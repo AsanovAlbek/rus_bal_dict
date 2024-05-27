@@ -1,14 +1,10 @@
 import 'dart:async';
-import 'dart:isolate';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:rus_bal_dict/feature/words_list/domain/bloc/word_list_event.dart';
 import 'package:rus_bal_dict/feature/words_list/domain/bloc/word_list_state.dart';
 import 'package:talker/talker.dart';
 
-import '../../../../core/model/word.dart';
 import '../repository/words_list_repository.dart';
 
 class WordsListBloc extends Bloc<WordsListEvent, WordsListState> {

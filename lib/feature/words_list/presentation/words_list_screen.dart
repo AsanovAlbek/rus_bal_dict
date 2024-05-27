@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
@@ -27,7 +24,7 @@ class _WordsListScreenState extends State<WordsListScreen> {
   @override
   void initState() {
     if (mounted) {
-      fetch();
+      //fetch();
       _scrollController.addListener(() {
         if (0.8 * _scrollController.position.maxScrollExtent < _scrollController.position.pixels) {
           fetch();

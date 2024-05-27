@@ -22,7 +22,7 @@ class DetailRepositoryImpl implements DetailRepository {
         } catch (e) {
           return const Right(null);
         }
-    } on Exception catch(e, s) {
+    } on Exception catch(e) {
       return Left(e);
     }
   }
