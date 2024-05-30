@@ -34,7 +34,6 @@ class _WordsListScreenState extends State<WordsListScreen> {
         if (_scrollController.position.maxScrollExtent == _scrollController.position.pixels) {
           fetch();
         }
-
       });
     }
     super.initState();
@@ -71,98 +70,96 @@ class _WordsListScreenState extends State<WordsListScreen> {
         final bloc = context.read<WordsListBloc>();
         return Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(mainAxisSize: MainAxisSize.max, children: [
-            TextField(
-              controller: _searchController,
-              decoration: const InputDecoration(
-                  filled: true,
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.search),
-                  labelText: 'Поиск слова'),
-              onChanged: (text) {
-                AppUtils.debounce(() {
-                  _animateScrollToTop();
-                  fetch(query: _searchController.text.trim());
-                });
-              },
-            ),
-            Expanded(
-              child: switch (state) {
-                WordsListStateLoading() => const Center(child: CircularProgressIndicator()),
-                WordsListStateLoaded(
-                words: final words,
-                itemsCount: final itemsCount,
-                currentPage: final page,
-                isLastPage: final isLastPage,
-                canScrollUp: final canScrollUp,
-                totalWordsCount: final totalWordsCount,
-                ) =>
-                    Scrollbar(
-                      trackVisibility: true,
-                      controller: _scrollController,
-                      child: Stack(children: [
-                        Column(
-                          children: [
-                            Text('Найдено слов:$totalWordsCount'),
-                            const SizedBox(height: 8),
-                            Expanded(
-                              child: RefreshIndicator(
-                                onRefresh: () {
-                                  return Future.sync(() => fetch());
-                                },
-                                child: words.isNotEmpty
-                                    ? ListView(
-                                  controller: _scrollController,
-                                  children: [
-                                      for (var word in words) ...[
-                                        WordListItem(word: word,
-                                            onPressed: (word) =>
-                                                context.go('/word_list/word_detail', extra: word))
-                                      ],
-                                  if (words.length < totalWordsCount) const Center(
-                                      child: Padding(
-                                          padding: EdgeInsets.all(8),
-                                          child: CircularProgressIndicator()))
-                                ],)
-                                // ? ListView.separated(
-                                //     itemBuilder: (context, index) {
-                                //       if (index == words.length && words.length <= totalWordsCount) {
-                                //         return const Center(
-                                //             child: Padding(
-                                //                 padding: EdgeInsets.all(8),
-                                //                 child: CircularProgressIndicator()));
-                                //       }
-                                //       return WordListItem(
-                                //         word: words[index],
-                                //         onPressed: (word) =>
-                                //             context.go('/word_list/word_detail', extra: word),
-                                //       );
-                                //     },
-                                //     separatorBuilder: (context, index) => const SizedBox(height: 4),
-                                //     itemCount:
-                                //         words.length < totalWordsCount ? words.length + 1 : words.length,
-                                //     controller: _scrollController,
-                                //   )
-                                    : const Center(child: Text('Пусто')),
-                              ),
-                            )
-                          ],
+          child: RefreshIndicator(
+            onRefresh: () {
+              return Future.sync(() {
+                fetch();
+              });
+            },
+            child: Stack(children: [
+              CustomScrollView(
+                controller: _scrollController,
+                slivers: [
+                  SliverAppBar(
+                    pinned: true,
+                    bottom: PreferredSize(
+                      preferredSize: const Size.fromHeight(24),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: TextField(
+                          controller: _searchController,
+                          decoration: const InputDecoration(
+                              filled: true,
+                              border: OutlineInputBorder(),
+                              prefixIcon: Icon(Icons.search),
+                              labelText: 'Поиск слова'),
+                          onChanged: (text) {
+                            AppUtils.debounce(() {
+                              _animateScrollToTop();
+                              fetch(query: _searchController.text.trim());
+                            });
+                          },
                         ),
-                        if (canScrollUp)
-                          Positioned(
-                            bottom: 24,
-                            right: 24,
-                            child: FloatingActionButton(
-                              onPressed: _jumpToTop,
-                              child: const Icon(Icons.arrow_upward),
-                            ),
-                          )
-                      ]),
+                      ),
                     ),
-                WordsListStateError(message: final msg) => Center(child: Text('$msg'))
-              },
-            ),
-          ]),
+                  ),
+                  if (state is WordsListStateLoaded)
+                    SliverPadding(
+                        padding: const EdgeInsets.all(8),
+                        sliver: Text(
+                          'Найдено слов: ${state.totalWordsCount}',
+                          textAlign: TextAlign.center,
+                        ).asSliver),
+                  switch (state) {
+                    WordsListStateLoading() => const SliverFillRemaining(
+                        child: Center(child: CircularProgressIndicator()),
+                      ),
+                    WordsListStateLoaded(
+                      words: final words,
+                      totalWordsCount: final totalWordsCount,
+                    ) =>
+                      SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                          (context, index) {
+                            if (index == words.length && words.length < totalWordsCount) {
+                              return const Center(
+                                child: Padding(
+                                  padding: EdgeInsets.all(8),
+                                  child: CircularProgressIndicator(),
+                                ),
+                              );
+                            }
+                            return WordListItem(
+                              word: words[index],
+                              onPressed: (word) {
+                                // Если у поисковой строки фокус и происходит переход к слову
+                                // То после возврата фокус остаётся и открывается клавиатура
+                                // Воизбежание такого поведения отнимаем фокус у поля
+                                FocusManager.instance.primaryFocus?.unfocus();
+                                context.go('/word_list/word_detail', extra: word);
+                              },
+                            );
+                          },
+                          childCount: words.length < totalWordsCount ? words.length + 1 : words.length,
+                        ),
+                      ),
+                    WordsListStateError(message: final msg) => SliverFillRemaining(
+                        child: Center(child: Text('$msg')),
+                      ),
+                  },
+                ],
+              ),
+              if (state is WordsListStateLoaded && state.canScrollUp)
+                Positioned(
+                  bottom: 24,
+                  right: 24,
+                  child: FloatingActionButton(
+                    onPressed: _jumpToTop,
+                    child: const Icon(Icons.arrow_upward),
+                  ),
+                )
+            ]),
+          ),
         );
       },
     );
