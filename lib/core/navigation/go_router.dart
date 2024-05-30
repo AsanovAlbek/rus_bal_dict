@@ -8,7 +8,7 @@ import 'package:rus_bal_dict/feature/word_detail/presentation/detail_screen.dart
 import 'package:rus_bal_dict/feature/words_list/presentation/words_list_screen.dart';
 
 import '../../feature/history/presentation/history_screen.dart';
-import '../model/word.dart';
+import '../model/word/word.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root shell');
 final _wordsListScreenNavigationKey = GlobalKey<NavigatorState>(debugLabel: 'words list shell');

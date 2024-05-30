@@ -1,4 +1,4 @@
-import '../../../../core/model/word.dart';
+import '../../../../core/model/word/word.dart';
 
 abstract interface class HistoryRepository {
   Stream<Word> wordsFromHistory();

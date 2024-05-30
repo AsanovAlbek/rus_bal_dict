@@ -1,4 +1,5 @@
 import 'dart:async';
+import "package:flutter/material.dart" show SliverToBoxAdapter, Widget;
 
 class AppUtils {
   static Timer? _timer;
@@ -7,5 +8,11 @@ class AppUtils {
       _timer?.cancel();
     }
     _timer = Timer(duration, () => action());
+  }
+}
+
+extension WidgetToSliver on Widget {
+  Widget get asSliver {
+    return SliverToBoxAdapter(child: this);
   }
 }

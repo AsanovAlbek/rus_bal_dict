@@ -3,10 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:rus_bal_dict/core/hive/converter.dart';
-import 'package:rus_bal_dict/core/hive/word_hive_model.dart';
+import 'package:rus_bal_dict/core/hive/word/converter.dart';
 import 'package:rus_bal_dict/feature/history/domain/bloc/history_bloc.dart';
 import 'package:rus_bal_dict/feature/history/domain/bloc/history_event.dart';
+
+import '../../../core/hive/word/word_hive_model.dart';
 
 class HistoryScreen extends StatelessWidget {
   const HistoryScreen({super.key});
