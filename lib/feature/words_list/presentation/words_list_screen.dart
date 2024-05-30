@@ -3,11 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rus_bal_dict/core/utils/app_utils.dart';
+import 'package:rus_bal_dict/core/widgets/word_list_item.dart';
 import 'package:rus_bal_dict/feature/words_list/domain/bloc/word_list_bloc.dart';
 import 'package:rus_bal_dict/feature/words_list/domain/bloc/word_list_event.dart';
 import 'package:rus_bal_dict/feature/words_list/domain/bloc/word_list_state.dart';
 import 'package:talker/talker.dart';
-
 
 class WordsListScreen extends StatefulWidget {
   const WordsListScreen({super.key});
@@ -21,14 +21,20 @@ class _WordsListScreenState extends State<WordsListScreen> {
   final TextEditingController _searchController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
 
+  //bool canAnimateUp = false;
+
   @override
   void initState() {
     if (mounted) {
       //fetch();
       _scrollController.addListener(() {
-        if (0.8 * _scrollController.position.maxScrollExtent < _scrollController.position.pixels) {
+        context
+            .read<WordsListBloc>()
+            .add(WordsListEvent.changeScrollableUp(canScroll: _scrollController.position.extentBefore > 500));
+        if (_scrollController.position.maxScrollExtent == _scrollController.position.pixels) {
           fetch();
         }
+
       });
     }
     super.initState();
@@ -41,14 +47,21 @@ class _WordsListScreenState extends State<WordsListScreen> {
     super.dispose();
   }
 
-  void fetch({String? query, int? page}) {
+  void fetch({String? query}) {
     Talker().debug('fetch');
     context.read<WordsListBloc>().add(WordsListEvent.fetch(
         query: query,
-        page: page,
         onSuccess: (words, total) {
           bool isLastPage = words.length < 100;
         }));
+  }
+
+  void _animateScrollToTop() {
+    _scrollController.animateTo(0, duration: const Duration(milliseconds: 500), curve: Curves.easeIn);
+  }
+
+  void _jumpToTop() {
+    _scrollController.jumpTo(0);
   }
 
   @override
@@ -63,12 +76,14 @@ class _WordsListScreenState extends State<WordsListScreen> {
               controller: _searchController,
               decoration: const InputDecoration(
                   filled: true,
-                  fillColor: Colors.white,
                   border: OutlineInputBorder(),
                   prefixIcon: Icon(Icons.search),
                   labelText: 'Поиск слова'),
               onChanged: (text) {
-                AppUtils.debounce(() => fetch(query: _searchController.text.trim()));
+                AppUtils.debounce(() {
+                  _animateScrollToTop();
+                  fetch(query: _searchController.text.trim());
+                });
               },
             ),
             Expanded(
@@ -79,45 +94,70 @@ class _WordsListScreenState extends State<WordsListScreen> {
                 itemsCount: final itemsCount,
                 currentPage: final page,
                 isLastPage: final isLastPage,
+                canScrollUp: final canScrollUp,
                 totalWordsCount: final totalWordsCount,
                 ) =>
-                    Stack(
-                        children: [
-                          Column(
-                            children: [
-                              Text('Найдено слов:$totalWordsCount'),
-                              const SizedBox(height: 8),
-                              Expanded(
-                                child: RefreshIndicator(
-                                  onRefresh: () {
-                                    return Future.sync(() => fetch(page: 0));
-                                  },
-                                  child: words.isNotEmpty
-                                      ? Scrollbar(
-                                    controller: _scrollController,
-                                    thumbVisibility: true,
-                                    child: ListView.separated(
-                                      itemBuilder: (context, index) {
-                                        // if (index == words.length) {
-                                        //   return const Center(
-                                        //       child: Padding(
-                                        //           padding: EdgeInsets.all(8), child: CircularProgressIndicator()));
-                                        // }
-                                        return ListTile(
-                                            onTap: () => context.go('/word_list/word_detail', extra: words[index]),
-                                            title: Text(words[index].word));
-                                      },
-                                      separatorBuilder: (context, index) => const SizedBox(height: 4),
-                                      itemCount: words.length,
-                                      controller: _scrollController,
-                                    ),
-                                  )
-                                      : const Center(child: Text('Пусто')),
-                                ),
-                              )
-                            ],
-                          ),
-                        ]
+                    Scrollbar(
+                      trackVisibility: true,
+                      controller: _scrollController,
+                      child: Stack(children: [
+                        Column(
+                          children: [
+                            Text('Найдено слов:$totalWordsCount'),
+                            const SizedBox(height: 8),
+                            Expanded(
+                              child: RefreshIndicator(
+                                onRefresh: () {
+                                  return Future.sync(() => fetch());
+                                },
+                                child: words.isNotEmpty
+                                    ? ListView(
+                                  controller: _scrollController,
+                                  children: [
+                                      for (var word in words) ...[
+                                        WordListItem(word: word,
+                                            onPressed: (word) =>
+                                                context.go('/word_list/word_detail', extra: word))
+                                      ],
+                                  if (words.length < totalWordsCount) const Center(
+                                      child: Padding(
+                                          padding: EdgeInsets.all(8),
+                                          child: CircularProgressIndicator()))
+                                ],)
+                                // ? ListView.separated(
+                                //     itemBuilder: (context, index) {
+                                //       if (index == words.length && words.length <= totalWordsCount) {
+                                //         return const Center(
+                                //             child: Padding(
+                                //                 padding: EdgeInsets.all(8),
+                                //                 child: CircularProgressIndicator()));
+                                //       }
+                                //       return WordListItem(
+                                //         word: words[index],
+                                //         onPressed: (word) =>
+                                //             context.go('/word_list/word_detail', extra: word),
+                                //       );
+                                //     },
+                                //     separatorBuilder: (context, index) => const SizedBox(height: 4),
+                                //     itemCount:
+                                //         words.length < totalWordsCount ? words.length + 1 : words.length,
+                                //     controller: _scrollController,
+                                //   )
+                                    : const Center(child: Text('Пусто')),
+                              ),
+                            )
+                          ],
+                        ),
+                        if (canScrollUp)
+                          Positioned(
+                            bottom: 24,
+                            right: 24,
+                            child: FloatingActionButton(
+                              onPressed: _jumpToTop,
+                              child: const Icon(Icons.arrow_upward),
+                            ),
+                          )
+                      ]),
                     ),
                 WordsListStateError(message: final msg) => Center(child: Text('$msg'))
               },

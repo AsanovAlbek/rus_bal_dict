@@ -1,11 +1,11 @@
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
-import 'package:rus_bal_dict/core/hive/converter.dart';
-import 'package:rus_bal_dict/core/model/word.dart';
+import 'package:rus_bal_dict/core/hive/word/converter.dart';
+import 'package:rus_bal_dict/core/model/word/word.dart';
 import 'package:rus_bal_dict/feature/history/domain/repository/history_repository.dart';
 import 'package:talker/talker.dart';
 
-import '../../../../core/hive/word_hive_model.dart';
+import '../../../../core/hive/word/word_hive_model.dart';
 
 class HistoryRepositoryImpl implements HistoryRepository {
   final Box<WordHiveModel> _historyBox;

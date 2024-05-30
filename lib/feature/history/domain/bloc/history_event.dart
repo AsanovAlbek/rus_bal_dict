@@ -1,4 +1,4 @@
-import '../../../../core/model/word.dart';
+import '../../../../core/model/word/word.dart';
 
 sealed class HistoryEvent {
   static AddToHistoryEvent addToHistory({required Word word}) => AddToHistoryEvent(word: word);

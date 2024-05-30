@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
-import 'package:rus_bal_dict/core/model/word.dart';
+import 'package:rus_bal_dict/core/model/word/word.dart';
 
 import '../../domain/repository/words_list_repository.dart';
 import 'package:talker/talker.dart';

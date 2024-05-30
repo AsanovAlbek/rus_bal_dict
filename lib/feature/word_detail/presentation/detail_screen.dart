@@ -12,7 +12,7 @@ import 'package:rus_bal_dict/feature/word_detail/domain/bloc/detail_bloc.dart';
 import 'package:rus_bal_dict/feature/word_detail/domain/bloc/detail_event.dart';
 import 'package:rus_bal_dict/feature/word_detail/domain/bloc/detail_state.dart';
 
-import '../../../core/model/word.dart';
+import '../../../core/model/word/word.dart';
 import '../domain/repository/detail_repository.dart';
 
 const double _normalSpeed = 1.0;

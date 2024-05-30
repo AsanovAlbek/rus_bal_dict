@@ -1,4 +1,4 @@
-import '../../../../core/model/word.dart';
+import '../../../../core/model/word/word.dart';
 
 sealed class HistoryState {
   static HistoryStateLoading loading() => HistoryStateLoading();
