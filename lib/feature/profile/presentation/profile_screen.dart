@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rus_bal_dict/core/model/settings/theme_mode.dart';
 import 'package:rus_bal_dict/core/utils/app_utils.dart';
 import 'package:rus_bal_dict/feature/profile/domain/cubit/profile_cubit.dart';
@@ -18,8 +19,8 @@ class ProfileScreen extends StatelessWidget {
         return CustomScrollView(
           slivers: [
             SliverAppBar(
-                expandedHeight: 150,
-                pinned: true,
+              expandedHeight: 150,
+              pinned: true,
               flexibleSpace: FlexibleSpaceBar(
                 title: Text(state.appSettings.userInfo.name ?? 'Имя пользователя'),
                 background: const FlutterLogo(),
@@ -39,7 +40,14 @@ class ProfileScreen extends StatelessWidget {
                     return ButtonSegment(value: mode, label: Text(mode.label));
                   }).toList()),
             ).asSliver,
-            const Divider().asSliver
+            const Divider().asSliver,
+            TextButton(
+                    onPressed: () {
+                      context.read<ProfileCubit>().signOut();
+                      context.pushReplacement('/');
+                    },
+                    child: const Text('Выход'))
+                .asSliver
           ],
         );
       },

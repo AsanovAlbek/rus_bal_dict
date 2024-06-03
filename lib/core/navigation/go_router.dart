@@ -1,5 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hive/hive.dart';
+import 'package:rus_bal_dict/core/hive/settings/app_settings_hive.dart';
+import 'package:rus_bal_dict/core/model/settings/app_settings.dart';
+import 'package:rus_bal_dict/core/model/settings/converter.dart';
 import 'package:rus_bal_dict/feature/auth/presentation/auth_screen.dart';
 import 'package:rus_bal_dict/feature/favorites/presentation/favorites_screen.dart';
 import 'package:rus_bal_dict/feature/home/presentation/home_screen.dart';
@@ -17,8 +21,15 @@ final _historyScreenNavigationKey = GlobalKey<NavigatorState>(debugLabel: 'histo
 final _profileScreenNavigationKey = GlobalKey<NavigatorState>(debugLabel: 'settings shell');
 
 class AppRouter {
-  final router = GoRouter(navigatorKey: _rootNavigatorKey, initialLocation: '/word_list', routes: [
-    GoRoute(path: '/', builder: (context, state) => const AuthScreen()),
+  final router = GoRouter(navigatorKey: _rootNavigatorKey, initialLocation: '/', routes: [
+    GoRoute(path: '/', redirect: (context, state) {
+      final settingsBox = Hive.box<AppSettingsHiveModel>('settings');
+      final settings = (settingsBox.getAt(0) ?? AppSettingsHiveModel()).toModel();
+      if (settings.userInfo.isUserSignIn && state.uri.path == '/') {
+        return '/word_list';
+      }
+      return null;
+    }, builder: (context, state) => const AuthScreen()),
     StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
           return HomeScreen(navigationShell: navigationShell);

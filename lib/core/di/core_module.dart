@@ -12,8 +12,8 @@ final di = GetIt.instance;
 void coreModule(CacheStore cacheStore) {
 
   final options = BaseOptions(
-    //baseUrl: 'http://192.168.177.2:8000/',
-    baseUrl: baseUrl
+    baseUrl: testBaseUrl,
+    //baseUrl: baseUrl
     //baseUrl: balRusBaseUrl
   );
 

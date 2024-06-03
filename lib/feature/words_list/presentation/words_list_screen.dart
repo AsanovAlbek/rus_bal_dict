@@ -21,8 +21,6 @@ class _WordsListScreenState extends State<WordsListScreen> {
   final TextEditingController _searchController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
 
-  //bool canAnimateUp = false;
-
   @override
   void initState() {
     if (mounted) {
@@ -48,11 +46,7 @@ class _WordsListScreenState extends State<WordsListScreen> {
 
   void fetch({String? query}) {
     Talker().debug('fetch');
-    context.read<WordsListBloc>().add(WordsListEvent.fetch(
-        query: query,
-        onSuccess: (words, total) {
-          bool isLastPage = words.length < 100;
-        }));
+    context.read<WordsListBloc>().add(WordsListEvent.fetch(query: query));
   }
 
   void _animateScrollToTop() {
@@ -116,8 +110,7 @@ class _WordsListScreenState extends State<WordsListScreen> {
                       ),
                     WordsListStateLoaded(
                       words: final words,
-                      totalWordsCount: final totalWordsCount,
-                    ) =>
+                      totalWordsCount: final totalWordsCount) =>
                       SliverList(
                         delegate: SliverChildBuilderDelegate(
                           (context, index) {

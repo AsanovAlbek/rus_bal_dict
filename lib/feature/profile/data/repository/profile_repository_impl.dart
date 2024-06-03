@@ -27,7 +27,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
 
   @override
   Future<void> signOut() async {
-    var appSettings = _settingsBox.get(_settingsBox, defaultValue: AppSettingsHiveModel())!.toModel();
+    var appSettings = _settingsBox.get(_singleSettingsKey, defaultValue: AppSettingsHiveModel())!.toModel();
     appSettings = appSettings.copyWith(userInfo: appSettings.userInfo.copyWith(isUserSignIn: false));
     return _settingsBox.put(_singleSettingsKey, appSettings.toHive());
   }
