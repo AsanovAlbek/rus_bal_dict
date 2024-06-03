@@ -10,6 +10,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:rus_bal_dict/core/di/core_module.dart';
 import 'package:rus_bal_dict/core/hive/settings/app_settings_hive.dart';
 import 'package:rus_bal_dict/core/model/settings/converter.dart';
+import 'package:rus_bal_dict/feature/auth/di/auth_module.dart';
 import 'package:rus_bal_dict/feature/profile/di/profile_module.dart';
 import 'package:rus_bal_dict/feature/profile/domain/cubit/profile_cubit.dart';
 import 'package:rus_bal_dict/feature/profile/domain/repository/profile_repository.dart';
@@ -29,6 +30,7 @@ Future<void> main() async {
   final settingsBox = await Hive.openBox<AppSettingsHiveModel>('settings');
   final tempDir = await getTemporaryDirectory();
   coreModule(HiveCacheStore(tempDir.path));
+  authModule(settingsBox);
   wordListModule();
   detailModule();
   historyModule(historyBox);
