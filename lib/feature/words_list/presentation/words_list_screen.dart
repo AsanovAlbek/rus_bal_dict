@@ -76,8 +76,20 @@ class _WordsListScreenState extends State<WordsListScreen> {
                 slivers: [
                   SliverAppBar(
                     pinned: true,
+                    expandedHeight: 150,
+                    flexibleSpace: Container(
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [Color.fromRGBO(197, 255, 195, 1), Color.fromRGBO(68, 176, 105, 1)]
+                        )
+                      ),
+                    ),
+                    leading: IconButton(icon: const Icon(Icons.arrow_back_ios), onPressed: () {
+                      context.pop();
+                    },),
+                    title: const Text('РУССКО - БАЛКАРСКИЙ СЛОВАРЬ'),
                     bottom: PreferredSize(
-                      preferredSize: const Size.fromHeight(24),
+                      preferredSize: const Size.fromHeight(50),
                       child: Padding(
                         padding: const EdgeInsets.all(8),
                         child: TextField(

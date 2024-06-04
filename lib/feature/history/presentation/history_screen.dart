@@ -6,6 +6,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:rus_bal_dict/core/hive/word/converter.dart';
 import 'package:rus_bal_dict/feature/history/domain/bloc/history_bloc.dart';
 import 'package:rus_bal_dict/feature/history/domain/bloc/history_event.dart';
+import 'package:rus_bal_dict/feature/profile/domain/cubit/profile_cubit.dart';
 
 import '../../../core/hive/word/word_hive_model.dart';
 
@@ -17,8 +18,14 @@ class HistoryScreen extends StatelessWidget {
     return ValueListenableBuilder(
       valueListenable: Hive.box<WordHiveModel>('history').listenable(),
       builder: (BuildContext context, Box<WordHiveModel> box, Widget? child) {
-        final wordsFromHistory = box.values.toList()
-          ..sort((word, next) => next.createTime.compareTo(word.createTime));
+        final wordsFromHistory = box.values
+            .where((word) => word.userId == (context.read<ProfileCubit>().state.appSettings.userInfo.id ?? 0))
+            .toList()
+          ..sort((word, next) {
+            final wordCreatedDate = DateTime.fromMillisecondsSinceEpoch(word.createTime);
+            final nextWordCreatedDate = DateTime.fromMillisecondsSinceEpoch(next.createTime);
+            return nextWordCreatedDate.compareTo(wordCreatedDate);
+          });
         final words = wordsFromHistory.map((hiveModel) => hiveModel.toModel()).toList();
         return CustomScrollView(
           slivers: [
@@ -39,7 +46,8 @@ class HistoryScreen extends StatelessWidget {
                     onTap: () => context.go('/history/word_detail', extra: words[index]),
                     title: Text(words[index].word));
               }, childCount: words.length))
-            else const SliverToBoxAdapter(child: Center(child: Text('Здесь пока ничего нет')))
+            else
+              const SliverToBoxAdapter(child: Center(child: Text('Здесь пока ничего нет')))
           ],
         );
       },

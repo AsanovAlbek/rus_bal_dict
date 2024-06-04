@@ -33,7 +33,7 @@ Future<void> main() async {
   authModule(settingsBox);
   wordListModule();
   detailModule();
-  historyModule(historyBox);
+  historyModule(settingsBox, historyBox);
   profileModule(settingsBox);
   runApp(MyApp());
 }
