@@ -67,6 +67,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     TextButton(
                       onPressed: () {
                         _formKey.currentState?.reset();
+                        FocusManager.instance.primaryFocus?.unfocus();
                         context
                             .read<AuthBloc>()
                             .add(AuthEvent.changeAuthPage(pageState: AuthPageState.signUp));
@@ -83,6 +84,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     TextButton(
                       onPressed: () {
                         _formKey.currentState?.reset();
+                        FocusManager.instance.primaryFocus?.unfocus();
                         context
                             .read<AuthBloc>()
                             .add(AuthEvent.changeAuthPage(pageState: AuthPageState.signIn));

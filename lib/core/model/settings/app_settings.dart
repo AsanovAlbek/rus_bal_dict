@@ -17,15 +17,15 @@ class AppSettings {
 @immutable
 class Settings {
   final SettingsThemeMode themeMode;
-  final int fontSize;
+  final double fontSize;
   final Duration? historyStaleLimitTime;
 
   const Settings(
       {this.themeMode = SettingsThemeMode.system,
-      this.fontSize = 13,
+      this.fontSize = 1.0,
       this.historyStaleLimitTime});
 
-  Settings copyWith({SettingsThemeMode? themeMode, int? fontSize, Duration? historyStaleLimitTime}) {
+  Settings copyWith({SettingsThemeMode? themeMode, double? fontSize, Duration? historyStaleLimitTime}) {
     return Settings(
       themeMode: themeMode ?? this.themeMode,
       fontSize: fontSize ?? this.fontSize,

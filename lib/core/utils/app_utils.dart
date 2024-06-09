@@ -23,3 +23,7 @@ extension ContextExtension on BuildContext {
     ScaffoldMessenger.of(this).showSnackBar(SnackBar(content: Text(message)));
   }
 }
+
+extension StringExt on String {
+  String toCapitalized() => length > 0 ?'${this[0].toUpperCase()}${substring(1).toLowerCase()}':'';
+}

@@ -37,4 +37,10 @@ class ProfileCubit extends Cubit<ProfileState> {
         .copyWith(settings: _profile.appSettings.settings.copyWith(themeMode: selection.first));
     saveSettings(newSettings);
   }
+
+  void changeTextScale(double scale) {
+    final settings =
+        _profile.appSettings.copyWith(settings: _profile.appSettings.settings.copyWith(fontSize: scale));
+    saveSettings(settings);
+  }
 }

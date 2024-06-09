@@ -17,11 +17,11 @@ class AppSettingsHiveModelAdapter extends TypeAdapter<AppSettingsHiveModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return AppSettingsHiveModel(
-      userId: fields[0] as int?,
-      userName: fields[1] as String?,
-      isUserSignedIn: fields[2] as bool,
-      themeMode: fields[3] as int,
-      fontSize: fields[4] as int?,
+      userId: fields[0] == null ? 0 : fields[0] as int?,
+      userName: fields[1] == null ? '' : fields[1] as String?,
+      isUserSignedIn: fields[2] == null ? false : fields[2] as bool,
+      themeMode: fields[3] == null ? 0 : fields[3] as int,
+      fontSize: fields[4] == null ? 1.0 : fields[4] as double?,
       historyStaleLimitTime: fields[5] as Duration?,
     );
   }

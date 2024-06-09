@@ -12,7 +12,8 @@ final di = GetIt.instance;
 void coreModule(CacheStore cacheStore) {
 
   final options = BaseOptions(
-    baseUrl: testBaseUrl,
+    baseUrl: reserveApiUrl,
+    //baseUrl: testBaseUrl,
     //baseUrl: baseUrl
     //baseUrl: balRusBaseUrl
   );

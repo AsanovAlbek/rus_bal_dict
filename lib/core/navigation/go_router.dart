@@ -7,7 +7,8 @@ import 'package:rus_bal_dict/core/model/settings/converter.dart';
 import 'package:rus_bal_dict/feature/auth/presentation/auth_screen.dart';
 import 'package:rus_bal_dict/feature/favorites/presentation/favorites_screen.dart';
 import 'package:rus_bal_dict/feature/home/presentation/home_screen.dart';
-import 'package:rus_bal_dict/feature/profile/presentation/profile_screen.dart';
+import 'package:rus_bal_dict/feature/profile/presentation/screen/profile_screen.dart';
+import 'package:rus_bal_dict/feature/profile/presentation/screen/settings_screen.dart';
 import 'package:rus_bal_dict/feature/word_detail/presentation/detail_screen.dart';
 import 'package:rus_bal_dict/feature/words_list/presentation/words_list_screen.dart';
 
@@ -22,14 +23,17 @@ final _profileScreenNavigationKey = GlobalKey<NavigatorState>(debugLabel: 'setti
 
 class AppRouter {
   final router = GoRouter(navigatorKey: _rootNavigatorKey, initialLocation: '/', routes: [
-    GoRoute(path: '/', redirect: (context, state) {
-      final settingsBox = Hive.box<AppSettingsHiveModel>('settings');
-      final settings = (settingsBox.getAt(0) ?? AppSettingsHiveModel()).toModel();
-      if (settings.userInfo.isUserSignIn && state.uri.path == '/') {
-        return '/word_list';
-      }
-      return null;
-    }, builder: (context, state) => const AuthScreen()),
+    GoRoute(
+        path: '/',
+        redirect: (context, state) {
+          final settingsBox = Hive.box<AppSettingsHiveModel>('settings');
+          final settings = (settingsBox.getAt(0) ?? AppSettingsHiveModel()).toModel();
+          if (settings.userInfo.isUserSignIn && state.uri.path == '/') {
+            return '/word_list';
+          }
+          return null;
+        },
+        builder: (context, state) => const AuthScreen()),
     StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
           return HomeScreen(navigationShell: navigationShell);
@@ -56,9 +60,12 @@ class AppRouter {
                   builder: (context, state) => WordsDetailScreen(word: state.extra as Word?))
             ])
           ]),
-          StatefulShellBranch(
-              navigatorKey: _profileScreenNavigationKey,
-              routes: [GoRoute(path: '/profile', builder: (context, state) => const ProfileScreen())])
+          StatefulShellBranch(navigatorKey: _profileScreenNavigationKey, routes: [
+            GoRoute(
+                path: '/profile',
+                builder: (context, state) => const ProfileScreen(),
+                routes: [GoRoute(path: 'settings', builder: (context, state) => const SettingsScreen())])
+          ])
         ])
   ]);
 }

@@ -3,32 +3,32 @@ part 'app_settings_hive.g.dart';
 
 @HiveType(typeId: 1)
 class AppSettingsHiveModel extends HiveObject {
-  @HiveField(0)
+  @HiveField(0, defaultValue: 0)
 
   /// id пользователя, != null если пользователь авторизирован
   int? userId;
 
-  @HiveField(1)
+  @HiveField(1, defaultValue: '')
 
   /// Имя пользователя
   String? userName;
 
-  @HiveField(2)
+  @HiveField(2, defaultValue: false)
 
   /// Зашёл ли пользователь
   bool isUserSignedIn;
 
-  @HiveField(3)
+  @HiveField(3, defaultValue: 0)
 
   /// Настройки темы (hive не хочет хранить вложенные кастомные объекты, поэтому енам храним по индексу)
   int themeMode;
 
-  @HiveField(4)
+  @HiveField(4, defaultValue: 1.0)
 
   /// Настройки размера шрифта
-  int? fontSize;
+  double? fontSize;
 
-  @HiveField(5)
+  @HiveField(5, defaultValue: null)
   /// Настройки времени жизни записей в истории.
   /// Все записи, срок которых истек удаляются
   /// Если null, то записи не удаляются из истории

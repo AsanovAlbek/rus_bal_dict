@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:rus_bal_dict/core/hive/word/converter.dart';
+import 'package:rus_bal_dict/core/widgets/my_app_bar.dart';
+import 'package:rus_bal_dict/core/widgets/word_list_item.dart';
 import 'package:rus_bal_dict/feature/history/domain/bloc/history_bloc.dart';
 import 'package:rus_bal_dict/feature/history/domain/bloc/history_event.dart';
 import 'package:rus_bal_dict/feature/profile/domain/cubit/profile_cubit.dart';
@@ -19,7 +21,13 @@ class HistoryScreen extends StatelessWidget {
       valueListenable: Hive.box<WordHiveModel>('history').listenable(),
       builder: (BuildContext context, Box<WordHiveModel> box, Widget? child) {
         final wordsFromHistory = box.values
-            .where((word) => word.userId == (context.read<ProfileCubit>().state.appSettings.userInfo.id ?? 0))
+            .where((word) =>
+        word.userId == (context
+            .read<ProfileCubit>()
+            .state
+            .appSettings
+            .userInfo
+            .id ?? 0))
             .toList()
           ..sort((word, next) {
             final wordCreatedDate = DateTime.fromMillisecondsSinceEpoch(word.createTime);
@@ -29,23 +37,19 @@ class HistoryScreen extends StatelessWidget {
         final words = wordsFromHistory.map((hiveModel) => hiveModel.toModel()).toList();
         return CustomScrollView(
           slivers: [
-            SliverAppBar(
-              title: Text('История поиска',
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontSize: 20)),
-              actions: [
-                ElevatedButton.icon(
-                    onPressed: () => context.read<HistoryBloc>().add(HistoryEvent.clearHistory()),
-                    label: const Text('Удалить историю'),
-                    icon: const Icon(Icons.delete_forever))
-              ],
-            ),
+            MyAppBar(title: 'История', actions: [
+              ElevatedButton.icon(
+                  onPressed: () => context.read<HistoryBloc>().add(HistoryEvent.clearHistory()),
+                  label: const Text('Удалить историю'),
+                  icon: const Icon(Icons.delete_forever))
+            ],),
             if (words.isNotEmpty)
               SliverList(
                   delegate: SliverChildBuilderDelegate((context, index) {
-                return ListTile(
-                    onTap: () => context.go('/history/word_detail', extra: words[index]),
-                    title: Text(words[index].word));
-              }, childCount: words.length))
+                    return WordListItem(
+                      word: words[index],
+                      onPressed: (word) => context.go('/history/word_detail', extra: word),);
+                  }, childCount: words.length))
             else
               const SliverToBoxAdapter(child: Center(child: Text('Здесь пока ничего нет')))
           ],

@@ -22,7 +22,7 @@ extension HiveToAppSettings on AppSettingsHiveModel {
             isUserSignIn: isUserSignedIn),
         settings: Settings(
             themeMode: SettingsThemeMode.values[themeMode],
-            fontSize: fontSize ?? 13,
+            fontSize: fontSize ?? 1.0,
             historyStaleLimitTime: historyStaleLimitTime));
   }
 }

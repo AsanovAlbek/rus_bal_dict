@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:rus_bal_dict/feature/favorites/domain/bloc/favorites_bloc.dart';
+import 'package:rus_bal_dict/feature/favorites/domain/bloc/favorites_event.dart';
+import 'package:rus_bal_dict/feature/favorites/domain/repository/favorites_repository.dart';
 import 'package:rus_bal_dict/feature/history/domain/bloc/history_bloc.dart';
 import 'package:rus_bal_dict/feature/history/domain/bloc/history_event.dart';
 import 'package:rus_bal_dict/feature/history/domain/repository/history_repository.dart';
@@ -30,21 +33,21 @@ class HomeScreen extends StatelessWidget {
             ),
             BlocProvider(
                 create: (context) =>
-                    HistoryBloc(GetIt.I<HistoryRepository>())..add(HistoryEvent.getHistory()))
+                    HistoryBloc(GetIt.I<HistoryRepository>())..add(HistoryEvent.getHistory())),
+            BlocProvider(
+                create: (context) =>
+                    FavoritesBloc(GetIt.I<FavoritesRepository>())..add(FavoritesEvent.load()))
           ],
-          child: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: navigationShell,
-          )),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: navigationShell.currentIndex,
-        destinations: const [
-          NavigationDestination(icon: Icon(Icons.home), label: 'Главная'),
-          NavigationDestination(icon: Icon(Icons.bookmark), label: 'Сохраненные'),
-          NavigationDestination(icon: Icon(Icons.history), label: 'Недавние'),
-          NavigationDestination(icon: Icon(Icons.person), label: 'Профиль')
+          child: navigationShell),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: navigationShell.currentIndex,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Главная'),
+          BottomNavigationBarItem(icon: Icon(Icons.bookmark), label: 'Сохраненные'),
+          BottomNavigationBarItem(icon: Icon(Icons.history), label: 'Недавние'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Профиль')
         ],
-        onDestinationSelected: _onSelectNavBar,
+        onTap: _onSelectNavBar,
       ),
     );
   }

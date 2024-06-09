@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:io';
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rus_bal_dict/core/model/user/user.dart';
 import 'package:rus_bal_dict/feature/auth/data/exceptions/exceptions.dart';
@@ -20,7 +22,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   FutureOr<void> _signUp(SignUpEvent event, Emitter<AuthState> emit) async {
-    final user = User(name: event.name, email: event.email, password: event.password, imei: '');
+    final deviceId = await _deviceId();
+    final user = User(name: event.name, email: event.email, password: event.password, imei: deviceId ?? 'unknown');
     final signUpEither = await repository.registerUser(user: user);
     signUpEither.either((userSignUpException) {
       String errorMessage = userSignUpException is UserAlreadyExistException
@@ -30,6 +33,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }, (newUser) {
       event.onSuccess?.call(newUser, 'Вы успешно зарегистрировались');
     });
+  }
+
+  Future<String?> _deviceId() async {
+    var deviceInfo = DeviceInfoPlugin();
+    if (Platform.isAndroid) {
+      final androidInfo = await deviceInfo.androidInfo;
+      return androidInfo.id;
+    } else if (Platform.isIOS) {
+      final iosInfo = await deviceInfo.iosInfo;
+      return iosInfo.identifierForVendor;
+    }
+    // Иначе если платформа не ios и не android
+    return null;
   }
 
   FutureOr<void> _signIn(SignInEvent event, Emitter<AuthState> emit) async {
