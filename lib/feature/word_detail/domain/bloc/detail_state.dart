@@ -7,10 +7,15 @@ sealed class DetailState {
 
 class DetailStateLoaded extends DetailState with EquatableMixin {
   final Uint8List? bytes;
-  DetailStateLoaded({this.bytes});
+  final bool isFavorite;
+  DetailStateLoaded({this.bytes, this.isFavorite = false});
 
   @override
   List<Object?> get props => [bytes];
+
+  DetailStateLoaded copyWith({Uint8List? bytes, bool? isFavorite}) {
+    return DetailStateLoaded(bytes: bytes ?? this.bytes, isFavorite: isFavorite ?? this.isFavorite);
+  }
 }
 
 class DetailStateError extends DetailState {

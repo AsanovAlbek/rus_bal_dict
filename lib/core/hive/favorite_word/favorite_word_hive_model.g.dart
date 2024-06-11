@@ -24,13 +24,14 @@ class FavoriteWordHiveModelAdapter extends TypeAdapter<FavoriteWordHiveModel> {
       meaning: fields[4] == null ? '' : fields[4] as String,
       audioBytes: fields[5] as Uint8List?,
       editedTime: fields[6] == null ? 0 : fields[6] as int,
+      audioUrl: fields[7] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, FavoriteWordHiveModel obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -44,7 +45,9 @@ class FavoriteWordHiveModelAdapter extends TypeAdapter<FavoriteWordHiveModel> {
       ..writeByte(5)
       ..write(obj.audioBytes)
       ..writeByte(6)
-      ..write(obj.editedTime);
+      ..write(obj.editedTime)
+      ..writeByte(7)
+      ..write(obj.audioUrl);
   }
 
   @override

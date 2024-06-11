@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:rus_bal_dict/core/hive/favorite_word/favorite_word_hive_model.dart';
 import 'package:rus_bal_dict/core/utils/app_utils.dart';
 
 import '../model/word/word.dart';
@@ -28,7 +30,14 @@ class WordListItem extends StatelessWidget {
         ListTile(
           leading: Visibility(
               visible: saveEnable,
-              child: IconButton(onPressed: () => onSaveWord?.call(word), icon: const Icon(Icons.star))),
+              child: IconButton(
+                  onPressed: () => onSaveWord?.call(word),
+                  icon: Icon(
+                    Icons.star,
+                    color: Hive.box<FavoriteWordHiveModel>('favorites').containsKey(word.id)
+                        ? Colors.yellow
+                        : Colors.grey,
+                  ))),
           title: Text(
             word.word.toCapitalized(),
             style: Theme.of(context).textTheme.bodyMedium,
@@ -36,6 +45,7 @@ class WordListItem extends StatelessWidget {
           onTap: () => onPressed?.call(word),
           trailing: Visibility(
             visible: playEndale,
+            maintainSize: false,
             child: IconButton(onPressed: () => onPlaySound?.call(word), icon: const Icon(Icons.play_arrow)),
           ),
         ),

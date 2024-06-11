@@ -85,12 +85,4 @@ class MyApp extends StatelessWidget {
       SettingsThemeMode.dark => darkTheme,
     };
   }
-
-  // Brightness _brightness(BuildContext context, SettingsThemeMode themeMode) {
-  //   return switch (themeMode) {
-  //     SettingsThemeMode.system => MediaQuery.of(context).platformBrightness,
-  //     SettingsThemeMode.light => Brightness.light,
-  //     SettingsThemeMode.dark => Brightness.dark,
-  //   };
-  // }
 }

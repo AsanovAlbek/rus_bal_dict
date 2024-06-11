@@ -25,6 +25,8 @@ dependencies:
   path_provider: ^2.1.3
   bloc_concurrency: ^0.2.5
   device_info_plus: ^10.1.0
+  google_fonts: ^6.2.1
+  flutter_svg: ^2.0.10+1
 
 
 dev_dependencies:
@@ -37,4 +39,8 @@ dev_dependencies:
   hive_generator: ^2.0.1
 
 flutter:
+  assets:
+    - assets/images/
+    - assets/images/favorites.svg
+    - assets/images/play_audio.svg
   uses-material-design: true

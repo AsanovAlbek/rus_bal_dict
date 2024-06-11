@@ -8,7 +8,7 @@ import '../repository/favorites_repository.dart';
 
 class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
   final FavoritesRepository repository;
-  FavoritesBloc(this.repository): super(FavoritesState.loading()) {
+  FavoritesBloc(this.repository): super(FavoritesState.loaded()) {
     on<LoadFavoritesEvent>(_loadFavorites);
     on<DeleteFromFavoritesEvent>(_deleteFromFavorites);
     on<AddToFavoritesEvent>(_addToFavorites);

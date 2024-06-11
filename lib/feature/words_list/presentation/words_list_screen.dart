@@ -123,7 +123,7 @@ class _WordsListScreenState extends State<WordsListScreen> {
                                     FocusManager.instance.primaryFocus?.unfocus();
                                     context.go('/word_list/word_detail', extra: word);
                                   },
-                                  saveEnable: true,
+                                  saveEnable: false,
                                   onSaveWord: (word) {
                                     context
                                         .read<FavoritesBloc>()

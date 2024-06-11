@@ -8,7 +8,8 @@ class Word with _$Word {
     @JsonKey(name: 'id') int? id,
     @JsonKey(name: 'name') @Default('') String word,
     @JsonKey(name: 'meaning') @Default('') String meaning,
-    @JsonKey(name: 'audio_url') @Default('') String audioUrl
+    @JsonKey(name: 'audio_url') @Default('') String audioUrl,
+    @JsonKey(includeToJson: false, includeFromJson: false) @Default(false) bool isFavorite
   }) = _Word;
   factory Word.fromJson(Map<String, dynamic> json) => _$WordFromJson(json);
 }

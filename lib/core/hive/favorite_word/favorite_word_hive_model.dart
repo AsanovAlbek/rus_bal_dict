@@ -20,6 +20,8 @@ class FavoriteWordHiveModel with HiveObjectMixin {
   final Uint8List? audioBytes;
   @HiveField(6, defaultValue: 0)
   final int editedTime;
+  @HiveField(7, defaultValue: null)
+  String? audioUrl;
 
   FavoriteWordHiveModel(
       {required this.id,
@@ -28,5 +30,6 @@ class FavoriteWordHiveModel with HiveObjectMixin {
       required this.word,
       required this.meaning,
       required this.audioBytes,
-      required this.editedTime});
+      required this.editedTime,
+      required this.audioUrl});
 }

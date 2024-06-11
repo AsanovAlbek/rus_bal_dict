@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:rus_bal_dict/colors.dart';
 
 final lightTheme = ThemeData.light().copyWith(
@@ -24,7 +26,7 @@ final darkTheme = ThemeData.dark().copyWith(
     ),
     dividerColor: AppDarkColors.dividerColor);
 
-const textTheme = TextTheme(bodyMedium: TextStyle(fontSize: 18));
+final textTheme = GoogleFonts.interTextTheme(const TextTheme(bodyMedium: TextStyle(fontSize: 18)));
 
 const bottomBarThemeLight = BottomNavigationBarThemeData(
     type: BottomNavigationBarType.fixed,

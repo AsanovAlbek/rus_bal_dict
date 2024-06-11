@@ -36,7 +36,7 @@ class HomeScreen extends StatelessWidget {
                     HistoryBloc(GetIt.I<HistoryRepository>())..add(HistoryEvent.getHistory())),
             BlocProvider(
                 create: (context) =>
-                    FavoritesBloc(GetIt.I<FavoritesRepository>())..add(FavoritesEvent.load()))
+                    FavoritesBloc(GetIt.I<FavoritesRepository>()))//..add(FavoritesEvent.load()))
           ],
           child: navigationShell),
       bottomNavigationBar: BottomNavigationBar(

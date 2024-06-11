@@ -75,7 +75,11 @@ class MyAppBar extends StatelessWidget {
                   });
             },
           ),
-          title: FittedBox(child: Text(title)),
+          title: FittedBox(
+              child: Text(
+            title,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w700),
+          )),
           bottom: showSearchField
               ? PreferredSize(
                   preferredSize: const Size.fromHeight(50),

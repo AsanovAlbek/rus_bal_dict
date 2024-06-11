@@ -4,6 +4,7 @@ import 'package:hive/hive.dart';
 import 'package:rus_bal_dict/core/model/favorite_word/favorite_word.dart';
 import 'package:rus_bal_dict/core/model/settings/converter.dart';
 import 'package:rus_bal_dict/core/model/word/word.dart';
+import 'package:rus_bal_dict/feature/favorites/data/converter.dart';
 import 'package:rus_bal_dict/feature/favorites/domain/repository/favorites_repository.dart';
 
 import '../../../../core/hive/favorite_word/favorite_word_hive_model.dart';
@@ -22,9 +23,13 @@ class FavoriteRepositoryImpl implements FavoritesRepository {
   Future<Either<Exception, Word>> deleteFromFavorites(Word favoriteWord) async {
     try {
       var appSettings = settingsBox.get(_singleSettingsKey, defaultValue: AppSettingsHiveModel())!.toModel();
-      final wordDeleteResponse = await dio.delete('delete_favorite_word/',
-          queryParameters: {'user_id': appSettings.userInfo.id, 'word_id': favoriteWord.id});
-      return Right(Word.fromJson(wordDeleteResponse.data));
+      // Если понадобится хранить на сервере
+      // final wordDeleteResponse = await dio.delete('delete_favorite_word/',
+      //     queryParameters: {'user_id': appSettings.userInfo.id, 'word_id': favoriteWord.id});
+      final hiveWord = favoriteWord.toFavoritesHive(userId: appSettings.userInfo.id ?? 0);
+      favoritesBox.delete(hiveWord.wordId);
+      //return Right(Word.fromJson(wordDeleteResponse.data));
+      return Right(favoriteWord);
     } on Exception catch (e, s) {
       return Left(e);
     }
@@ -48,9 +53,11 @@ class FavoriteRepositoryImpl implements FavoritesRepository {
   Future<Either<Exception, Word>> saveToFavorites(Word favoriteWord) async {
     try {
       var appSettings = settingsBox.get(_singleSettingsKey, defaultValue: AppSettingsHiveModel())!.toModel();
-      final favorite = FavoriteWord(id: 0, userId: appSettings.userInfo.id ?? 0, wordId: favoriteWord.id ?? 0);
-      final favoriteAddResponse = await dio.post('add_favorite_word/', data: favorite.toJson());
-      return Right(Word.fromJson(favoriteAddResponse.data));
+      favoritesBox.put(favoriteWord.id, favoriteWord.toFavoritesHive(userId: appSettings.userInfo.id ?? 0));
+      // final favorite = FavoriteWord(id: 0, userId: appSettings.userInfo.id ?? 0, wordId: favoriteWord.id ?? 0);
+      // final favoriteAddResponse = await dio.post('add_favorite_word/', data: favorite.toJson());
+      // return Right(Word.fromJson(favoriteAddResponse.data));
+      return Right(favoriteWord);
     } on Exception catch (e, s) {
       return Left(e);
     }

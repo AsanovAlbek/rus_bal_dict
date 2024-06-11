@@ -128,6 +128,7 @@ class _AuthScreenState extends State<AuthScreen> {
           onSuccess: (user, message) {
             context.showSnackBar(message);
             context.go('/word_list');
+            context.read<AuthBloc>().add(AuthEvent.changeAuthPage(pageState: AuthPageState.signIn));
           },
           onError: (message) {
             if (message != null) {

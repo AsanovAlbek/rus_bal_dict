@@ -4,7 +4,7 @@ import "package:flutter/material.dart";
 class AppUtils {
   static Timer? _timer;
 
-  static void debounce(Function action, [Duration duration = const Duration(milliseconds: 500)]) {
+  static void debounce(Function action, [Duration duration = const Duration(milliseconds: 300)]) {
     if (_timer?.isActive ?? false) {
       _timer?.cancel();
     }
