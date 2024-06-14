@@ -10,7 +10,7 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   ProfileCubit(this.repository) : super(const ProfileState());
 
-  var _profile = ProfileState();
+  var _profile = const ProfileState();
 
   void dropToDefaultSettings() {
     repository.dropToDefault();

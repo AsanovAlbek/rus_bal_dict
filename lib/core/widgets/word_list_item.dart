@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive/hive.dart';
 import 'package:rus_bal_dict/core/hive/favorite_word/favorite_word_hive_model.dart';
 import 'package:rus_bal_dict/core/utils/app_utils.dart';
+import 'package:rus_bal_dict/core/widgets/favorites_icon_button.dart';
 
 import '../model/word/word.dart';
 
@@ -12,6 +14,7 @@ class WordListItem extends StatelessWidget {
   final Function(Word)? onPressed;
   final Function(Word)? onSaveWord;
   final Function(Word)? onPlaySound;
+  final bool isFavorite;
 
   const WordListItem(
       {super.key,
@@ -20,24 +23,20 @@ class WordListItem extends StatelessWidget {
       this.playEndale = false,
       this.onPressed,
       this.onSaveWord,
-      this.onPlaySound});
+      this.onPlaySound,
+      this.isFavorite = false});
 
   @override
   Widget build(BuildContext context) {
+    final iconColor = Theme.of(context).iconTheme.color ?? Colors.black;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         ListTile(
           leading: Visibility(
-              visible: saveEnable,
-              child: IconButton(
-                  onPressed: () => onSaveWord?.call(word),
-                  icon: Icon(
-                    Icons.star,
-                    color: Hive.box<FavoriteWordHiveModel>('favorites').containsKey(word.id)
-                        ? Colors.yellow
-                        : Colors.grey,
-                  ))),
+            visible: saveEnable,
+            child: FavoritesIconButton(onPressed: () => onSaveWord?.call(word), isFavorite: isFavorite),
+          ),
           title: Text(
             word.word.toCapitalized(),
             style: Theme.of(context).textTheme.bodyMedium,
@@ -46,7 +45,12 @@ class WordListItem extends StatelessWidget {
           trailing: Visibility(
             visible: playEndale,
             maintainSize: false,
-            child: IconButton(onPressed: () => onPlaySound?.call(word), icon: const Icon(Icons.play_arrow)),
+            child: IconButton(
+                onPressed: () => onPlaySound?.call(word),
+                icon: SvgPicture.asset(
+                  'assets/images/play_audio.svg',
+                  colorFilter: ColorFilter.mode(iconColor, BlendMode.srcIn),
+                )),
           ),
         ),
         const Padding(

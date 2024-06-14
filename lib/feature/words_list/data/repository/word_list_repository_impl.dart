@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
 import 'package:hive/hive.dart';
-import 'package:rus_bal_dict/core/model/favorite_word/favorite_word.dart';
 import 'package:rus_bal_dict/core/model/word/word.dart';
 
 import '../../../../core/hive/settings/app_settings_hive.dart';
@@ -35,7 +34,7 @@ class WordsListRepositoryImpl implements WordsListRepository {
   @override
   Future<Either<Exception, int>> wordsCount({required String query}) async {
     try {
-      Response<int> response = await dio.get('words_count/', queryParameters: {'name': query});
+      Response<int> response = await dio.get('words_count/$query', queryParameters: {'name': query});
       return Right(response.data ?? 0);
     } on Exception catch (e, s) {
       talker.handle(e, s, 'Error in $runtimeType');

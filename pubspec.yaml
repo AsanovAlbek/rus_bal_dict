@@ -43,4 +43,5 @@ flutter:
     - assets/images/
     - assets/images/favorites.svg
     - assets/images/play_audio.svg
+    - assets/images/favorites_filled.svg
   uses-material-design: true

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:rus_bal_dict/core/hive/word/converter.dart';
 import 'package:rus_bal_dict/core/widgets/my_app_bar.dart';

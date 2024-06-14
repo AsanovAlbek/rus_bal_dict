@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive/hive.dart';
 import 'package:rus_bal_dict/core/hive/settings/app_settings_hive.dart';
-import 'package:rus_bal_dict/core/model/settings/app_settings.dart';
 import 'package:rus_bal_dict/core/model/settings/converter.dart';
 import 'package:rus_bal_dict/feature/auth/presentation/auth_screen.dart';
 import 'package:rus_bal_dict/feature/favorites/presentation/favorites_screen.dart';

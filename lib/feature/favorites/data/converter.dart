@@ -12,7 +12,7 @@ extension WordToHive on Word {
         meaning: meaning,
         audioBytes: null,
         audioUrl: audioUrl,
-        editedTime: DateTime.now().millisecond);
+        editedTime: DateTime.now().millisecondsSinceEpoch);
   }
 }
 

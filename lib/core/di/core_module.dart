@@ -12,6 +12,7 @@ final di = GetIt.instance;
 void coreModule(CacheStore cacheStore) {
 
   final options = BaseOptions(
+    connectTimeout: const Duration(seconds: 5),
     baseUrl: reserveApiUrl,
     //baseUrl: testBaseUrl,
     //baseUrl: baseUrl

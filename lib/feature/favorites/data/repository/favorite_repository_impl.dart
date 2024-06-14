@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:either_dart/src/either.dart';
 import 'package:hive/hive.dart';
-import 'package:rus_bal_dict/core/model/favorite_word/favorite_word.dart';
 import 'package:rus_bal_dict/core/model/settings/converter.dart';
 import 'package:rus_bal_dict/core/model/word/word.dart';
 import 'package:rus_bal_dict/feature/favorites/data/converter.dart';
@@ -30,7 +29,7 @@ class FavoriteRepositoryImpl implements FavoritesRepository {
       favoritesBox.delete(hiveWord.wordId);
       //return Right(Word.fromJson(wordDeleteResponse.data));
       return Right(favoriteWord);
-    } on Exception catch (e, s) {
+    } on Exception catch (e) {
       return Left(e);
     }
   }
@@ -44,7 +43,7 @@ class FavoriteRepositoryImpl implements FavoritesRepository {
       Iterable iterableResponse = favoriteWordsResponse.data;
       final words = List<Word>.from(iterableResponse.map((json) => Word.fromJson(json))).toList();
       return Right(words);
-    } on Exception catch (e, s) {
+    } on Exception catch (e) {
       return Left(e);
     }
   }
@@ -58,7 +57,7 @@ class FavoriteRepositoryImpl implements FavoritesRepository {
       // final favoriteAddResponse = await dio.post('add_favorite_word/', data: favorite.toJson());
       // return Right(Word.fromJson(favoriteAddResponse.data));
       return Right(favoriteWord);
-    } on Exception catch (e, s) {
+    } on Exception catch (e) {
       return Left(e);
     }
   }
