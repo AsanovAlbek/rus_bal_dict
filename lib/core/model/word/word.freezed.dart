@@ -28,6 +28,8 @@ mixin _$Word {
   String get meaning => throw _privateConstructorUsedError;
   @JsonKey(name: 'audio_url')
   String get audioUrl => throw _privateConstructorUsedError;
+  @JsonKey(includeToJson: false, includeFromJson: false)
+  bool get isFavorite => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -43,7 +45,8 @@ abstract class $WordCopyWith<$Res> {
       {@JsonKey(name: 'id') int? id,
       @JsonKey(name: 'name') String word,
       @JsonKey(name: 'meaning') String meaning,
-      @JsonKey(name: 'audio_url') String audioUrl});
+      @JsonKey(name: 'audio_url') String audioUrl,
+      @JsonKey(includeToJson: false, includeFromJson: false) bool isFavorite});
 }
 
 /// @nodoc
@@ -63,6 +66,7 @@ class _$WordCopyWithImpl<$Res, $Val extends Word>
     Object? word = null,
     Object? meaning = null,
     Object? audioUrl = null,
+    Object? isFavorite = null,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -81,6 +85,10 @@ class _$WordCopyWithImpl<$Res, $Val extends Word>
           ? _value.audioUrl
           : audioUrl // ignore: cast_nullable_to_non_nullable
               as String,
+      isFavorite: null == isFavorite
+          ? _value.isFavorite
+          : isFavorite // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -96,7 +104,8 @@ abstract class _$$WordImplCopyWith<$Res> implements $WordCopyWith<$Res> {
       {@JsonKey(name: 'id') int? id,
       @JsonKey(name: 'name') String word,
       @JsonKey(name: 'meaning') String meaning,
-      @JsonKey(name: 'audio_url') String audioUrl});
+      @JsonKey(name: 'audio_url') String audioUrl,
+      @JsonKey(includeToJson: false, includeFromJson: false) bool isFavorite});
 }
 
 /// @nodoc
@@ -113,6 +122,7 @@ class __$$WordImplCopyWithImpl<$Res>
     Object? word = null,
     Object? meaning = null,
     Object? audioUrl = null,
+    Object? isFavorite = null,
   }) {
     return _then(_$WordImpl(
       id: freezed == id
@@ -131,6 +141,10 @@ class __$$WordImplCopyWithImpl<$Res>
           ? _value.audioUrl
           : audioUrl // ignore: cast_nullable_to_non_nullable
               as String,
+      isFavorite: null == isFavorite
+          ? _value.isFavorite
+          : isFavorite // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -142,7 +156,9 @@ class _$WordImpl implements _Word {
       {@JsonKey(name: 'id') this.id,
       @JsonKey(name: 'name') this.word = '',
       @JsonKey(name: 'meaning') this.meaning = '',
-      @JsonKey(name: 'audio_url') this.audioUrl = ''});
+      @JsonKey(name: 'audio_url') this.audioUrl = '',
+      @JsonKey(includeToJson: false, includeFromJson: false)
+      this.isFavorite = false});
 
   factory _$WordImpl.fromJson(Map<String, dynamic> json) =>
       _$$WordImplFromJson(json);
@@ -159,10 +175,13 @@ class _$WordImpl implements _Word {
   @override
   @JsonKey(name: 'audio_url')
   final String audioUrl;
+  @override
+  @JsonKey(includeToJson: false, includeFromJson: false)
+  final bool isFavorite;
 
   @override
   String toString() {
-    return 'Word(id: $id, word: $word, meaning: $meaning, audioUrl: $audioUrl)';
+    return 'Word(id: $id, word: $word, meaning: $meaning, audioUrl: $audioUrl, isFavorite: $isFavorite)';
   }
 
   @override
@@ -174,12 +193,15 @@ class _$WordImpl implements _Word {
             (identical(other.word, word) || other.word == word) &&
             (identical(other.meaning, meaning) || other.meaning == meaning) &&
             (identical(other.audioUrl, audioUrl) ||
-                other.audioUrl == audioUrl));
+                other.audioUrl == audioUrl) &&
+            (identical(other.isFavorite, isFavorite) ||
+                other.isFavorite == isFavorite));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, word, meaning, audioUrl);
+  int get hashCode =>
+      Object.hash(runtimeType, id, word, meaning, audioUrl, isFavorite);
 
   @JsonKey(ignore: true)
   @override
@@ -200,7 +222,9 @@ abstract class _Word implements Word {
       {@JsonKey(name: 'id') final int? id,
       @JsonKey(name: 'name') final String word,
       @JsonKey(name: 'meaning') final String meaning,
-      @JsonKey(name: 'audio_url') final String audioUrl}) = _$WordImpl;
+      @JsonKey(name: 'audio_url') final String audioUrl,
+      @JsonKey(includeToJson: false, includeFromJson: false)
+      final bool isFavorite}) = _$WordImpl;
 
   factory _Word.fromJson(Map<String, dynamic> json) = _$WordImpl.fromJson;
 
@@ -216,6 +240,9 @@ abstract class _Word implements Word {
   @override
   @JsonKey(name: 'audio_url')
   String get audioUrl;
+  @override
+  @JsonKey(includeToJson: false, includeFromJson: false)
+  bool get isFavorite;
   @override
   @JsonKey(ignore: true)
   _$$WordImplCopyWith<_$WordImpl> get copyWith =>

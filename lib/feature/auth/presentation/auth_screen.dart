@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-import 'package:rus_bal_dict/core/model/user/user.dart';
 import 'package:rus_bal_dict/core/utils/app_utils.dart';
 import 'package:rus_bal_dict/feature/auth/domain/bloc/auth_bloc.dart';
 import 'package:rus_bal_dict/feature/auth/domain/bloc/auth_event.dart';
@@ -67,6 +66,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     TextButton(
                       onPressed: () {
                         _formKey.currentState?.reset();
+                        FocusManager.instance.primaryFocus?.unfocus();
                         context
                             .read<AuthBloc>()
                             .add(AuthEvent.changeAuthPage(pageState: AuthPageState.signUp));
@@ -83,6 +83,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     TextButton(
                       onPressed: () {
                         _formKey.currentState?.reset();
+                        FocusManager.instance.primaryFocus?.unfocus();
                         context
                             .read<AuthBloc>()
                             .add(AuthEvent.changeAuthPage(pageState: AuthPageState.signIn));
@@ -126,6 +127,7 @@ class _AuthScreenState extends State<AuthScreen> {
           onSuccess: (user, message) {
             context.showSnackBar(message);
             context.go('/word_list');
+            context.read<AuthBloc>().add(AuthEvent.changeAuthPage(pageState: AuthPageState.signIn));
           },
           onError: (message) {
             if (message != null) {

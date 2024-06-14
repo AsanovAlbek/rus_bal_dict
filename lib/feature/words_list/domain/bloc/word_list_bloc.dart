@@ -1,10 +1,7 @@
 import 'dart:async';
-import 'dart:isolate';
 
 import 'package:bloc_concurrency/bloc_concurrency.dart';
-import 'package:either_dart/either.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rus_bal_dict/core/model/word/word.dart';
 import 'package:rus_bal_dict/feature/words_list/domain/bloc/word_list_event.dart';
 import 'package:rus_bal_dict/feature/words_list/domain/bloc/word_list_state.dart';
 import 'package:talker/talker.dart';
@@ -35,7 +32,7 @@ class WordsListBloc extends Bloc<WordsListEvent, WordsListState> {
       event.onError?.call(error);
     }, (count) {
       _loaded = _loaded.copyWith(totalWordsCount: count);
-      Talker().debug('page = ${_loaded.currentPage}');
+      Talker().debug('page = ${_loaded.currentPage} words count = $count');
     });
     if (_loaded.words.length < _loaded.totalWordsCount) {
       final wordListResult = await repository.fetchWords(

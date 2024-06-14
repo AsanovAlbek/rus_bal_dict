@@ -10,7 +10,7 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   ProfileCubit(this.repository) : super(const ProfileState());
 
-  var _profile = ProfileState();
+  var _profile = const ProfileState();
 
   void dropToDefaultSettings() {
     repository.dropToDefault();
@@ -36,5 +36,11 @@ class ProfileCubit extends Cubit<ProfileState> {
     var newSettings = _profile.appSettings
         .copyWith(settings: _profile.appSettings.settings.copyWith(themeMode: selection.first));
     saveSettings(newSettings);
+  }
+
+  void changeTextScale(double scale) {
+    final settings =
+        _profile.appSettings.copyWith(settings: _profile.appSettings.settings.copyWith(fontSize: scale));
+    saveSettings(settings);
   }
 }

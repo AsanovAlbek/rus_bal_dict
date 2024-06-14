@@ -31,6 +31,7 @@ class AuthForm extends StatelessWidget {
             if (pageState == AuthPageState.signUp)
               TextFormField(
                 controller: nameController,
+                style: Theme.of(context).textTheme.bodyMedium,
                 validator: AuthValidator.validateUserName,
                 decoration: const InputDecoration(
                     errorMaxLines: 3,
@@ -42,6 +43,7 @@ class AuthForm extends StatelessWidget {
             const SizedBox(height: 8),
             TextFormField(
               controller: emailController,
+              style: Theme.of(context).textTheme.bodyMedium,
               validator: AuthValidator.validateEmail,
               decoration: const InputDecoration(
                   labelText: 'Почта',
@@ -53,6 +55,7 @@ class AuthForm extends StatelessWidget {
             const SizedBox(height: 8),
             TextFormField(
               controller: passwordController,
+              style: Theme.of(context).textTheme.bodyMedium,
               validator: AuthValidator.validatePassword,
               decoration: InputDecoration(
                   labelText: 'Пароль',
@@ -61,7 +64,7 @@ class AuthForm extends StatelessWidget {
                   border: const OutlineInputBorder(),
                   suffixIcon: IconButton(
                       onPressed: onChangePasswordVisibility,
-                      icon: Icon(isPasswordMasked ? Icons.visibility : Icons.visibility_off))),
+                      icon: Icon(isPasswordMasked ? Icons.visibility_off : Icons.visibility))),
               maxLines: 1,
               obscureText: isPasswordMasked,
             ),

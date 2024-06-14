@@ -10,12 +10,13 @@ const String _singleSettingsKey = 'AppSettings';
 class ProfileRepositoryImpl implements ProfileRepository {
   final Box<AppSettingsHiveModel> _settingsBox;
 
-
   ProfileRepositoryImpl(this._settingsBox);
 
   @override
   Future<void> dropToDefault() async {
-    var appSettings = _settingsBox.get(_singleSettingsKey, defaultValue: AppSettingsHiveModel())!.toModel();
+    var appSettings =
+        (_settingsBox.get(_singleSettingsKey, defaultValue: AppSettingsHiveModel()) ?? AppSettingsHiveModel())
+            .toModel();
     appSettings = appSettings.copyWith(settings: const Settings());
     return _settingsBox.put(_singleSettingsKey, appSettings.toHive());
   }
@@ -27,9 +28,10 @@ class ProfileRepositoryImpl implements ProfileRepository {
 
   @override
   Future<void> signOut() async {
-    var appSettings = _settingsBox.get(_singleSettingsKey, defaultValue: AppSettingsHiveModel())!.toModel();
+    var appSettings =
+    (_settingsBox.get(_singleSettingsKey, defaultValue: AppSettingsHiveModel()) ?? AppSettingsHiveModel())
+        .toModel();
     appSettings = appSettings.copyWith(userInfo: appSettings.userInfo.copyWith(isUserSignIn: false));
     return _settingsBox.put(_singleSettingsKey, appSettings.toHive());
   }
-
 }

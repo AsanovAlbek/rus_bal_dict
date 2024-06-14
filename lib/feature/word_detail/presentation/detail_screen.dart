@@ -4,13 +4,24 @@ import 'dart:typed_data';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:rus_bal_dict/core/hive/favorite_word/favorite_word_hive_model.dart';
+import 'package:rus_bal_dict/core/utils/app_utils.dart';
+import 'package:rus_bal_dict/core/widgets/favorites_icon_button.dart';
+import 'package:rus_bal_dict/core/widgets/my_app_bar.dart';
+import 'package:rus_bal_dict/feature/favorites/data/converter.dart';
+import 'package:rus_bal_dict/feature/favorites/domain/bloc/favorites_bloc.dart';
+import 'package:rus_bal_dict/feature/favorites/domain/bloc/favorites_state.dart';
 import 'package:rus_bal_dict/feature/history/domain/bloc/history_bloc.dart';
 import 'package:rus_bal_dict/feature/history/domain/bloc/history_event.dart';
+import 'package:rus_bal_dict/feature/profile/domain/cubit/profile_cubit.dart';
 import 'package:rus_bal_dict/feature/word_detail/domain/bloc/detail_bloc.dart';
 import 'package:rus_bal_dict/feature/word_detail/domain/bloc/detail_event.dart';
 import 'package:rus_bal_dict/feature/word_detail/domain/bloc/detail_state.dart';
+import 'package:talker/talker.dart';
 
 import '../../../core/model/word/word.dart';
 import '../domain/repository/detail_repository.dart';
@@ -54,59 +65,75 @@ class _WordsDetailScreenState extends State<WordsDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: PopScope(
-            canPop: false,
-            onPopInvoked: (didPop) {
-              if (didPop) return;
-              context.pop();
-            },
-            child: Column(
-              children: [
-                AppBar(
-                  leading: IconButton(
-                    onPressed: () => context.pop(),
-                    icon: const Icon(Icons.arrow_back),
-                  ),
-                  title: Text('${widget.word?.word}'),
-                ),
-                const SizedBox(height: 12),
-                if (widget.word?.audioUrl.trim().isNotEmpty ?? false)
-                  BlocProvider(
-                    create: (context) =>
-                        DetailBloc(GetIt.I<DetailRepository>())..add(GetAudioEvent(widget.word?.audioUrl)),
-                    child: BlocBuilder<DetailBloc, DetailState>(
-                      builder: (context, state) {
-                        return switch (state) {
-                          DetailStateLoaded(bytes: final bytes) => Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                IconButton.outlined(
-                                    onPressed: () => _playMusic(bytes: bytes, speed: _normalSpeed),
-                                    icon: Icon(_iconData)),
-                                IconButton.outlined(
-                                    onPressed: () => _playMusic(bytes: bytes, speed: _slowSpeed),
-                                    icon: Row(
-                                      children: [
-                                        const Text('Медленно'),
-                                        Icon(_iconData),
-                                      ],
-                                    ))
-                              ],
-                            ),
-                          DetailStateError(exception: final exception) => Center(child: Text('$exception')),
-                          DetailStateLoading() => const Center(child: CircularProgressIndicator()),
-                        };
-                      },
-                    ),
-                  ),
-                const SizedBox(height: 12),
-                Expanded(
-                    child:
-                        SingleChildScrollView(scrollDirection: Axis.vertical, child: Text("${widget.word?.meaning}")))
-              ],
-            )),
+      child: PopScope(
+        canPop: false,
+        onPopInvoked: (didPop) {
+          if (didPop) return;
+          context.pop();
+        },
+        child: ValueListenableBuilder(
+          valueListenable: Hive.box<FavoriteWordHiveModel>('favorites').listenable(),
+          builder: (BuildContext context, Box<FavoriteWordHiveModel> value, Widget? child) {
+            return BlocProvider(
+              create: (context) =>
+                  DetailBloc(GetIt.I<DetailRepository>())..add(GetAudioEvent(widget.word?.audioUrl)),
+              child: BlocBuilder<DetailBloc, DetailState>(
+                builder: (context, state) {
+                  final iconColor = Theme.of(context).iconTheme.color ?? Colors.black;
+                  final favoritesState = context.read<FavoritesBloc>().state;
+                  if (favoritesState is FavoritesStateLoaded) {
+                    context
+                        .read<DetailBloc>()
+                        .add(ChangeFavoriteEvent(favoritesState.favorites.contains(widget.word)));
+                  }
+                  return switch (state) {
+                    DetailStateLoaded(bytes: final bytes, isFavorite: final isFavorite) =>
+                      CustomScrollView(controller: ScrollController(), slivers: [
+                        MyAppBar(
+                          title: widget.word?.word.toCapitalized() ?? '',
+                          actions: [
+                            IconButton(
+                                onPressed: () => _playMusic(bytes: state.bytes),
+                                icon: SvgPicture.asset(
+                                  'assets/images/play_audio.svg',
+                                  colorFilter: ColorFilter.mode(iconColor, BlendMode.srcIn),
+                                )),
+                            FavoritesIconButton(
+                              isFavorite: Hive.box<FavoriteWordHiveModel>('favorites')
+                                  .containsKey(widget.word?.id ?? 0),
+                              onPressed: () {
+                                if (widget.word != null) {
+                                  int wordId = widget.word?.id ?? 0;
+                                  if (value.containsKey(wordId)) {
+                                    value.delete(wordId);
+                                  } else {
+                                    int userId =
+                                        context.read<ProfileCubit>().state.appSettings.userInfo.id ?? 0;
+                                    value.put(wordId, widget.word!.toFavoritesHive(userId: userId));
+                                  }
+                                  //context.read<WordsListBloc>().add(WordsListEvent.fetch());
+                                }
+                              },
+                            )
+                          ],
+                        ),
+                        const SizedBox(height: 12).asSliver,
+                        SliverPadding(
+                            padding: const EdgeInsets.all(12),
+                            sliver: Card(
+                                child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("${widget.word?.meaning.toCapitalized()}"),
+                            )).asSliver)
+                      ]),
+                    DetailStateError(exception: final exception) => Center(child: Text('$exception')),
+                    DetailStateLoading() => const Center(child: CircularProgressIndicator()),
+                  };
+                },
+              ),
+            );
+          },
+        ),
       ),
     );
   }
@@ -125,5 +152,6 @@ class _WordsDetailScreenState extends State<WordsDetailScreen> {
         player.play(audioSource);
       }
     }
+    Talker().debug('bytes = $bytes source = $audioSource');
   }
 }
