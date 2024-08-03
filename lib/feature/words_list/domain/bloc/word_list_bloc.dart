@@ -30,15 +30,22 @@ class WordsListBloc extends Bloc<WordsListEvent, WordsListState> {
     wordsCount.either((error) {
       emit(WordsListState.error(message: error.toString()));
       event.onError?.call(error);
+      event.completer?.completeError(error);
     }, (count) {
+      if (count != _loaded.totalWordsCount) {
+        _loaded = _loaded.copyWith(currentPage: 0, words: []);
+      }
       _loaded = _loaded.copyWith(totalWordsCount: count);
       Talker().debug('page = ${_loaded.currentPage} words count = $count');
     });
-    if (_loaded.words.length < _loaded.totalWordsCount) {
+    if (_loaded.totalWordsCount <= 0) {
+      emit(WordsListState.empty(message: 'Таких слов пока нет, но вы можете предложить слово'));
+    } else if (_loaded.words.length < _loaded.totalWordsCount) {
       final wordListResult = await repository.fetchWords(
           query: event.query ?? _loaded.query, page: _loaded.currentPage, size: 80);
       wordListResult.either((exception) {
         emit(WordsListState.error(message: exception.toString()));
+        event.completer?.completeError(exception);
       }, (words) {
         _loaded = _loaded.copyWith(words: [..._loaded.words, ...words]);
         Talker().debug('words count ${_loaded.words.length}');
@@ -46,7 +53,7 @@ class WordsListBloc extends Bloc<WordsListEvent, WordsListState> {
       });
       _loaded = _loaded.copyWith(currentPage: _loaded.currentPage + 1);
     }
-
+    event.completer?.complete();
     event.onSuccess?.call(_loaded.words, _loaded.totalWordsCount);
   }
 

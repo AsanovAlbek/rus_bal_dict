@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:dio/dio.dart';
 import 'package:either_dart/src/either.dart' show Either, Left, Right;
 import 'package:get_it/get_it.dart';
@@ -37,9 +39,11 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Exception, User>> signIn({required String email, required String password}) async {
+  Future<Either<Exception, User>> signIn(
+      {required String email, required String password}) async {
     try {
-      final userResponse = await _dio.get('user/', queryParameters: {'email': email, 'password': password});
+      final userResponse = await _dio.get('user/',
+          queryParameters: {'email': email, 'password': password});
       if (userResponse.data == null) {
         throw UserNotFoundException(
             'Пользователь с такими данными не найден. Зарегистрируйтесь, если у вас нет аккаунта');
@@ -56,8 +60,11 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<Either<Exception, void>> signOut() async {
     try {
-      var appSettings = _settingsBox.get(_singleSettingsKey, defaultValue: AppSettingsHiveModel())!.toModel();
-      appSettings = appSettings.copyWith(userInfo: const UserInfo(isUserSignIn: false));
+      var appSettings = _settingsBox
+          .get(_singleSettingsKey, defaultValue: AppSettingsHiveModel())!
+          .toModel();
+      appSettings =
+          appSettings.copyWith(userInfo: const UserInfo(isUserSignIn: false));
       return Right(_settingsBox.put(_singleSettingsKey, appSettings.toHive()));
     } on Exception catch (e) {
       return Left(e);
@@ -65,8 +72,29 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   Future<void> _saveUserLocal(User user) async {
-    var appSettings = _settingsBox.get(_singleSettingsKey, defaultValue: AppSettingsHiveModel())!.toModel();
-    appSettings = appSettings.copyWith(userInfo: UserInfo(id: user.id, name: user.name, isUserSignIn: true));
+    var appSettings = _settingsBox
+        .get(_singleSettingsKey, defaultValue: AppSettingsHiveModel())!
+        .toModel();
+    appSettings = appSettings.copyWith(
+        userInfo: UserInfo(id: user.id, name: user.name, isUserSignIn: true));
     return _settingsBox.put(_singleSettingsKey, appSettings.toHive());
+  }
+
+  @override
+  Future<Either<Exception, int>> sendCodeToEmail(
+      {required String email}) async {
+    try {
+      final mockedCode = Random().nextInt(899999) + 100000;
+      return Right(mockedCode);
+    } on Exception catch (e, s) {
+      Talker().handle(e, s);
+      return Left(e);
+    }
+  }
+
+  @override
+  Future<void> resetUserPassword({required String newPassword}) async {
+    // TODO: Тут надо будет делать обновление пароля
+    Talker().debug('Reset password');
   }
 }

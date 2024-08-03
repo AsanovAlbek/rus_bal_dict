@@ -1,6 +1,11 @@
 final RegExp _usernameRegex = RegExp(r'^[a-zA-ZА-Яа-яёЁ0-9_ ]{2,32}$');
-final RegExp _emailRegex = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
-final RegExp _passwordRegex = RegExp(r'^(?=.*[a-zа-яё])(?=.*[A-ZА-ЯЁ])(?=.*[0-9])[a-zA-Z0-9]{8,}$');
+final RegExp _emailRegex =
+    RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+final RegExp _passwordRegex =
+    RegExp(r'^(?=.*[a-zа-яё])(?=.*[A-ZА-ЯЁ])(?=.*[0-9])[a-zA-Z0-9]{8,}$');
+final int _restorePasswordCodeLength = 6;
+
+const f = r'^[a-zA-ZА-Яа-яёЁ0-9_ ]{2,32}$';
 
 class AuthValidator {
   static String? validateUserName(String? username) {
@@ -17,5 +22,13 @@ class AuthValidator {
     return _passwordRegex.hasMatch(password ?? '')
         ? null
         : 'Пароль должен содержать минимум 1 маленькую, 1 большую буквы, 1 цифру и быть не менее 8 символов';
+  }
+
+  static String? validateRestorePasswordCode(String? code) {
+    return code != null &&
+            code.length == _restorePasswordCodeLength &&
+            int.tryParse(code) != null
+        ? null
+        : 'Неверно введён код';
   }
 }

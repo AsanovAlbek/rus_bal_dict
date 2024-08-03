@@ -45,6 +45,7 @@ class AuthForm extends StatelessWidget {
               controller: emailController,
               style: Theme.of(context).textTheme.bodyMedium,
               validator: AuthValidator.validateEmail,
+              keyboardType: TextInputType.emailAddress,
               decoration: const InputDecoration(
                   labelText: 'Почта',
                   hintText: 'ivanov@mail.ru',

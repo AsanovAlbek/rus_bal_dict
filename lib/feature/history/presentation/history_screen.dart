@@ -1,16 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-import 'package:hive_flutter/adapters.dart';
-import 'package:rus_bal_dict/core/hive/word/converter.dart';
-import 'package:rus_bal_dict/core/widgets/my_app_bar.dart';
-import 'package:rus_bal_dict/core/widgets/word_list_item.dart';
-import 'package:rus_bal_dict/feature/history/domain/bloc/history_bloc.dart';
-import 'package:rus_bal_dict/feature/history/domain/bloc/history_event.dart';
-import 'package:rus_bal_dict/feature/profile/domain/cubit/profile_cubit.dart';
-import 'package:talker/talker.dart';
-
-import '../../../core/hive/word/word_hive_model.dart';
+import 'history.dart';
 
 class HistoryScreen extends StatelessWidget {
   const HistoryScreen({super.key});

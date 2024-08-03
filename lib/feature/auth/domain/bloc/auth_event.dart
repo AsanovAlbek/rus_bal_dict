@@ -8,7 +8,11 @@ sealed class AuthEvent {
           required String password,
           void Function(User, String)? onSuccess,
           void Function(String?)? onError}) =>
-      SignInEvent(email: email, password: password, onSuccess: onSuccess, onError: onError);
+      SignInEvent(
+          email: email,
+          password: password,
+          onSuccess: onSuccess,
+          onError: onError);
 
   static SignUpEvent signUp(
           {required String name,
@@ -16,15 +20,24 @@ sealed class AuthEvent {
           required String password,
           void Function(User, String)? onSuccess,
           void Function(String?)? onError}) =>
-      SignUpEvent(name: name, email: email, password: password, onSuccess: onSuccess, onError: onError);
+      SignUpEvent(
+          name: name,
+          email: email,
+          password: password,
+          onSuccess: onSuccess,
+          onError: onError);
 
   static SignOutEvent signOut() => SignOutEvent();
 
   static MaskPasswordEvent maskPassword({required bool isPasswordMasked}) =>
       MaskPasswordEvent(isPasswordMasked: isPasswordMasked);
 
-  static ChangeAuthPageEvent changeAuthPage({required AuthPageState pageState}) =>
+  static ChangeAuthPageEvent changeAuthPage(
+          {required AuthPageState pageState}) =>
       ChangeAuthPageEvent(pageState: pageState);
+
+  static SendCodeToEmailAuthEvent sendCodeToEmail({required String email}) =>
+      SendCodeToEmailAuthEvent(email: email);
 }
 
 @immutable
@@ -34,7 +47,11 @@ class SignInEvent extends AuthEvent {
   final void Function(User, String)? onSuccess;
   final void Function(String?)? onError;
 
-  SignInEvent({required this.email, required this.password, this.onSuccess, this.onError});
+  SignInEvent(
+      {required this.email,
+      required this.password,
+      this.onSuccess,
+      this.onError});
 }
 
 @immutable
@@ -46,7 +63,11 @@ class SignUpEvent extends AuthEvent {
   final void Function(String?)? onError;
 
   SignUpEvent(
-      {required this.name, required this.email, required this.password, this.onSuccess, this.onError});
+      {required this.name,
+      required this.email,
+      required this.password,
+      this.onSuccess,
+      this.onError});
 }
 
 @immutable
@@ -63,4 +84,26 @@ class ChangeAuthPageEvent extends AuthEvent {
   final AuthPageState pageState;
 
   ChangeAuthPageEvent({required this.pageState});
+}
+
+@immutable
+class SendCodeToEmailAuthEvent extends AuthEvent {
+  final String email;
+  final Function(int?)? onSuccess;
+  final Function(String?)? onError;
+  SendCodeToEmailAuthEvent({required this.email, this.onSuccess, this.onError});
+}
+
+@immutable
+class UpdateUserPasswordAuthEvent extends AuthEvent {
+  final String newPassword;
+  final String confirmPassword;
+  final Function()? onSuccess;
+  final Function(String?)? onError;
+
+  UpdateUserPasswordAuthEvent(
+      {required this.newPassword,
+      required this.confirmPassword,
+      this.onSuccess,
+      this.onError});
 }
