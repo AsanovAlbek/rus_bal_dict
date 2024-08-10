@@ -16,6 +16,12 @@
             "args": ["--dart-define-from-file=lib/env/balrus.json"]
         },
         {
+            "name": "rus_bal_dict (local)",
+            "request": "launch",
+            "type": "dart",
+            "args": ["--dart-define=dictionary=localTest"]
+        },
+        {
             "name": "rus_bal_dict (rusbal)",
             "request": "launch",
             "type": "dart",

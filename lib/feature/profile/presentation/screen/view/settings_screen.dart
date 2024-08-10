@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rus_bal_dict/core/utils/app_utils.dart';
 import 'package:rus_bal_dict/core/widgets/my_app_bar.dart';
 
-import '../../../../core/model/settings/theme_mode.dart';
-import '../../domain/cubit/profile_cubit.dart';
-import '../../domain/cubit/profile_state.dart';
+import '../../../../../core/model/settings/theme_mode.dart';
+import '../../../domain/cubit/profile_cubit.dart';
+import '../../../domain/cubit/profile_state.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});

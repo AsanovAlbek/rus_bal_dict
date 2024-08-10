@@ -23,13 +23,15 @@ class AppSettingsHiveModelAdapter extends TypeAdapter<AppSettingsHiveModel> {
       themeMode: fields[3] == null ? 0 : fields[3] as int,
       fontSize: fields[4] == null ? 1.0 : fields[4] as double?,
       historyStaleLimitTime: fields[5] as Duration?,
+      email: fields[6] as String?,
+      premiumDays: fields[7] == null ? 0 : fields[7] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, AppSettingsHiveModel obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.userId)
       ..writeByte(1)
@@ -41,7 +43,11 @@ class AppSettingsHiveModelAdapter extends TypeAdapter<AppSettingsHiveModel> {
       ..writeByte(4)
       ..write(obj.fontSize)
       ..writeByte(5)
-      ..write(obj.historyStaleLimitTime);
+      ..write(obj.historyStaleLimitTime)
+      ..writeByte(6)
+      ..write(obj.email)
+      ..writeByte(7)
+      ..write(obj.premiumDays);
   }
 
   @override

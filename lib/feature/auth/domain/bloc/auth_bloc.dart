@@ -84,26 +84,36 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   FutureOr<void> _sendCodeToEmail(
       SendCodeToEmailAuthEvent event, Emitter<AuthState> emit) async {
-    final sendCodeEither = await repository.sendCodeToEmail(email: event.email);
+    final email =
+        event.email.isNotEmpty ? event.email : state.emailForRestorePassword;
+    final sendCodeEither =
+        await repository.sendCodeToEmail(email: email ?? event.email);
     sendCodeEither.either((userSendCodeException) {
       event.onError?.call(userSendCodeException.toString());
     }, (code) {
-      emit(state.copyWith(codeFromEmail: code));
+      emit(state.copyWith(
+          codeFromEmail: code, emailForRestorePassword: event.email));
       event.onSuccess?.call(code);
     });
+    if (event.email.trim().isNotEmpty) {
+      emit(state.copyWith(emailForRestorePassword: event.email));
+    }
   }
 
-  FutureOr<void> _updateUserPassword(UpdateUserPasswordAuthEvent event, Emitter<AuthState> emit) async {
+  FutureOr<void> _updateUserPassword(
+      UpdateUserPasswordAuthEvent event, Emitter<AuthState> emit) async {
     try {
       if (event.newPassword == event.confirmPassword) {
         await repository.resetUserPassword(newPassword: event.newPassword);
         event.onSuccess?.call();
+        // Обнулить состояние
+        emit(AuthState());
       } else {
         event.onError?.call('Пароли не совпадают');
       }
-    } on Exception catch(e, s) {
-        event.onError?.call(e.toString());
-        Talker().handle(e,s);
+    } on Exception catch (e, s) {
+      event.onError?.call(e.toString());
+      Talker().handle(e, s);
     }
   }
 }

@@ -34,11 +34,20 @@ class AppSettingsHiveModel extends HiveObject {
   /// Если null, то записи не удаляются из истории
   Duration? historyStaleLimitTime;
 
+  @HiveField(6, defaultValue: null)
+  String? email;
+
+  @HiveField(7, defaultValue: 0)
+  int premiumDays;
+
   AppSettingsHiveModel(
       {this.userId,
       this.userName,
       this.isUserSignedIn = false,
       this.themeMode = 0,
       this.fontSize,
-      this.historyStaleLimitTime});
+      this.historyStaleLimitTime,
+      this.email,
+      this.premiumDays = 0
+      });
 }

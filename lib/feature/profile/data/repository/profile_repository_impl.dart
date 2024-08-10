@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:hive/hive.dart';
 import 'package:rus_bal_dict/core/model/settings/app_settings.dart';
 import 'package:rus_bal_dict/core/model/settings/converter.dart';
@@ -9,8 +10,9 @@ const String _singleSettingsKey = 'AppSettings';
 
 class ProfileRepositoryImpl implements ProfileRepository {
   final Box<AppSettingsHiveModel> _settingsBox;
+  final Dio dio;
 
-  ProfileRepositoryImpl(this._settingsBox);
+  ProfileRepositoryImpl(this._settingsBox, this.dio);
 
   @override
   Future<void> dropToDefault() async {
@@ -33,5 +35,12 @@ class ProfileRepositoryImpl implements ProfileRepository {
         .toModel();
     appSettings = appSettings.copyWith(userInfo: appSettings.userInfo.copyWith(isUserSignIn: false));
     return _settingsBox.put(_singleSettingsKey, appSettings.toHive());
+  }
+  
+  @override
+  Future<int> checkPremium(AppSettings appSettings) async {
+    // TODO: тут будет проверка есть ли премиум
+    // Если нет, то 0 дней
+    return 0;
   }
 }

@@ -4,6 +4,7 @@ import 'package:hive/hive.dart';
 import 'package:rus_bal_dict/core/constants/config.dart';
 import 'package:rus_bal_dict/core/hive/settings/app_settings_hive.dart';
 import 'package:rus_bal_dict/core/model/settings/converter.dart';
+import 'package:rus_bal_dict/core/navigation/navigation_args.dart';
 import 'package:rus_bal_dict/feature/auth/presentation/view/auth_screen.dart';
 import 'package:rus_bal_dict/feature/auth/presentation/view/input_code_screen.dart';
 import 'package:rus_bal_dict/feature/auth/presentation/view/new_password_screen.dart';
@@ -11,7 +12,13 @@ import 'package:rus_bal_dict/feature/auth/presentation/view/restore_password_scr
 import 'package:rus_bal_dict/feature/favorites/presentation/favorites_screen.dart';
 import 'package:rus_bal_dict/feature/home/presentation/home_screen.dart';
 import 'package:rus_bal_dict/feature/profile/presentation/screen/profile_screen.dart';
-import 'package:rus_bal_dict/feature/profile/presentation/screen/settings_screen.dart';
+import 'package:rus_bal_dict/feature/profile/presentation/screen/view/about_app_screen.dart';
+import 'package:rus_bal_dict/feature/profile/presentation/screen/view/feedback_screen.dart';
+import 'package:rus_bal_dict/feature/profile/presentation/screen/view/payment_screen.dart';
+import 'package:rus_bal_dict/feature/profile/presentation/screen/view/premium_screen.dart';
+import 'package:rus_bal_dict/feature/profile/presentation/screen/view/settings_screen.dart';
+import 'package:rus_bal_dict/feature/profile/presentation/screen/view/suggest_word_screen.dart';
+import 'package:rus_bal_dict/feature/profile/presentation/screen/view/terms_of_use_screen.dart';
 import 'package:rus_bal_dict/feature/word_detail/presentation/detail_screen.dart';
 import 'package:rus_bal_dict/feature/words_list/presentation/words_list_screen.dart';
 
@@ -56,10 +63,12 @@ class AppRouter {
                     routes: [
                       GoRoute(
                           path: 'input_code',
-                          builder: (context, state) => const InputCodeScreen(), routes: [
+                          builder: (context, state) => const InputCodeScreen(),
+                          routes: [
                             GoRoute(
                               path: 'new_password',
-                              builder: (context, state) => const NewPasswordScreen(),
+                              builder: (context, state) =>
+                                  const NewPasswordScreen(),
                             )
                           ]),
                     ])
@@ -118,7 +127,41 @@ class AppRouter {
                             GoRoute(
                                 path: 'settings',
                                 builder: (context, state) =>
-                                    const SettingsScreen())
+                                    const SettingsScreen()),
+                            GoRoute(
+                              path: 'suggest_word',
+                              builder: (context, state) =>
+                                  const SuggestWordScreen(),
+                            ),
+                            GoRoute(
+                              path: 'feedback',
+                              builder: (context, state) =>
+                                  const FeedbackScreen(),
+                            ),
+                            GoRoute(
+                                path: 'premium',
+                                builder: (context, state) =>
+                                    const PremiumScreen(),
+                                routes: [
+                                  GoRoute(
+                                    path: 'payment',
+                                    builder: (context, state) {
+                                      final arg = state.extra as PaymentArg;
+                                      return PaymentScreen(
+                                          amount: arg.amount, email: arg.email);
+                                    },
+                                  )
+                                ]),
+                            GoRoute(
+                              path: 'about_app',
+                              builder: (context, state) =>
+                                  const AboutAppScreen(),
+                            ),
+                            GoRoute(
+                              path: 'term_of_use',
+                              builder: (context, state) =>
+                                  const TermsOfUseScreen(),
+                            ),
                           ])
                     ])
               ])

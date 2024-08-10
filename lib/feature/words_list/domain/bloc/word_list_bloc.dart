@@ -19,13 +19,10 @@ class WordsListBloc extends Bloc<WordsListEvent, WordsListState> {
   var _loaded = WordsListState.loaded();
 
   FutureOr<void> _fetch(WordsListEventFetch event, Emitter<WordsListState> emit) async {
-    // if (state is! WordsListStateLoading) {
-    //   emit(WordsListState.loading());
-    // }
     if (event.query != null && event.query != _loaded.query) {
       _loaded = _loaded.copyWith(words: [], currentPage: 0, query: event.query);
-      //emit(_loaded);
     }
+    
     final wordsCount = await repository.wordsCount(query: event.query ?? _loaded.query);
     wordsCount.either((error) {
       emit(WordsListState.error(message: error.toString()));

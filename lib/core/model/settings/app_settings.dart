@@ -7,10 +7,13 @@ class AppSettings {
   final Settings settings;
 
   const AppSettings({required this.userInfo, required this.settings});
-  const AppSettings.defaultSettings({this.userInfo = const UserInfo(), this.settings = const Settings()});
+  const AppSettings.defaultSettings(
+      {this.userInfo = const UserInfo(), this.settings = const Settings()});
 
   AppSettings copyWith({UserInfo? userInfo, Settings? settings}) {
-    return AppSettings(userInfo: userInfo ?? this.userInfo, settings: settings ?? this.settings);
+    return AppSettings(
+        userInfo: userInfo ?? this.userInfo,
+        settings: settings ?? this.settings);
   }
 }
 
@@ -25,12 +28,15 @@ class Settings {
       this.fontSize = 1.0,
       this.historyStaleLimitTime});
 
-  Settings copyWith({SettingsThemeMode? themeMode, double? fontSize, Duration? historyStaleLimitTime}) {
+  Settings copyWith(
+      {SettingsThemeMode? themeMode,
+      double? fontSize,
+      Duration? historyStaleLimitTime}) {
     return Settings(
-      themeMode: themeMode ?? this.themeMode,
-      fontSize: fontSize ?? this.fontSize,
-      historyStaleLimitTime: historyStaleLimitTime ?? this.historyStaleLimitTime
-    );
+        themeMode: themeMode ?? this.themeMode,
+        fontSize: fontSize ?? this.fontSize,
+        historyStaleLimitTime:
+            historyStaleLimitTime ?? this.historyStaleLimitTime);
   }
 }
 
@@ -39,13 +45,26 @@ class UserInfo {
   final int? id;
   final String? name;
   final bool isUserSignIn;
+  final String? email;
+  final int? premiumDays;
 
-  const UserInfo({this.id, this.name, this.isUserSignIn = false});
+  const UserInfo(
+      {this.id,
+      this.name,
+      this.isUserSignIn = false,
+      this.email,
+      this.premiumDays});
 
-  UserInfo copyWith({int? id, String? name, bool? isUserSignIn}) {
+  UserInfo copyWith(
+      {int? id,
+      String? name,
+      bool? isUserSignIn,
+      String? email,
+      int? premiumDays}) {
     return UserInfo(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        isUserSignIn: isUserSignIn ?? this.isUserSignIn);
+      id: id ?? this.id,
+      name: name ?? this.name,
+      isUserSignIn: isUserSignIn ?? this.isUserSignIn,
+    );
   }
 }
