@@ -9,26 +9,16 @@ class FeedbackScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomScrollView(slivers: [
       const MyAppBar(title: 'О приложении'),
-      SliverList.list(children: const [
-        FeedbackItem(
+      SliverList.list(
+          children: List.filled(
+        10,
+        const FeedbackItem(
           title: 'КБНЦ РАН',
           subtitle: 'Компания - разработчик',
           email: 'kbnc_ran@mail.ru',
           contactPhoneNumber: '+7-777-777-77-77',
         ),
-        FeedbackItem(
-          title: 'КБНЦ РАН',
-          subtitle: 'Компания - разработчик',
-          email: 'kbnc_ran@mail.ru',
-          contactPhoneNumber: '+7-777-777-77-77',
-        ),
-        FeedbackItem(
-          title: 'КБНЦ РАН',
-          subtitle: 'Компания - разработчик',
-          email: 'kbnc_ran@mail.ru',
-          contactPhoneNumber: '+7-777-777-77-77',
-        ),
-      ])
+      ))
     ]);
   }
 }

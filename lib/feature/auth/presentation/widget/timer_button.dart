@@ -106,7 +106,7 @@ class _TimerButtonState extends State<TimerButton> {
         ));
   }
 
-  // Делает то же самое, но через dateTime и с форматтером
+  // Приведение времени к строковому формату
   String _timeToString(Duration duration,
       [bool showTime = true,
       String pattern = 'mm:ss',

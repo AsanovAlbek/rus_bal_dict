@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:rus_bal_dict/core/di/core_module.dart';
 import 'package:rus_bal_dict/core/utils/interceptiors.dart';
 import 'package:rus_bal_dict/core/widgets/my_app_bar.dart';
 import 'package:talker/talker.dart';
@@ -30,12 +32,18 @@ class _PaymentScreenState extends State<PaymentScreen> {
   Widget build(BuildContext context) {
     return FutureBuilder(
         future: _makePayment(),
-        builder: (context, _) {
+        builder: (context, snapshot) {
+          final isWebViewPrepared =
+              snapshot.connectionState == ConnectionState.done;
           return CustomScrollView(
             slivers: [
               const MyAppBar(title: 'Оплата подписки'),
               SliverFillRemaining(
-                child: WebViewWidget(controller: controller),
+                child: isWebViewPrepared
+                    ? WebViewWidget(controller: controller)
+                    : const Center(
+                        child: CircularProgressIndicator.adaptive(),
+                      ),
               )
             ],
           );
@@ -43,7 +51,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
   }
 
   Future<void> _makePayment() async {
-    final dio = Dio();
+    final dio = GetIt.I<Dio>(instanceName: dioWithoutBaseUrlInstanceName);
     dio.interceptors.add(LogInterceptor(responseBody: false));
     dio.interceptors.add(RedirectInterceptor(dio));
 
@@ -52,6 +60,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
       'order_id': Random().nextInt(99999),
       'email': widget.email,
     };
+
+    Talker().debug('data = $data');
 
     try {
       final paymentResponse = await dio.post(

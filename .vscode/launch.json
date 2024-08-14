@@ -28,6 +28,18 @@
             "args": ["--dart-define-from-file=lib/env/rusbal.json"]
         },
         {
+            "name": "rus_bal_dict (balrus test)",
+            "request": "launch",
+            "type": "dart",
+            "args": ["--dart-define=dictionary=balRusTest"]
+        },
+        {
+            "name": "rus_bal_dict (balrus test 2)",
+            "request": "launch",
+            "type": "dart",
+            "args": ["--dart-define=dictionary=rusBalTest"]
+        },
+        {
             "name": "rus_bal_dict (profile mode)",
             "request": "launch",
             "type": "dart",

@@ -1,6 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rus_bal_dict/core/model/settings/app_settings.dart';
 import 'package:rus_bal_dict/feature/profile/domain/cubit/profile_state.dart';
+import 'package:talker/talker.dart';
 
 import '../../../../core/model/settings/theme_mode.dart';
 import '../repository/profile_repository.dart';
@@ -18,6 +20,7 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   void saveSettings(AppSettings appSettings) {
     repository.saveSettings(appSettings);
+    Talker().debug('appSettings saved $appSettings');
   }
 
   void signOut() {
@@ -45,4 +48,21 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   void changeTextScaleToDefault() => changeTextScale(1.0);
+
+  Future<void> fetchUserPaymentInfo([VoidCallback? onSuccess, Function(String?)? onError]) async {
+    final userPaymentInfoEither = await repository.paymentInfo();
+    userPaymentInfoEither.either((error) {
+      onError?.call(error.toString());
+    }, (info) {
+      _profile = _profile.copyWith(paymentInfo: info);
+      emit(_profile);
+      onSuccess?.call();
+    });
+  }
+
+  Future<void> checkLimits() async {
+    await repository.checkUserLimit();
+    await fetchUserPaymentInfo();
+    Talker().debug('limits checked');
+  }
 }

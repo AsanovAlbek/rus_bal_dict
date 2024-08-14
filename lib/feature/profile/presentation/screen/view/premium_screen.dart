@@ -1,10 +1,12 @@
-import 'dart:math';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rus_bal_dict/core/navigation/navigation_args.dart';
 import 'package:rus_bal_dict/core/widgets/my_app_bar.dart';
+import 'package:rus_bal_dict/feature/profile/domain/cubit/profile_state.dart';
+
+import '../../../domain/cubit/profile_cubit.dart';
 
 class PremiumScreen extends StatelessWidget {
   const PremiumScreen({super.key});
@@ -12,39 +14,47 @@ class PremiumScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    const String email = 'asaalbek@yandex.ru';
-    final isPremium = Random().nextBool();
-    return CustomScrollView(
-      slivers: [
-        const MyAppBar(title: 'Подписка'),
-        SliverVisibility(
-            sliver: SliverToBoxAdapter(
-          child: ListTile(
-            leading: const Icon(Icons.stars_sharp, size: 36),
-            title: Text('Статус подписки: Подписка ${isPremium ? 'активна' : 'неактивна'}'),
-            subtitle: Visibility(visible: isPremium, child: const Text('Конец через n дней')),
-            iconColor: Colors.green[600],
-            textColor: theme.textTheme.bodyMedium?.color,
-            subtitleTextStyle:
-                theme.textTheme.bodySmall?.copyWith(fontSize: 11),
-          ),
-        )),
-        SliverList.list(children: const [
-          PremiumPlan(
-              amount: '300',
-              email: email,
-              title: 'Преобрести подписку на месяц'),
-          PremiumPlan(
-              amount: '1500',
-              email: email,
-              title: 'Преобрести подписку на пол года'),
-          PremiumPlan(
-              amount: '2400',
-              email: email,
-              title: 'Преобрести подписку на год'),
-        ])
-      ],
-    );
+    return BlocBuilder<ProfileCubit, ProfileState>(builder: (context, state) {
+      final userEmail = state.appSettings.userInfo.email ?? '';
+      final premiumInfoText = state.paymentInfo.isSubscribe
+          ? 'Конец через ${state.paymentInfo.dayLimit} дней'
+          : 'Количество попыток на сегодня: ${state.paymentInfo.dayLimit}';
+      return CustomScrollView(
+        slivers: [
+          const MyAppBar(title: 'Подписка'),
+          SliverVisibility(
+              sliver: SliverToBoxAdapter(
+            child: ListTile(
+              leading: const Icon(Icons.stars_sharp, size: 36),
+              title: Text(
+                  'Статус подписки: Подписка ${state.paymentInfo.isSubscribe ? 'активна' : 'неактивна'}'),
+              subtitle: Text(premiumInfoText),
+              iconColor: state.paymentInfo.isSubscribe ? Colors.green[600] : Colors.teal[200],
+              textColor: theme.textTheme.bodyMedium?.color,
+              subtitleTextStyle:
+                  theme.textTheme.bodySmall?.copyWith(fontSize: 11),
+            ),
+          )),
+          SliverVisibility(
+            visible: !state.paymentInfo.isSubscribe,
+            sliver: SliverList.list(children: [
+              PremiumPlan(
+                  amount: '300',
+                  email: userEmail,
+                  title: 'Преобрести подписку на месяц'),
+              PremiumPlan(
+                  amount: '1500',
+                  email: userEmail,
+                  title: 'Преобрести подписку на пол года'),
+              PremiumPlan(
+                  amount: '2400',
+                  email: userEmail,
+                  title: 'Преобрести подписку на год'),
+            ]),
+          )
+        ],
+      );
+    });
   }
 }
 

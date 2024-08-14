@@ -15,7 +15,7 @@ class WordsListRepositoryImpl implements WordsListRepository {
   Future<Either<Exception, List<Word>>> fetchWords(
       {required String query, required int page, required int size}) async {
     try {
-      final response = await dio.get('words/$query', queryParameters: {'page': page, 'size': size});
+      final response = await dio.get('words/$query', queryParameters: {'page': page, 'size': size, 'name': query});
       Iterable responseData = response.data;
       var words = List<Word>.from(responseData.map((json) => Word.fromJson(json)).toList());
       return Right(words);

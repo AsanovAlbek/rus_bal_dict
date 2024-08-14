@@ -76,7 +76,7 @@ class AuthRepositoryImpl implements AuthRepository {
         .get(_singleSettingsKey, defaultValue: AppSettingsHiveModel())!
         .toModel();
     appSettings = appSettings.copyWith(
-        userInfo: UserInfo(id: user.id, name: user.name, isUserSignIn: true));
+        userInfo: UserInfo(id: user.id, name: user.name, isUserSignIn: true, email: user.email));
     return _settingsBox.put(_singleSettingsKey, appSettings.toHive());
   }
 
@@ -84,8 +84,13 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Either<Exception, int>> sendCodeToEmail(
       {required String email}) async {
     try {
-      final mockedCode = Random().nextInt(899999) + 100000;
-      return Right(mockedCode);
+      final responseWithCode = await _dio
+          .get('send_restore_code/', queryParameters: {'email': email});
+      final code = responseWithCode.data['restore_password_code'] as int?;
+      if (code == null) {
+        throw Exception('Ошибка отправки кода');
+      }
+      return Right(code);
     } on Exception catch (e, s) {
       Talker().handle(e, s);
       return Left(e);
@@ -93,8 +98,12 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<void> resetUserPassword({required String newPassword}) async {
-    // TODO: Тут надо будет делать обновление пароля
-    Talker().debug('Reset password');
+  Future<void> resetUserPassword({required String email, required String newPassword}) async {
+    try {
+      await _dio.post('update_password/',
+          queryParameters: {'email': email, 'password': newPassword});
+    } on Exception catch (e, s) {
+      Talker().handle(e, s);
+    }
   }
 }

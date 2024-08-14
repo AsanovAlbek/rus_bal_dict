@@ -96,13 +96,15 @@ class SendCodeToEmailAuthEvent extends AuthEvent {
 
 @immutable
 class UpdateUserPasswordAuthEvent extends AuthEvent {
+  final String email;
   final String newPassword;
   final String confirmPassword;
   final Function()? onSuccess;
   final Function(String?)? onError;
 
   UpdateUserPasswordAuthEvent(
-      {required this.newPassword,
+      {required this.email,
+      required this.newPassword,
       required this.confirmPassword,
       this.onSuccess,
       this.onError});

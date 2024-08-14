@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rus_bal_dict/core/model/user/user.dart';
@@ -20,7 +21,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<SignOutEvent>(_signOut);
     on<ChangeAuthPageEvent>(_changeAuthPage);
     on<MaskPasswordEvent>(_maskPassword);
-    on<SendCodeToEmailAuthEvent>(_sendCodeToEmail);
+    on<SendCodeToEmailAuthEvent>(_sendCodeToEmail, transformer: droppable());
     on<UpdateUserPasswordAuthEvent>(_updateUserPassword);
   }
 
@@ -104,7 +105,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       UpdateUserPasswordAuthEvent event, Emitter<AuthState> emit) async {
     try {
       if (event.newPassword == event.confirmPassword) {
-        await repository.resetUserPassword(newPassword: event.newPassword);
+        await repository.resetUserPassword(email: event.email, newPassword:  event.newPassword);
         event.onSuccess?.call();
         // Обнулить состояние
         emit(AuthState());

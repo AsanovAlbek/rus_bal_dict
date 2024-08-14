@@ -32,7 +32,11 @@ class ProfileScreen extends StatelessWidget {
               ),
               ProfileItem(
                 title: 'Подписка',
-                onPress: () => context.go('/profile/premium'),
+                onPress: () async {
+                  await context.read<ProfileCubit>().fetchUserPaymentInfo(() {
+                    context.go('/profile/premium');
+                  });
+                },
               ),
               ProfileItem(
                 title: 'О приложении',
@@ -48,7 +52,7 @@ class ProfileScreen extends StatelessWidget {
                   showDivider: false,
                   onPress: () {
                     context.read<ProfileCubit>().signOut();
-                    context.pushReplacement('/');
+                    context.pushReplacement('/auth');
                   })
             ])
           ],

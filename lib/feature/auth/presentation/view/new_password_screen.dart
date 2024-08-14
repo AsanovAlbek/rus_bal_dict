@@ -91,6 +91,7 @@ class _NewPasswordState extends State<NewPasswordScreen> {
                         if (formKey.currentState?.validate() ?? false) {
                           context.read<AuthBloc>().add(
                               UpdateUserPasswordAuthEvent(
+                                  email: state.emailForRestorePassword ?? '',
                                   newPassword:
                                       newPasswordController.text.trim(),
                                   confirmPassword:

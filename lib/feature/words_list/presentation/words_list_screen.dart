@@ -1,3 +1,5 @@
+import 'package:rus_bal_dict/export.dart';
+
 import 'words_list.dart';
 
 class WordsListScreen extends StatefulWidget {
@@ -103,13 +105,31 @@ class _WordsListScreenState extends State<WordsListScreen> {
                             }
                             return WordListItem(
                                 word: words[index],
-                                onPressed: (word) {
-                                  // Если у поисковой строки фокус и происходит переход к слову
-                                  // То после возврата фокус остаётся и открывается клавиатура
-                                  // Воизбежание такого поведения отнимаем фокус у поля
-                                  FocusManager.instance.primaryFocus?.unfocus();
-                                  context.go('/word_list/word_detail',
-                                      extra: word);
+                                onPressed: (word) async {
+                                  final profileCubit =
+                                      context.read<ProfileCubit>();
+                                  await profileCubit.checkLimits();
+                                  final premiumInfo =
+                                      profileCubit.state.paymentInfo;
+                                  if (!premiumInfo.isSubscribe) {
+                                    Talker().debug(
+                                        'Minus one free try. tries = ${premiumInfo.dayLimit}');
+                                  }
+                                  // Если пользователь без подписки и его попытки кончились
+                                  if (!premiumInfo.isSubscribe &&
+                                      premiumInfo.dayLimit <= 0) {
+                                    Future.sync(() =>
+                                        showFreeTriesReachLimitDialog(context));
+                                  } else {
+                                    // Если у поисковой строки фокус и происходит переход к слову
+                                    // То после возврата фокус остаётся и открывается клавиатура
+                                    // Воизбежание такого поведения отнимаем фокус у поля
+                                    FocusManager.instance.primaryFocus
+                                        ?.unfocus();
+                                    Future.sync(() => context.go(
+                                        '/word_list/word_detail',
+                                        extra: word));
+                                  }
                                 },
                                 saveEnable: false,
                                 onSaveWord: (word) {
@@ -160,5 +180,34 @@ class _WordsListScreenState extends State<WordsListScreen> {
         );
       },
     );
+  }
+
+  void showFreeTriesReachLimitDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (dialogContext) {
+          return AlertDialog(
+            title: const Text('У вас закончились бесплатные просмотры слов'),
+            content: const Text(
+                'Оформите подписку чтобы пользоваться словарем без ограничений'),
+            actions: [
+              TextButton(
+                onPressed: () async {
+                  await context.read<ProfileCubit>().fetchUserPaymentInfo(() {
+                    context.go('/profile/premium');
+                    Navigator.of(dialogContext).pop();
+                  });
+                },
+                child: const Text('Оформить подписку'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(dialogContext).pop();
+                },
+                child: const Text('Ок'),
+              ),
+            ],
+          );
+        });
   }
 }
