@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:rus_bal_dict/core/constants/config.dart';
 import 'package:rus_bal_dict/feature/auth/domain/bloc/auth_bloc.dart';
 import 'package:rus_bal_dict/feature/auth/domain/repository/auth_repository.dart';
+import 'package:rus_bal_dict/feature/profile/domain/repository/payment_repository.dart';
 
 import 'export.dart';
 import 'feature/auth/di/auth_module.dart';
@@ -10,6 +12,7 @@ import 'feature/history/di/history_module.dart';
 import 'feature/profile/di/profile_module.dart';
 import 'feature/word_detail/di/detail_module.dart';
 import 'feature/words_list/di/word_list_module.dart';
+
 
 Future<void> main() async {
   await Hive.initFlutter();
@@ -59,7 +62,8 @@ class MyApp extends StatelessWidget {
           BlocProvider(
               create: (context) => AuthBloc(GetIt.I<AuthRepository>())),
           BlocProvider(
-              create: (context) => ProfileCubit(GetIt.I<ProfileRepository>()))
+              create: (context) => ProfileCubit(
+                  GetIt.I<ProfileRepository>(), GetIt.I<PaymentRepository>()))
         ],
         child: ValueListenableBuilder(
           valueListenable:

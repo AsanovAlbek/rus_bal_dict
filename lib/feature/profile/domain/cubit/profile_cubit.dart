@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rus_bal_dict/core/model/settings/app_settings.dart';
 import 'package:rus_bal_dict/feature/profile/domain/cubit/profile_state.dart';
+import 'package:rus_bal_dict/feature/profile/domain/repository/payment_repository.dart';
 import 'package:talker/talker.dart';
 
 import '../../../../core/model/settings/theme_mode.dart';
@@ -9,8 +10,9 @@ import '../repository/profile_repository.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
   final ProfileRepository repository;
+  final PaymentRepository paymentRepository;
 
-  ProfileCubit(this.repository) : super(const ProfileState());
+  ProfileCubit(this.repository, this.paymentRepository) : super(const ProfileState());
 
   var _profile = const ProfileState();
 
@@ -50,7 +52,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   void changeTextScaleToDefault() => changeTextScale(1.0);
 
   Future<void> fetchUserPaymentInfo([VoidCallback? onSuccess, Function(String?)? onError]) async {
-    final userPaymentInfoEither = await repository.paymentInfo();
+    final userPaymentInfoEither = await paymentRepository.paymentInfo();
     userPaymentInfoEither.either((error) {
       onError?.call(error.toString());
     }, (info) {
@@ -61,8 +63,17 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   Future<void> checkLimits() async {
-    await repository.checkUserLimit();
+    await paymentRepository.decrementNonPremiumUserTries();
     await fetchUserPaymentInfo();
     Talker().debug('limits checked');
+  }
+
+  Future<Uri?> paymentUri({required String amount, required String email}) async {
+    return paymentRepository.getPaymentWebViewBody(amount: amount, email: email); 
+  }
+
+  Future<void> confirmPayment({VoidCallback? onSuccess, Function(String?)? onError}) async {
+    await paymentRepository.confirmPayment();
+    await fetchUserPaymentInfo(onSuccess, onError);
   }
 }

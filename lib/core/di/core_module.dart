@@ -26,7 +26,7 @@ void coreModule(EnvironmentConfig config, [CacheStore? cacheStore]) {
   final dio = Dio(options);
   dio.interceptors.add(RedirectInterceptor(dio));
   dio.interceptors.add(LogInterceptor(responseBody: false));
-  final dioWithoutBaseUrl = Dio();
+  final dioWithoutBaseUrl = Dio(BaseOptions(connectTimeout: const Duration(seconds: 5)));
   dioWithoutBaseUrl.interceptors.add(RedirectInterceptor(dioWithoutBaseUrl));
   dioWithoutBaseUrl.interceptors.add(LogInterceptor(responseBody: false));
   dio.interceptors.add(LogInterceptor(responseBody: false));

@@ -15,9 +15,6 @@ class HistoryScreen extends StatelessWidget {
             return next.createTime.compareTo(word.createTime);
           });
         final words = wordsFromHistory.map((hiveModel) => hiveModel.toModel()).toList();
-        for (final fromHistory in wordsFromHistory) {
-          Talker().debug('word ${fromHistory.word} created millis ${fromHistory.createTime}');
-        }
         return CustomScrollView(
           slivers: [
             MyAppBar(
@@ -38,7 +35,7 @@ class HistoryScreen extends StatelessWidget {
                 );
               }, childCount: words.length))
             else
-              const SliverToBoxAdapter(child: Center(child: Text('Здесь пока ничего нет')))
+              const SliverFillRemaining(child: Center(child: Text('Здесь пока ничего нет')))
           ],
         );
       },

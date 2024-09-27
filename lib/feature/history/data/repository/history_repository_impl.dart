@@ -35,7 +35,6 @@ class HistoryRepositoryImpl implements HistoryRepository {
         'model = ${hiveModel.id}, ${hiveModel.word} exists = ${_historyBox.containsKey(hiveModel.id)}');
     if (_historyBox.containsKey(hiveModel.id)) {
       await _historyBox.delete(hiveModel.id);
-      _talker.debug('after delete model exists = ${_historyBox.containsKey(hiveModel.id)}');
     }
     _historyBox.put(hiveModel.id, hiveModel);
   }

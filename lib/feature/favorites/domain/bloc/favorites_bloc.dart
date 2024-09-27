@@ -31,7 +31,6 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
     deleteFavoritesEither.either((error) {
       event.onError?.call(error.toString());
     }, (deletedWord) {
-      add(FavoritesEvent.load());
       event.onSuccess?.call(deletedWord);
     });
   }
@@ -41,7 +40,6 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
     addToFavoritesEither.either((error) {
       event.onError?.call(error.toString());
     }, (deletedWord) {
-      add(FavoritesEvent.load());
       event.onSuccess?.call(deletedWord);
     });
   }

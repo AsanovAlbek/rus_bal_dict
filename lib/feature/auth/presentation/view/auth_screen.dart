@@ -1,3 +1,5 @@
+import 'package:rus_bal_dict/export.dart';
+
 import '../auth.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -124,6 +126,7 @@ class _AuthScreenState extends State<AuthScreen> {
             context.showSnackBar(message);
             context.go('/word_list');
             context.read<AuthBloc>().add(AuthEvent.changeAuthPage(pageState: AuthPageState.signIn));
+            context.read<ProfileCubit>().fetchUserPaymentInfo();
           },
           onError: (message) {
             if (message != null) {

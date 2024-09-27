@@ -12,13 +12,14 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: MultiBlocProvider(providers: [
         BlocProvider(
           create: (context) =>
               WordsListBloc(repository: GetIt.I<WordsListRepository>())..add(WordsListEvent.fetch()),
         ),
         BlocProvider(
-            create: (context) => HistoryBloc(GetIt.I<HistoryRepository>())..add(HistoryEvent.getHistory())),
+            create: (context) => HistoryBloc(GetIt.I<HistoryRepository>())),//..add(HistoryEvent.getHistory())),
         BlocProvider(
             create: (context) =>
                 FavoritesBloc(GetIt.I<FavoritesRepository>())) //..add(FavoritesEvent.load()))

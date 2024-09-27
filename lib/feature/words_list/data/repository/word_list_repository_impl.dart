@@ -15,9 +15,11 @@ class WordsListRepositoryImpl implements WordsListRepository {
   Future<Either<Exception, List<Word>>> fetchWords(
       {required String query, required int page, required int size}) async {
     try {
-      final response = await dio.get('words/$query', queryParameters: {'page': page, 'size': size, 'name': query});
+      final response = await dio.get('words/$query',
+          queryParameters: {'page': page, 'size': size, 'name': query});
       Iterable responseData = response.data;
-      var words = List<Word>.from(responseData.map((json) => Word.fromJson(json)).toList());
+      var words = List<Word>.from(
+          responseData.map((json) => Word.fromJson(json)).toList());
       return Right(words);
     } on Exception catch (e, s) {
       talker.handle(e, s, 'Errorr in $runtimeType');
@@ -28,11 +30,13 @@ class WordsListRepositoryImpl implements WordsListRepository {
   @override
   Future<Either<Exception, int>> wordsCount({required String query}) async {
     try {
-      Response<int> response = await dio.get('words_count/$query', queryParameters: {'name': query});
+      Response<int> response =
+          await dio.get('words_count/$query', queryParameters: {'name': query});
       return Right(response.data ?? 0);
     } on Exception catch (e, s) {
       talker.handle(e, s, 'Errorrr in $runtimeType');
       return Left(e);
     }
   }
+
 }

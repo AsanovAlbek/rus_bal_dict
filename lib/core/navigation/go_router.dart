@@ -5,6 +5,8 @@ import 'package:rus_bal_dict/core/constants/config.dart';
 import 'package:rus_bal_dict/core/hive/settings/app_settings_hive.dart';
 import 'package:rus_bal_dict/core/model/settings/converter.dart';
 import 'package:rus_bal_dict/core/navigation/navigation_args.dart';
+import 'package:rus_bal_dict/core/navigation/slider_transition_page.dart';
+import 'package:rus_bal_dict/export.dart';
 import 'package:rus_bal_dict/feature/auth/presentation/view/auth_screen.dart';
 import 'package:rus_bal_dict/feature/auth/presentation/view/input_code_screen.dart';
 import 'package:rus_bal_dict/feature/auth/presentation/view/new_password_screen.dart';
@@ -86,9 +88,14 @@ class AppRouter {
                           builder: (context, state) => const WordsListScreen(),
                           routes: [
                             GoRoute(
-                                path: 'word_detail',
-                                builder: (context, state) => WordsDetailScreen(
-                                    word: state.extra as Word?))
+                              path: 'word_detail',
+                              pageBuilder: (context, state) =>
+                                  SliderTransitionPage(
+                                      key: state.pageKey,
+                                      child: WordsDetailScreen(
+                                        word: state.extra as Word,
+                                      )),
+                            )
                           ]),
                     ]),
                 StatefulShellBranch(
@@ -100,8 +107,12 @@ class AppRouter {
                           routes: [
                             GoRoute(
                                 path: 'word_detail',
-                                builder: (context, state) => WordsDetailScreen(
-                                    word: state.extra as Word?))
+                                pageBuilder: (context, state) =>
+                                    SliderTransitionPage(
+                                        key: state.pageKey,
+                                        child: WordsDetailScreen(
+                                          word: state.extra as Word,
+                                        )))
                           ]),
                     ]),
                 StatefulShellBranch(
@@ -113,8 +124,12 @@ class AppRouter {
                           routes: [
                             GoRoute(
                                 path: 'word_detail',
-                                builder: (context, state) => WordsDetailScreen(
-                                    word: state.extra as Word?))
+                                pageBuilder: (context, state) =>
+                                    SliderTransitionPage(
+                                        key: state.pageKey,
+                                        child: WordsDetailScreen(
+                                          word: state.extra as Word,
+                                        )))
                           ])
                     ]),
                 StatefulShellBranch(
@@ -148,7 +163,9 @@ class AppRouter {
                                     builder: (context, state) {
                                       final arg = state.extra as PaymentArg;
                                       return PaymentScreen(
-                                          amount: arg.amount, email: arg.email);
+                                          amount: arg.amount,
+                                          email: arg.email,
+                                          paymentUri: arg.paymentUri);
                                     },
                                   )
                                 ]),

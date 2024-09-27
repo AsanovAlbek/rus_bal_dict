@@ -73,8 +73,6 @@ class _WordsListScreenState extends State<WordsListScreen> {
                   showSearchField: true,
                   searchController: _searchController,
                   onTextEditing: (text) {
-                    // _animateScrollToTop();
-                    // fetch(query: _searchController.text.trim());
                     AppUtils.debounce(() {
                       _animateScrollToTop();
                       fetch(query: _searchController.text.trim());
@@ -151,7 +149,6 @@ class _WordsListScreenState extends State<WordsListScreen> {
                     SliverFillRemaining(
                       child: Center(child: Text('$msg')),
                     ),
-                  // TODO: Handle this case.
                   WordsListStateEmpty(message: final message) =>
                     SliverFillRemaining(
                       child: Center(
