@@ -65,7 +65,9 @@ class AuthForm extends StatelessWidget {
                   border: const OutlineInputBorder(),
                   suffixIcon: IconButton(
                       onPressed: onChangePasswordVisibility,
-                      icon: Icon(isPasswordMasked ? Icons.visibility_off : Icons.visibility))),
+                      icon: Icon(isPasswordMasked
+                          ? Icons.visibility_off
+                          : Icons.visibility))),
               maxLines: 1,
               obscureText: isPasswordMasked,
             ),

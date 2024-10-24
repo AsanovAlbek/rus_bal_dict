@@ -7,6 +7,7 @@ enum EnvironmentConfig {
   rusKabTest('Пока не добавил'),
   localTest('http://192.168.177.2:8000/'),
   localHostTest('http://127.0.0.1:8000/');
+
   final String apiUrl;
   const EnvironmentConfig(this.apiUrl);
 }

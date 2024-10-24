@@ -10,6 +10,7 @@ import 'package:rus_bal_dict/export.dart';
 import 'package:rus_bal_dict/feature/auth/presentation/view/auth_screen.dart';
 import 'package:rus_bal_dict/feature/auth/presentation/view/input_code_screen.dart';
 import 'package:rus_bal_dict/feature/auth/presentation/view/new_password_screen.dart';
+import 'package:rus_bal_dict/feature/auth/presentation/view/policy_agree_screen.dart';
 import 'package:rus_bal_dict/feature/auth/presentation/view/restore_password_screen.dart';
 import 'package:rus_bal_dict/feature/favorites/presentation/favorites_screen.dart';
 import 'package:rus_bal_dict/feature/home/presentation/home_screen.dart';
@@ -18,6 +19,7 @@ import 'package:rus_bal_dict/feature/profile/presentation/screen/view/about_app_
 import 'package:rus_bal_dict/feature/profile/presentation/screen/view/feedback_screen.dart';
 import 'package:rus_bal_dict/feature/profile/presentation/screen/view/payment_screen.dart';
 import 'package:rus_bal_dict/feature/profile/presentation/screen/view/premium_screen.dart';
+import 'package:rus_bal_dict/feature/profile/presentation/screen/view/privacy_policy_screen.dart';
 import 'package:rus_bal_dict/feature/profile/presentation/screen/view/settings_screen.dart';
 import 'package:rus_bal_dict/feature/profile/presentation/screen/view/suggest_word_screen.dart';
 import 'package:rus_bal_dict/feature/profile/presentation/screen/view/terms_of_use_screen.dart';
@@ -73,7 +75,16 @@ class AppRouter {
                                   const NewPasswordScreen(),
                             )
                           ]),
-                    ])
+                    ]),
+                GoRoute(
+                  path: 'privacy',
+                  builder: (context, state) =>
+                      const Scaffold(body: PrivacyPolicyScreen()),
+                ),
+                GoRoute(
+                  path: 'register_agree',
+                  builder: (context, state) => const PolicyAgreeScreen(),
+                )
               ]),
           StatefulShellRoute.indexedStack(
               builder: (context, state, navigationShell) {
@@ -179,6 +190,11 @@ class AppRouter {
                               builder: (context, state) =>
                                   const TermsOfUseScreen(),
                             ),
+                            GoRoute(
+                              path: 'privacy',
+                              builder: (context, state) =>
+                                  const PrivacyPolicyScreen(),
+                            )
                           ])
                     ])
               ])

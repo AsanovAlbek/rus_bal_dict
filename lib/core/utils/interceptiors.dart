@@ -28,8 +28,9 @@ class RedirectInterceptor extends Interceptor {
     if (rawUriValue == null) {
       response.requestOptions.extra[rawUri] = response.requestOptions.uri;
     }
-    final rawRequestOptionValue = response.requestOptions.extra[rawRequestOption];
-    if (rawRequestOptionValue == null){
+    final rawRequestOptionValue =
+        response.requestOptions.extra[rawRequestOption];
+    if (rawRequestOptionValue == null) {
       response.requestOptions.extra[rawRequestOption] = response.requestOptions;
     }
 

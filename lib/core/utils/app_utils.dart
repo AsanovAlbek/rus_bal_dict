@@ -4,7 +4,8 @@ import "package:flutter/material.dart";
 class AppUtils {
   static Timer? _timer;
 
-  static void debounce(Function action, [Duration duration = const Duration(milliseconds: 500)]) {
+  static void debounce(Function action,
+      [Duration duration = const Duration(milliseconds: 500)]) {
     if (_timer?.isActive ?? false) {
       _timer?.cancel();
     }
@@ -25,5 +26,6 @@ extension ContextExtension on BuildContext {
 }
 
 extension StringExt on String {
-  String toCapitalized() => length > 0 ?'${this[0].toUpperCase()}${substring(1).toLowerCase()}':'';
+  String toCapitalized() =>
+      length > 0 ? '${this[0].toUpperCase()}${substring(1).toLowerCase()}' : '';
 }

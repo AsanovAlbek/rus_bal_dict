@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:rus_bal_dict/core/model/settings/theme_mode.dart';
 
 @immutable
-class AppSettings with EquatableMixin{
+class AppSettings with EquatableMixin {
   final UserInfo userInfo;
   final Settings settings;
 
@@ -16,7 +16,7 @@ class AppSettings with EquatableMixin{
         userInfo: userInfo ?? this.userInfo,
         settings: settings ?? this.settings);
   }
-  
+
   @override
   List<Object?> get props => [userInfo, settings];
 
@@ -45,7 +45,7 @@ class Settings with EquatableMixin {
         historyStaleLimitTime:
             historyStaleLimitTime ?? this.historyStaleLimitTime);
   }
-  
+
   @override
   List<Object?> get props => [themeMode, fontSize, historyStaleLimitTime];
 
@@ -80,10 +80,10 @@ class UserInfo with EquatableMixin {
       isUserSignIn: isUserSignIn ?? this.isUserSignIn,
     );
   }
-  
+
   @override
   List<Object?> get props => [id, name, email];
-  
+
   @override
   bool? get stringify => true;
 }

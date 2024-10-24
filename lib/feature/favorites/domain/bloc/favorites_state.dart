@@ -4,8 +4,10 @@ import '../../../../core/model/word/word.dart';
 
 sealed class FavoritesState {
   static FavoritesStateLoading loading() => FavoritesStateLoading();
-  static FavoritesStateError error({String? message}) => FavoritesStateError(message: message);
-  static FavoritesStateLoaded loaded({List<Word> words = const <Word>[]}) => FavoritesStateLoaded(favorites: words);
+  static FavoritesStateError error({String? message}) =>
+      FavoritesStateError(message: message);
+  static FavoritesStateLoaded loaded({List<Word> words = const <Word>[]}) =>
+      FavoritesStateLoaded(favorites: words);
 }
 
 @immutable

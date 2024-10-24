@@ -23,9 +23,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<MaskPasswordEvent>(_maskPassword);
     on<SendCodeToEmailAuthEvent>(_sendCodeToEmail, transformer: droppable());
     on<UpdateUserPasswordAuthEvent>(_updateUserPassword);
+    on<ChangeAgreeWithPolicyAuthEvent>(_changeAgreeWithPolicy);
+    on<SaveUserSignUpInputAuthEvent>(_saveSignUpInput);
   }
 
   FutureOr<void> _signUp(SignUpEvent event, Emitter<AuthState> emit) async {
+    if (!state.policyAgree) {
+      Future.sync(() => event.onUserNoAgreeWithPolicy?.call());
+      return;
+    }
     final deviceId = await _deviceId();
     final user = User(
         name: event.name,
@@ -105,7 +111,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       UpdateUserPasswordAuthEvent event, Emitter<AuthState> emit) async {
     try {
       if (event.newPassword == event.confirmPassword) {
-        await repository.resetUserPassword(email: event.email, newPassword:  event.newPassword);
+        await repository.resetUserPassword(
+            email: event.email, newPassword: event.newPassword);
         event.onSuccess?.call();
         // Обнулить состояние
         emit(AuthState());
@@ -116,5 +123,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       event.onError?.call(e.toString());
       Talker().handle(e, s);
     }
+  }
+
+  FutureOr<void> _changeAgreeWithPolicy(
+      ChangeAgreeWithPolicyAuthEvent event, Emitter<AuthState> emit) {
+    emit(state.copyWith(policyAgree: event.agreeWithPolicy));
+  }
+
+  FutureOr<void> _saveSignUpInput(
+      SaveUserSignUpInputAuthEvent event, Emitter<AuthState> emit) {
+    emit(state.copyWith(
+        email: event.email, password: event.password, userName: event.name));
+    event.onComplete?.call();
   }
 }

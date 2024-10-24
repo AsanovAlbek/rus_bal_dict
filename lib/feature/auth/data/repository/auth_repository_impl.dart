@@ -17,15 +17,23 @@ const String _singleSettingsKey = 'AppSettings';
 
 class AuthRepositoryImpl implements AuthRepository {
   final Dio _dio;
+  final Dio withoutBaseDio;
   final Box<AppSettingsHiveModel> _settingsBox;
   final Talker _talker = GetIt.I<Talker>();
 
-  AuthRepositoryImpl(this._dio, this._settingsBox);
+  AuthRepositoryImpl(this._dio, this._settingsBox, this.withoutBaseDio);
 
   @override
   Future<Either<Exception, User>> registerUser({required User user}) async {
     try {
       final newUserResponse = await _dio.post('register/', data: user.toJson());
+      final paymentData = {
+        'name': user.name,
+        'email': user.email,
+        'password': user.password
+      };
+      await withoutBaseDio.post('http://files.howtosayve.com/login_balk.php',
+          data: FormData.fromMap(paymentData));
       if (newUserResponse.data == null) {
         throw UserAlreadyExistException('Такой пользователь уже существует');
       }
@@ -76,7 +84,11 @@ class AuthRepositoryImpl implements AuthRepository {
         .get(_singleSettingsKey, defaultValue: AppSettingsHiveModel())!
         .toModel();
     appSettings = appSettings.copyWith(
-        userInfo: UserInfo(id: user.id, name: user.name, isUserSignIn: true, email: user.email));
+        userInfo: UserInfo(
+            id: user.id,
+            name: user.name,
+            isUserSignIn: true,
+            email: user.email));
     return _settingsBox.put(_singleSettingsKey, appSettings.toHive());
   }
 
@@ -84,13 +96,14 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Either<Exception, int>> sendCodeToEmail(
       {required String email}) async {
     try {
-      final responseWithCode = await _dio
-          .get('send_restore_code/', queryParameters: {'email': email});
-      final code = responseWithCode.data['restore_password_code'] as int?;
-      if (code == null) {
-        throw Exception('Ошибка отправки кода');
-      }
-      return Right(code);
+      int minRandom = 100000;
+      int maxRandom = 999999;
+      final int generatedRandomCode =
+          Random().nextInt(maxRandom - minRandom) + minRandom;
+      await withoutBaseDio.post('https://files.howtosayve.com/email.php',
+          data:
+              FormData.fromMap({'email': email, 'code': generatedRandomCode}));
+      return Right(generatedRandomCode);
     } on Exception catch (e, s) {
       Talker().handle(e, s);
       return Left(e);
@@ -98,7 +111,8 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<void> resetUserPassword({required String email, required String newPassword}) async {
+  Future<void> resetUserPassword(
+      {required String email, required String newPassword}) async {
     try {
       await _dio.post('update_password/',
           queryParameters: {'email': email, 'password': newPassword});

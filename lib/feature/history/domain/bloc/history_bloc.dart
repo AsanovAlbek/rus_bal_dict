@@ -20,7 +20,8 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
 
   var _loaded = HistoryState.loaded();
 
-  FutureOr<void> _getWordsFromHistory(GetHistoryEvent event, Emitter<HistoryState> emit) async {
+  FutureOr<void> _getWordsFromHistory(
+      GetHistoryEvent event, Emitter<HistoryState> emit) async {
     _talker.debug('get stream from hive');
     await emit.forEach(repository.wordsFromHistory(), onData: (word) {
       _loaded = _loaded.copyWith(words: [..._loaded.wordsFromHistory, word]);
@@ -29,11 +30,13 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
     });
   }
 
-  FutureOr<void> _clearHistory(ClearHistoryEvent event, Emitter<HistoryState> emit) async {
+  FutureOr<void> _clearHistory(
+      ClearHistoryEvent event, Emitter<HistoryState> emit) async {
     repository.clearHistory();
   }
 
-  FutureOr<void> _addToHistory(AddToHistoryEvent event, Emitter<HistoryState> emit) {
+  FutureOr<void> _addToHistory(
+      AddToHistoryEvent event, Emitter<HistoryState> emit) {
     repository.saveWord(event.word);
   }
 }

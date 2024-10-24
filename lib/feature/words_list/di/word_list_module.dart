@@ -9,5 +9,7 @@ import 'package:talker/talker.dart';
 final di = GetIt.instance;
 
 void wordListModule(EnvironmentConfig config) {
-  di.registerSingleton<WordsListRepository>(WordsListRepositoryImpl(dio: di<Dio>(instanceName: dioWithBaseUrlInstanceName), talker: di<Talker>()));
+  di.registerSingleton<WordsListRepository>(WordsListRepositoryImpl(
+      dio: di<Dio>(instanceName: dioWithBaseUrlInstanceName),
+      talker: di<Talker>()));
 }

@@ -20,8 +20,11 @@ sealed class WordsListState {
           canScrollUp: canScrollUp,
           totalWordsCount: totalWordsCount);
 
-  static WordsListStateError error({String? message}) => WordsListStateError(message: message);
-  static WordsListStateEmpty empty({String message = 'Здесь пока ничего нет'}) => WordsListStateEmpty(message);
+  static WordsListStateError error({String? message}) =>
+      WordsListStateError(message: message);
+  static WordsListStateEmpty empty(
+          {String message = 'Здесь пока ничего нет'}) =>
+      WordsListStateEmpty(message);
 }
 
 class WordsListStateLoading extends WordsListState {}

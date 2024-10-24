@@ -6,5 +6,6 @@ class PaymentArg {
   final String email;
   final Uri? paymentUri;
 
-  const PaymentArg({required this.amount, required this.email, required this.paymentUri});
+  const PaymentArg(
+      {required this.amount, required this.email, required this.paymentUri});
 }

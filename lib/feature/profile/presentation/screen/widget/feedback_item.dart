@@ -48,15 +48,17 @@ class FeedbackItem extends StatelessWidget {
               if (contactPhoneNumber != null)
                 ListTile(
                   title: Text(contactPhoneNumber!),
-                  leading: const Icon(Icons.contact_page_outlined, color: Colors.grey),
+                  leading: const Icon(Icons.contact_page_outlined,
+                      color: Colors.grey),
                   trailing: IconButton(
                     icon: const Icon(Icons.copy, color: Colors.grey),
                     onPressed: () async {
-                      await Clipboard.setData(ClipboardData(text: contactPhoneNumber!));
+                      await Clipboard.setData(
+                          ClipboardData(text: contactPhoneNumber!));
                       Future.sync(() => ScaffoldMessenger.of(context)
                           .showSnackBar(const SnackBar(
-                              content:
-                                  Text('Номер телефона скопирован в буфер обмена'))));
+                              content: Text(
+                                  'Номер телефона скопирован в буфер обмена'))));
                     },
                   ),
                 ),

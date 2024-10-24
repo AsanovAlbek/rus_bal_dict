@@ -8,7 +8,7 @@ import '../repository/favorites_repository.dart';
 
 class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
   final FavoritesRepository repository;
-  FavoritesBloc(this.repository): super(FavoritesState.loaded()) {
+  FavoritesBloc(this.repository) : super(FavoritesState.loaded()) {
     on<LoadFavoritesEvent>(_loadFavorites);
     on<DeleteFromFavoritesEvent>(_deleteFromFavorites);
     on<AddToFavoritesEvent>(_addToFavorites);
@@ -16,7 +16,8 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
 
   var _loaded = FavoritesState.loaded();
 
-  FutureOr<void> _loadFavorites(LoadFavoritesEvent event, Emitter<FavoritesState> emit) async {
+  FutureOr<void> _loadFavorites(
+      LoadFavoritesEvent event, Emitter<FavoritesState> emit) async {
     final favoritesEither = await repository.getFavoriteWords();
     favoritesEither.either((error) {
       emit(FavoritesState.error(message: error.toString()));
@@ -26,8 +27,10 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
     });
   }
 
-  FutureOr<void> _deleteFromFavorites(DeleteFromFavoritesEvent event, Emitter<FavoritesState> emit) async {
-    final deleteFavoritesEither = await repository.deleteFromFavorites(event.word);
+  FutureOr<void> _deleteFromFavorites(
+      DeleteFromFavoritesEvent event, Emitter<FavoritesState> emit) async {
+    final deleteFavoritesEither =
+        await repository.deleteFromFavorites(event.word);
     deleteFavoritesEither.either((error) {
       event.onError?.call(error.toString());
     }, (deletedWord) {
@@ -35,7 +38,8 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
     });
   }
 
-  FutureOr<void> _addToFavorites(AddToFavoritesEvent event, Emitter<FavoritesState> emit) async {
+  FutureOr<void> _addToFavorites(
+      AddToFavoritesEvent event, Emitter<FavoritesState> emit) async {
     final addToFavoritesEither = await repository.saveToFavorites(event.word);
     addToFavoritesEither.either((error) {
       event.onError?.call(error.toString());

@@ -3,12 +3,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:rus_bal_dict/colors.dart';
 
 final lightTheme = ThemeData.light().copyWith(
-    textTheme: textTheme.copyWith(
-        bodyMedium: textTheme.bodyMedium
-            ?.copyWith(color: const Color.fromRGBO(0, 0, 0, 1)),
-        bodySmall: textTheme.bodySmall?.copyWith(color: Colors.black)).apply(
-          bodyColor: Colors.black, displayColor: Colors.black
-        ),
+    textTheme: textTheme
+        .copyWith(
+            bodyMedium: textTheme.bodyMedium
+                ?.copyWith(color: const Color.fromRGBO(0, 0, 0, 1)),
+            bodySmall: textTheme.bodySmall?.copyWith(color: Colors.black))
+        .apply(bodyColor: Colors.black, displayColor: Colors.black),
     brightness: Brightness.light,
     scaffoldBackgroundColor: AppLightColors.backgroundColor,
     colorScheme: ColorScheme.fromSeed(
@@ -22,11 +22,11 @@ final lightTheme = ThemeData.light().copyWith(
     iconTheme: const IconThemeData(color: Colors.black));
 
 final darkTheme = ThemeData.dark().copyWith(
-    textTheme: textTheme.copyWith(
-        bodyMedium: textTheme.bodyMedium?.copyWith(color: Colors.white),
-        bodySmall: textTheme.bodySmall?.copyWith(color: Colors.white)).apply(
-          bodyColor: Colors.white, displayColor: Colors.white
-        ),
+    textTheme: textTheme
+        .copyWith(
+            bodyMedium: textTheme.bodyMedium?.copyWith(color: Colors.white),
+            bodySmall: textTheme.bodySmall?.copyWith(color: Colors.white))
+        .apply(bodyColor: Colors.white, displayColor: Colors.white),
     brightness: Brightness.dark,
     scaffoldBackgroundColor: const Color.fromRGBO(44, 47, 59, 1),
     colorScheme: ColorScheme.fromSeed(

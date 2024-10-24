@@ -29,6 +29,7 @@ class AppSettingsHiveModel extends HiveObject {
   double? fontSize;
 
   @HiveField(5, defaultValue: null)
+
   /// Настройки времени жизни записей в истории.
   /// Все записи, срок которых истек удаляются
   /// Если null, то записи не удаляются из истории
@@ -48,6 +49,5 @@ class AppSettingsHiveModel extends HiveObject {
       this.fontSize,
       this.historyStaleLimitTime,
       this.email,
-      this.premiumDays = 0
-      });
+      this.premiumDays = 0});
 }

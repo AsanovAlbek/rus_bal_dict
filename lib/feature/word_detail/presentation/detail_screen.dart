@@ -123,7 +123,8 @@ class DetailContent extends StatelessWidget {
                           .state
                           .appSettings
                           .userInfo
-                          .id ?? 0;
+                          .id ??
+                      0;
                   favoritesBox.put(
                       wordId, word!.toFavoritesHive(userId: userId));
                 }

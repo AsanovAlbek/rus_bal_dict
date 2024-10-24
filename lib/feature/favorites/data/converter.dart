@@ -18,6 +18,11 @@ extension WordToHive on Word {
 
 extension HiveToWord on FavoriteWordHiveModel {
   Word toFavoritesModel() {
-    return Word(id: wordId, word: word, meaning: meaning, audioUrl: audioUrl ?? '', isFavorite: true);
+    return Word(
+        id: wordId,
+        word: word,
+        meaning: meaning,
+        audioUrl: audioUrl ?? '',
+        isFavorite: true);
   }
 }

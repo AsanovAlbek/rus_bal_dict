@@ -16,12 +16,17 @@ class FavoritesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: Hive.box<FavoriteWordHiveModel>('favorites').listenable(),
+      valueListenable:
+          Hive.box<FavoriteWordHiveModel>('favorites').listenable(),
       builder: (context, box, child) {
         var favoriteWords = box.values.toList();
-        favoriteWords.sort((first, second) => second.editedTime.compareTo(first.editedTime));
-        final words = favoriteWords.map((hiveModel) => hiveModel.toFavoritesModel()).toList();
-        return BlocBuilder<FavoritesBloc, FavoritesState>(builder: (context, state) {
+        favoriteWords.sort(
+            (first, second) => second.editedTime.compareTo(first.editedTime));
+        final words = favoriteWords
+            .map((hiveModel) => hiveModel.toFavoritesModel())
+            .toList();
+        return BlocBuilder<FavoritesBloc, FavoritesState>(
+            builder: (context, state) {
           return CustomScrollView(
             slivers: [
               const MyAppBar(title: 'Избранное'),
@@ -29,7 +34,8 @@ class FavoritesScreen extends StatelessWidget {
                 FavoritesStateLoading() => const SliverFillRemaining(
                     child: Center(child: CircularProgressIndicator()),
                   ),
-                FavoritesStateLoaded(favorites: final favorites) => words.isNotEmpty
+                FavoritesStateLoaded(favorites: final favorites) => words
+                        .isNotEmpty
                     ? SliverList(
                         delegate: SliverChildBuilderDelegate((context, index) {
                           return WordListItem(
@@ -37,11 +43,12 @@ class FavoritesScreen extends StatelessWidget {
                             word: words[index],
                             saveEnable: true,
                             isFavorite: true,
-                            onPressed: (word) => context.go('/favorites/word_detail', extra: word),
+                            onPressed: (word) => context
+                                .go('/favorites/word_detail', extra: word),
                             onSaveWord: (word) {
-                              context
-                                  .read<FavoritesBloc>()
-                                  .add(FavoritesEvent.deleteFromFavorites(word: word));
+                              context.read<FavoritesBloc>().add(
+                                  FavoritesEvent.deleteFromFavorites(
+                                      word: word));
                             },
                           );
                         }, childCount: words.length),
@@ -51,7 +58,8 @@ class FavoritesScreen extends StatelessWidget {
                           child: Text('Здесь пока ничего нет'),
                         ),
                       ),
-                FavoritesStateError(message: String? message) => SliverFillRemaining(
+                FavoritesStateError(message: String? message) =>
+                  SliverFillRemaining(
                     child: Center(
                       child: Text('$message'),
                     ),

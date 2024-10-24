@@ -12,7 +12,8 @@ class ProfileCubit extends Cubit<ProfileState> {
   final ProfileRepository repository;
   final PaymentRepository paymentRepository;
 
-  ProfileCubit(this.repository, this.paymentRepository) : super(const ProfileState());
+  ProfileCubit(this.repository, this.paymentRepository)
+      : super(const ProfileState());
 
   var _profile = const ProfileState();
 
@@ -30,28 +31,31 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   void settings(AppSettings appSettings) {
-    _profile = _profile
-        .copyWith(appSettings: appSettings, selectThemeTogglesSelection: {appSettings.settings.themeMode});
+    _profile = _profile.copyWith(
+        appSettings: appSettings,
+        selectThemeTogglesSelection: {appSettings.settings.themeMode});
     emit(_profile);
   }
 
   void selectTheme(Set<SettingsThemeMode> selection) {
     _profile = _profile.copyWith(selectThemeTogglesSelection: selection);
     emit(_profile);
-    var newSettings = _profile.appSettings
-        .copyWith(settings: _profile.appSettings.settings.copyWith(themeMode: selection.first));
+    var newSettings = _profile.appSettings.copyWith(
+        settings:
+            _profile.appSettings.settings.copyWith(themeMode: selection.first));
     saveSettings(newSettings);
   }
 
   void changeTextScale(double scale) {
-    final settings =
-        _profile.appSettings.copyWith(settings: _profile.appSettings.settings.copyWith(fontSize: scale));
+    final settings = _profile.appSettings.copyWith(
+        settings: _profile.appSettings.settings.copyWith(fontSize: scale));
     saveSettings(settings);
   }
 
   void changeTextScaleToDefault() => changeTextScale(1.0);
 
-  Future<void> fetchUserPaymentInfo([VoidCallback? onSuccess, Function(String?)? onError]) async {
+  Future<void> fetchUserPaymentInfo(
+      [VoidCallback? onSuccess, Function(String?)? onError]) async {
     final userPaymentInfoEither = await paymentRepository.paymentInfo();
     userPaymentInfoEither.either((error) {
       onError?.call(error.toString());
@@ -68,11 +72,14 @@ class ProfileCubit extends Cubit<ProfileState> {
     Talker().debug('limits checked');
   }
 
-  Future<Uri?> paymentUri({required String amount, required String email}) async {
-    return paymentRepository.getPaymentWebViewBody(amount: amount, email: email); 
+  Future<Uri?> paymentUri(
+      {required String amount, required String email}) async {
+    return paymentRepository.getPaymentWebViewBody(
+        amount: amount, email: email);
   }
 
-  Future<void> confirmPayment({VoidCallback? onSuccess, Function(String?)? onError}) async {
+  Future<void> confirmPayment(
+      {VoidCallback? onSuccess, Function(String?)? onError}) async {
     await paymentRepository.confirmPayment();
     await fetchUserPaymentInfo(onSuccess, onError);
   }

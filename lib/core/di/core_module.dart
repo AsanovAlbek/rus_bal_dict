@@ -16,26 +16,29 @@ void coreModule(EnvironmentConfig config, [CacheStore? cacheStore]) {
   di.registerSingleton<GoRouter>(AppRouter(config).router);
   final baseUrl = config.apiUrl;
   final options = BaseOptions(
-    connectTimeout: const Duration(seconds: 5),
-    //baseUrl: reserveApiUrl,
-    //baseUrl: testBaseUrl,
-    baseUrl: baseUrl
-    //baseUrl: balRusBaseUrl
-  );
-  
+      connectTimeout: const Duration(seconds: 5),
+      //baseUrl: reserveApiUrl,
+      //baseUrl: testBaseUrl,
+      baseUrl: baseUrl
+      //baseUrl: balRusBaseUrl
+      );
+
   final dio = Dio(options);
   dio.interceptors.add(RedirectInterceptor(dio));
   dio.interceptors.add(LogInterceptor(responseBody: false));
-  final dioWithoutBaseUrl = Dio(BaseOptions(connectTimeout: const Duration(seconds: 5)));
+  final dioWithoutBaseUrl =
+      Dio(BaseOptions(connectTimeout: const Duration(seconds: 5)));
   dioWithoutBaseUrl.interceptors.add(RedirectInterceptor(dioWithoutBaseUrl));
   dioWithoutBaseUrl.interceptors.add(LogInterceptor(responseBody: false));
   dio.interceptors.add(LogInterceptor(responseBody: false));
   if (cacheStore != null) {
-    final cacheOptions = CacheOptions(store: cacheStore, maxStale: const Duration(days: 3));
+    final cacheOptions =
+        CacheOptions(store: cacheStore, maxStale: const Duration(days: 3));
     dio.interceptors.add(DioCacheInterceptor(options: cacheOptions));
   }
   di.registerSingleton<Dio>(dio, instanceName: dioWithBaseUrlInstanceName);
-  di.registerSingleton<Dio>(dioWithoutBaseUrl, instanceName: dioWithoutBaseUrlInstanceName);
+  di.registerSingleton<Dio>(dioWithoutBaseUrl,
+      instanceName: dioWithoutBaseUrlInstanceName);
   di.registerSingleton<Talker>(Talker());
   di.registerSingleton<AudioPlayer>(AudioPlayer()
     ..setReleaseMode(ReleaseMode.stop)

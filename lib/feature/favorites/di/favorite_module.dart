@@ -10,7 +10,10 @@ import '../../../core/hive/settings/app_settings_hive.dart';
 
 final di = GetIt.instance;
 
-void favoriteModule(Box<AppSettingsHiveModel> settingsBox, Box<FavoriteWordHiveModel> favoritesBox) {
-  di.registerSingleton<FavoritesRepository>(
-      FavoriteRepositoryImpl(dio: di<Dio>(instanceName: dioWithBaseUrlInstanceName), favoritesBox: favoritesBox, settingsBox: settingsBox));
+void favoriteModule(Box<AppSettingsHiveModel> settingsBox,
+    Box<FavoriteWordHiveModel> favoritesBox) {
+  di.registerSingleton<FavoritesRepository>(FavoriteRepositoryImpl(
+      dio: di<Dio>(instanceName: dioWithBaseUrlInstanceName),
+      favoritesBox: favoritesBox,
+      settingsBox: settingsBox));
 }

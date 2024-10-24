@@ -21,9 +21,9 @@ class HistoryRepositoryImpl implements HistoryRepository {
     final wordsFromHistory = _historyBox.values
         .where((historyWord) => historyWord.userId == (settings.userId ?? 0))
         .map((hiveModel) {
-          _historyBox.delete(hiveModel.id);
-          return hiveModel.toModel();
-        }).toList();
+      _historyBox.delete(hiveModel.id);
+      return hiveModel.toModel();
+    }).toList();
     return wordsFromHistory;
   }
 
@@ -41,6 +41,8 @@ class HistoryRepositoryImpl implements HistoryRepository {
 
   @override
   Stream<Word> wordsFromHistory() {
-    return _historyBox.watch().map((event) => (event.value as WordHiveModel).toModel());
+    return _historyBox
+        .watch()
+        .map((event) => (event.value as WordHiveModel).toModel());
   }
 }

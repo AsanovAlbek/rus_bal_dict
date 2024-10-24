@@ -16,20 +16,20 @@ class DetailBloc extends Bloc<DetailEvent, DetailState> {
 
   var _wordState = DetailStateLoaded();
 
-  FutureOr<void> _getAudio(GetAudioEvent event, Emitter<DetailState> emit) async {
-    final audioEither = await repository.getAudioByPath(audioPath: event.audioUrl ?? '');
-    audioEither.either(
-        (exception) {
-          emit(DetailStateError(exception: exception));
-        }, (bytes) {
-          _wordState = _wordState.copyWith(bytes: bytes);
-          emit(_wordState);
-        });
+  FutureOr<void> _getAudio(
+      GetAudioEvent event, Emitter<DetailState> emit) async {
+    final audioEither =
+        await repository.getAudioByPath(audioPath: event.audioUrl ?? '');
+    audioEither.either((exception) {
+      emit(DetailStateError(exception: exception));
+    }, (bytes) {
+      _wordState = _wordState.copyWith(bytes: bytes);
+      emit(_wordState);
+    });
   }
 
-
-
-  FutureOr<void> _changeFavorite(ChangeFavoriteEvent event, Emitter<DetailState> emit) {
+  FutureOr<void> _changeFavorite(
+      ChangeFavoriteEvent event, Emitter<DetailState> emit) {
     _wordState = _wordState.copyWith(isFavorite: !_wordState.isFavorite);
     emit(_wordState);
   }

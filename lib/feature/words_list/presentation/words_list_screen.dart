@@ -69,7 +69,7 @@ class _WordsListScreenState extends State<WordsListScreen> {
               controller: _scrollController,
               slivers: [
                 MyAppBar(
-                  title: 'РУССКО - БАЛКАРСКИЙ СЛОВАРЬ',
+                  title: 'БАЛКАРО - РУССКИЙ СЛОВАРЬ',
                   showSearchField: true,
                   searchController: _searchController,
                   onTextEditing: (text) {

@@ -41,7 +41,9 @@ class SettingsScreen extends StatelessWidget {
                           'Размер текста: ${state.appSettings.settings.fontSize.toStringAsFixed(2)}')),
                   Flexible(
                     child: TextButton(
-                        onPressed: context.read<ProfileCubit>().changeTextScaleToDefault,
+                        onPressed: context
+                            .read<ProfileCubit>()
+                            .changeTextScaleToDefault,
                         child: const Text('По умолчанию')),
                   )
                 ],

@@ -6,7 +6,8 @@ class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key, required this.navigationShell});
 
   void _onSelectNavBar(int index) {
-    navigationShell.goBranch(index, initialLocation: index == navigationShell.currentIndex);
+    navigationShell.goBranch(index,
+        initialLocation: index == navigationShell.currentIndex);
   }
 
   @override
@@ -16,27 +17,33 @@ class HomeScreen extends StatelessWidget {
       body: MultiBlocProvider(providers: [
         BlocProvider(
           create: (context) =>
-              WordsListBloc(repository: GetIt.I<WordsListRepository>())..add(WordsListEvent.fetch()),
+              WordsListBloc(repository: GetIt.I<WordsListRepository>())
+                ..add(WordsListEvent.fetch()),
         ),
         BlocProvider(
-            create: (context) => HistoryBloc(GetIt.I<HistoryRepository>())),//..add(HistoryEvent.getHistory())),
+            create: (context) => HistoryBloc(GetIt.I<
+                HistoryRepository>())), //..add(HistoryEvent.getHistory())),
         BlocProvider(
-            create: (context) =>
-                FavoritesBloc(GetIt.I<FavoritesRepository>())) //..add(FavoritesEvent.load()))
+            create: (context) => FavoritesBloc(
+                GetIt.I<FavoritesRepository>())) //..add(FavoritesEvent.load()))
       ], child: navigationShell),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: navigationShell.currentIndex,
         items: [
-          const BottomNavigationBarItem(icon: Icon(Icons.home, size: 32), label: 'Главная'),
+          const BottomNavigationBarItem(
+              icon: Icon(Icons.home, size: 32), label: 'Главная'),
           BottomNavigationBarItem(
               icon: SvgPicture.asset(
                 'assets/images/favorites.svg',
-                colorFilter:
-                    ColorFilter.mode(Theme.of(context).iconTheme.color ?? Colors.black, BlendMode.srcIn),
+                colorFilter: ColorFilter.mode(
+                    Theme.of(context).iconTheme.color ?? Colors.black,
+                    BlendMode.srcIn),
               ),
               label: 'Избранное'),
-          const BottomNavigationBarItem(icon: Icon(Icons.history, size: 32), label: 'Недавние'),
-          const BottomNavigationBarItem(icon: Icon(Icons.person, size: 32), label: 'Профиль')
+          const BottomNavigationBarItem(
+              icon: Icon(Icons.history, size: 32), label: 'Недавние'),
+          const BottomNavigationBarItem(
+              icon: Icon(Icons.person, size: 32), label: 'Профиль')
         ],
         onTap: _onSelectNavBar,
       ),

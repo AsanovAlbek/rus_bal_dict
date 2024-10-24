@@ -28,9 +28,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
     controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..loadRequest(widget.paymentUri!)
-      ..addJavaScriptChannel('PaymentChannel', onMessageReceived: (JavaScriptMessage message) {
+      ..addJavaScriptChannel('PaymentChannel',
+          onMessageReceived: (JavaScriptMessage message) {
         Talker().debug('message from webview ${message.message}');
-      })..setNavigationDelegate(NavigationDelegate(
+      })
+      ..setNavigationDelegate(NavigationDelegate(
         onNavigationRequest: (NavigationRequest request) {
           talker.info('onNavigationRequest ${request.url}');
           return NavigationDecision.navigate;

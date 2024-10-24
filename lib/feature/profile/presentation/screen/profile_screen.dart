@@ -47,13 +47,17 @@ class ProfileScreen extends StatelessWidget {
                 onPress: () => context.go('/profile/term_of_use'),
               ),
               ProfileItem(
+                title: 'Политика конфиденциальности',
+                onPress: () => context.go('/profile/privacy'),
+              ),
+              ProfileItem(
                   title: 'Выход',
                   titleColor: Colors.red,
                   showDivider: false,
                   onPress: () {
                     context.read<ProfileCubit>().signOut();
                     context.pushReplacement('/auth');
-                  })
+                  }),
             ])
           ],
         );

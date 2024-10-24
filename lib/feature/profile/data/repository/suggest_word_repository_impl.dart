@@ -11,15 +11,15 @@ class SuggestWordRepositoryImpl implements SuggestWordRepository {
   Future<void> suggestWord(SuggestWord word) async {
     try {
       await dio.post('suggest_word/', data: word.toJson()..remove('id'));
-    } on Exception catch(e, s) {
+    } on Exception catch (e, s) {
       Talker().handle(e, s, 'Exception on suggestWord');
     }
   }
 
   @override
-  Future<Either<Exception, List<SuggestWord>>> suggestedWords({String name = '', int page = 0, int size = 15}) {
+  Future<Either<Exception, List<SuggestWord>>> suggestedWords(
+      {String name = '', int page = 0, int size = 15}) {
     // TODO: implement suggestedWords
     throw UnimplementedError();
   }
-
 }

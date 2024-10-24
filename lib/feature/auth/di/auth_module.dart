@@ -10,7 +10,11 @@ import '../../../core/hive/settings/app_settings_hive.dart';
 
 final di = GetIt.instance;
 
-void authModule(Box<AppSettingsHiveModel> settingsBox, EnvironmentConfig config) {
+void authModule(
+    Box<AppSettingsHiveModel> settingsBox, EnvironmentConfig config) {
   final dio = di<Dio>(instanceName: dioWithBaseUrlInstanceName);
-  di.registerSingleton<AuthRepository>(AuthRepositoryImpl(dio, settingsBox));
+  final dioWithoutBaseUrl =
+      di<Dio>(instanceName: dioWithoutBaseUrlInstanceName);
+  di.registerSingleton<AuthRepository>(
+      AuthRepositoryImpl(dio, settingsBox, dioWithoutBaseUrl));
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-sealed class AppColors {
 
-}
+sealed class AppColors {}
 
 class AppLightColors extends AppColors {
   static const gradientStartColor = Color.fromRGBO(197, 255, 195, 1);
@@ -12,7 +11,6 @@ class AppLightColors extends AppColors {
   static const onPrimaryColor = Colors.black;
   static const dividerColor = Color.fromRGBO(21, 171, 99, 0.54);
   static const starFilledColor = Color.fromRGBO(21, 171, 99, 0.92);
-
 }
 
 class AppDarkColors extends AppColors {
@@ -22,5 +20,4 @@ class AppDarkColors extends AppColors {
   static const dividerColor = Color.fromRGBO(227, 227, 227, 0.3);
   static const backgroundColor = Color.fromRGBO(44, 47, 59, 1);
   static const cardShadowColor = Color.fromRGBO(0, 0, 0, 0.25);
-
 }

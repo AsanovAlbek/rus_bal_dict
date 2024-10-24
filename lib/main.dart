@@ -13,7 +13,6 @@ import 'feature/profile/di/profile_module.dart';
 import 'feature/word_detail/di/detail_module.dart';
 import 'feature/words_list/di/word_list_module.dart';
 
-
 Future<void> main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(WordHiveModelAdapter());
@@ -84,7 +83,7 @@ class MyApp extends StatelessWidget {
                             TextScaler.linear(appSettings.settings.fontSize)),
                     child: child!);
               },
-              title: 'Русско - Балкарский словарь',
+              title: 'Балкаро - русский словарь',
               theme: _themeData(context, appSettings.settings.themeMode),
               routerConfig: router,
               debugShowCheckedModeBanner: false,

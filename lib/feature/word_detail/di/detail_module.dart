@@ -7,5 +7,6 @@ import 'package:rus_bal_dict/feature/word_detail/domain/repository/detail_reposi
 
 final di = GetIt.I;
 void detailModule(EnvironmentConfig config) {
-  di.registerSingleton<DetailRepository>(DetailRepositoryImpl(dio: di<Dio>(instanceName: dioWithBaseUrlInstanceName)));
+  di.registerSingleton<DetailRepository>(DetailRepositoryImpl(
+      dio: di<Dio>(instanceName: dioWithBaseUrlInstanceName)));
 }

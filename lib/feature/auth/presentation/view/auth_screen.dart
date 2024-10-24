@@ -1,4 +1,7 @@
+import 'package:flutter/gestures.dart';
 import 'package:rus_bal_dict/export.dart';
+import 'package:rus_bal_dict/feature/auth/presentation/widget/sign_in_widget.dart';
+import 'package:rus_bal_dict/feature/auth/presentation/widget/sign_up_widget.dart';
 
 import '../auth.dart';
 
@@ -25,6 +28,7 @@ class _AuthScreenState extends State<AuthScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
         return Scaffold(
@@ -36,9 +40,8 @@ class _AuthScreenState extends State<AuthScreen> {
                 AuthForm(
                   formKey: _formKey,
                   onChangePasswordVisibility: () {
-                    context
-                        .read<AuthBloc>()
-                        .add(AuthEvent.maskPassword(isPasswordMasked: !state.isPasswordMasked));
+                    context.read<AuthBloc>().add(AuthEvent.maskPassword(
+                        isPasswordMasked: !state.isPasswordMasked));
                   },
                   pageState: state.pageState,
                   isPasswordMasked: state.isPasswordMasked,
@@ -47,49 +50,21 @@ class _AuthScreenState extends State<AuthScreen> {
                   passwordController: _passwordController,
                 ),
                 const SizedBox(height: 8),
-                if (state.pageState == AuthPageState.signIn) ...[
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                        onPressed: () => _signIn(context, _formKey.currentState?.validate()),
-                        child: const Text('Войти')),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      _formKey.currentState?.reset();
-                      FocusManager.instance.primaryFocus?.unfocus();
-                      context
-                          .read<AuthBloc>()
-                          .add(AuthEvent.changeAuthPage(pageState: AuthPageState.signUp));
-                    },
-                    child: const Text('Нет аккаунта? Зарегистрироваться'),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      _formKey.currentState?.reset();
-                      FocusManager.instance.primaryFocus?.unfocus();
-                      context.go('/auth/restore_password');
-                    },
-                    child: const Text('Забыли пароль?'),
-                  )
-                ] else ...[
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                        onPressed: () => _signUp(context, _formKey.currentState?.validate()),
-                        child: const Text('Зарегистрироваться')),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      _formKey.currentState?.reset();
-                      FocusManager.instance.primaryFocus?.unfocus();
-                      context
-                          .read<AuthBloc>()
-                          .add(AuthEvent.changeAuthPage(pageState: AuthPageState.signIn));
-                    },
-                    child: const Text('Назад'),
-                  ),
-                ],
+                state.pageState == AuthPageState.signIn
+                    ? SignInWidget(authFormKey: _formKey, onSignIn: _signIn)
+                    : SignUpWidget(
+                        authFormKey: _formKey,
+                        onSignUp: (context, isValid) {
+                          if (isValid ?? false) {
+                            context.read<AuthBloc>().add(
+                                AuthEvent.saveUserSignUpInput(
+                                    name: _nameController.text.trim(),
+                                    email: _emailController.text.trim(),
+                                    password: _passwordController.text.trim(),
+                                    onComplete: () =>
+                                        context.go('/auth/register_agree')));
+                          }
+                        }),
                 const SizedBox(height: 8),
               ],
             ),
@@ -107,26 +82,6 @@ class _AuthScreenState extends State<AuthScreen> {
           onSuccess: (user, message) {
             context.showSnackBar(message);
             context.go('/word_list');
-          },
-          onError: (message) {
-            if (message != null) {
-              context.showSnackBar(message);
-            }
-          }));
-    }
-  }
-
-  void _signUp(BuildContext context, bool? isValid) {
-    if (isValid ?? false) {
-      context.read<AuthBloc>().add(AuthEvent.signUp(
-          name: _nameController.text.trim(),
-          email: _emailController.text.trim(),
-          password: _passwordController.text.trim(),
-          onSuccess: (user, message) {
-            context.showSnackBar(message);
-            context.go('/word_list');
-            context.read<AuthBloc>().add(AuthEvent.changeAuthPage(pageState: AuthPageState.signIn));
-            context.read<ProfileCubit>().fetchUserPaymentInfo();
           },
           onError: (message) {
             if (message != null) {

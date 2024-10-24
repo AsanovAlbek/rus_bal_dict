@@ -18,12 +18,14 @@ class WordsListBloc extends Bloc<WordsListEvent, WordsListState> {
 
   var _loaded = WordsListState.loaded();
 
-  FutureOr<void> _fetch(WordsListEventFetch event, Emitter<WordsListState> emit) async {
+  FutureOr<void> _fetch(
+      WordsListEventFetch event, Emitter<WordsListState> emit) async {
     if (event.query != null && event.query != _loaded.query) {
       _loaded = _loaded.copyWith(words: [], currentPage: 0, query: event.query);
     }
-    
-    final wordsCount = await repository.wordsCount(query: event.query ?? _loaded.query);
+
+    final wordsCount =
+        await repository.wordsCount(query: event.query ?? _loaded.query);
     wordsCount.either((error) {
       emit(WordsListState.error(message: error.toString()));
       event.onError?.call(error);
@@ -36,10 +38,13 @@ class WordsListBloc extends Bloc<WordsListEvent, WordsListState> {
       Talker().debug('page = ${_loaded.currentPage} words count = $count');
     });
     if (_loaded.totalWordsCount <= 0) {
-      emit(WordsListState.empty(message: 'Таких слов пока нет, но вы можете предложить слово'));
+      emit(WordsListState.empty(
+          message: 'Таких слов пока нет, но вы можете предложить слово'));
     } else if (_loaded.words.length < _loaded.totalWordsCount) {
       final wordListResult = await repository.fetchWords(
-          query: event.query ?? _loaded.query, page: _loaded.currentPage, size: 80);
+          query: event.query ?? _loaded.query,
+          page: _loaded.currentPage,
+          size: 80);
       wordListResult.either((exception) {
         emit(WordsListState.error(message: exception.toString()));
         event.completer?.completeError(exception);
@@ -54,7 +59,8 @@ class WordsListBloc extends Bloc<WordsListEvent, WordsListState> {
     event.onSuccess?.call(_loaded.words, _loaded.totalWordsCount);
   }
 
-  FutureOr<void> _changeScrollUp(ChangeScrollableUpEvent event, Emitter<WordsListState> emit) {
+  FutureOr<void> _changeScrollUp(
+      ChangeScrollableUpEvent event, Emitter<WordsListState> emit) {
     _loaded = _loaded.copyWith(canScrollUp: event.canScroll);
     emit(_loaded);
   }

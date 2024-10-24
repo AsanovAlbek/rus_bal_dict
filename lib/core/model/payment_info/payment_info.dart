@@ -6,12 +6,14 @@ part 'payment_info.g.dart';
 
 @freezed
 class PaymentInfo with _$PaymentInfo {
-  const factory PaymentInfo({
-    @JsonKey(name: 'daylimit') @Default('0') String dayLimit,
-    @JsonKey(name: 'subscription') @Default('false') String subscription
-  }) = _PaymentInfo;
+  const factory PaymentInfo(
+      {@JsonKey(name: 'daylimit') @Default('0') String dayLimit,
+      @JsonKey(name: 'subscription')
+      @Default('false')
+      String subscription}) = _PaymentInfo;
 
-  factory PaymentInfo.fromJson(Map<String, dynamic> json) => _$PaymentInfoFromJson(json);
+  factory PaymentInfo.fromJson(Map<String, dynamic> json) =>
+      _$PaymentInfoFromJson(json);
 }
 
 @immutable
@@ -21,11 +23,10 @@ class UserPaymentInfo with EquatableMixin {
 
   const UserPaymentInfo({this.dayLimit = 0, this.isSubscribe = false});
 
-  UserPaymentInfo.fromDto(PaymentInfo paymentInfo):
-    dayLimit = int.tryParse(paymentInfo.dayLimit) ?? 0,
-    isSubscribe = bool.tryParse(paymentInfo.subscription) ?? false;
+  UserPaymentInfo.fromDto(PaymentInfo paymentInfo)
+      : dayLimit = int.tryParse(paymentInfo.dayLimit) ?? 0,
+        isSubscribe = bool.tryParse(paymentInfo.subscription) ?? false;
 
   @override
   List<Object?> get props => [dayLimit, isSubscribe];
-  
 }

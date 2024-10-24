@@ -38,5 +38,4 @@ class WordsListRepositoryImpl implements WordsListRepository {
       return Left(e);
     }
   }
-
 }

@@ -99,7 +99,7 @@ class _SuggestWordScreenState extends State<SuggestWordScreen> {
 
   Future<void> suggestWord(SuggestWord word,
       {Function()? onSuccess, Function(Object?)? onError}) async {
-    final dio = GetIt.I<Dio>( instanceName: dioWithBaseUrlInstanceName);
+    final dio = GetIt.I<Dio>(instanceName: dioWithBaseUrlInstanceName);
     final logger = GetIt.I<Talker>();
     try {
       await dio.post('suggest_word/', data: word.toJson());

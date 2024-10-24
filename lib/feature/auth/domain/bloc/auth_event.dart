@@ -19,13 +19,15 @@ sealed class AuthEvent {
           required String email,
           required String password,
           void Function(User, String)? onSuccess,
-          void Function(String?)? onError}) =>
+          void Function(String?)? onError,
+          void Function()? onUserNoAgreeWithPolicy}) =>
       SignUpEvent(
           name: name,
           email: email,
           password: password,
           onSuccess: onSuccess,
-          onError: onError);
+          onError: onError,
+          onUserNoAgreeWithPolicy: onUserNoAgreeWithPolicy);
 
   static SignOutEvent signOut() => SignOutEvent();
 
@@ -38,6 +40,17 @@ sealed class AuthEvent {
 
   static SendCodeToEmailAuthEvent sendCodeToEmail({required String email}) =>
       SendCodeToEmailAuthEvent(email: email);
+
+  static ChangeAgreeWithPolicyAuthEvent changeAgree({required bool? agree}) =>
+      ChangeAgreeWithPolicyAuthEvent(agree);
+
+  static SaveUserSignUpInputAuthEvent saveUserSignUpInput(
+          {required String name,
+          required String email,
+          required String password,
+          void Function()? onComplete}) =>
+      SaveUserSignUpInputAuthEvent(
+          email: email, password: password, name: name, onComplete: onComplete);
 }
 
 @immutable
@@ -61,13 +74,15 @@ class SignUpEvent extends AuthEvent {
   final String password;
   final void Function(User, String)? onSuccess;
   final void Function(String?)? onError;
+  final void Function()? onUserNoAgreeWithPolicy;
 
   SignUpEvent(
       {required this.name,
       required this.email,
       required this.password,
       this.onSuccess,
-      this.onError});
+      this.onError,
+      this.onUserNoAgreeWithPolicy});
 }
 
 @immutable
@@ -108,4 +123,25 @@ class UpdateUserPasswordAuthEvent extends AuthEvent {
       required this.confirmPassword,
       this.onSuccess,
       this.onError});
+}
+
+@immutable
+class ChangeAgreeWithPolicyAuthEvent extends AuthEvent {
+  final bool? agreeWithPolicy;
+
+  ChangeAgreeWithPolicyAuthEvent(this.agreeWithPolicy);
+}
+
+@immutable
+class SaveUserSignUpInputAuthEvent extends AuthEvent {
+  final String email;
+  final String password;
+  final String name;
+  final void Function()? onComplete;
+
+  SaveUserSignUpInputAuthEvent(
+      {required this.email,
+      required this.password,
+      required this.name,
+      this.onComplete});
 }

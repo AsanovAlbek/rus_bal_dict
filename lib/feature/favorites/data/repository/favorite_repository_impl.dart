@@ -16,16 +16,22 @@ class FavoriteRepositoryImpl implements FavoritesRepository {
   final Box<FavoriteWordHiveModel> favoritesBox;
   final Box<AppSettingsHiveModel> settingsBox;
 
-  FavoriteRepositoryImpl({required this.dio, required this.favoritesBox, required this.settingsBox});
+  FavoriteRepositoryImpl(
+      {required this.dio,
+      required this.favoritesBox,
+      required this.settingsBox});
 
   @override
   Future<Either<Exception, Word>> deleteFromFavorites(Word favoriteWord) async {
     try {
-      var appSettings = settingsBox.get(_singleSettingsKey, defaultValue: AppSettingsHiveModel())!.toModel();
+      var appSettings = settingsBox
+          .get(_singleSettingsKey, defaultValue: AppSettingsHiveModel())!
+          .toModel();
       // Если понадобится хранить на сервере
       // final wordDeleteResponse = await dio.delete('delete_favorite_word/',
       //     queryParameters: {'user_id': appSettings.userInfo.id, 'word_id': favoriteWord.id});
-      final hiveWord = favoriteWord.toFavoritesHive(userId: appSettings.userInfo.id ?? 0);
+      final hiveWord =
+          favoriteWord.toFavoritesHive(userId: appSettings.userInfo.id ?? 0);
       favoritesBox.delete(hiveWord.wordId);
       //return Right(Word.fromJson(wordDeleteResponse.data));
       return Right(favoriteWord);
@@ -37,11 +43,15 @@ class FavoriteRepositoryImpl implements FavoritesRepository {
   @override
   Future<Either<Exception, List<Word>>> getFavoriteWords() async {
     try {
-      var appSettings = settingsBox.get(_singleSettingsKey, defaultValue: AppSettingsHiveModel())!.toModel();
-      final favoriteWordsResponse =
-          await dio.get('favorite_words/', queryParameters: {'user_id': appSettings.userInfo.id});
+      var appSettings = settingsBox
+          .get(_singleSettingsKey, defaultValue: AppSettingsHiveModel())!
+          .toModel();
+      final favoriteWordsResponse = await dio.get('favorite_words/',
+          queryParameters: {'user_id': appSettings.userInfo.id});
       Iterable iterableResponse = favoriteWordsResponse.data;
-      final words = List<Word>.from(iterableResponse.map((json) => Word.fromJson(json))).toList();
+      final words =
+          List<Word>.from(iterableResponse.map((json) => Word.fromJson(json)))
+              .toList();
       return Right(words);
     } on Exception catch (e) {
       return Left(e);
@@ -51,8 +61,11 @@ class FavoriteRepositoryImpl implements FavoritesRepository {
   @override
   Future<Either<Exception, Word>> saveToFavorites(Word favoriteWord) async {
     try {
-      var appSettings = settingsBox.get(_singleSettingsKey, defaultValue: AppSettingsHiveModel())!.toModel();
-      favoritesBox.put(favoriteWord.id, favoriteWord.toFavoritesHive(userId: appSettings.userInfo.id ?? 0));
+      var appSettings = settingsBox
+          .get(_singleSettingsKey, defaultValue: AppSettingsHiveModel())!
+          .toModel();
+      favoritesBox.put(favoriteWord.id,
+          favoriteWord.toFavoritesHive(userId: appSettings.userInfo.id ?? 0));
       // final favorite = FavoriteWord(id: 0, userId: appSettings.userInfo.id ?? 0, wordId: favoriteWord.id ?? 0);
       // final favoriteAddResponse = await dio.post('add_favorite_word/', data: favorite.toJson());
       // return Right(Word.fromJson(favoriteAddResponse.data));

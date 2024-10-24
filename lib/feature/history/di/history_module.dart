@@ -8,6 +8,8 @@ import '../../../core/hive/word/word_hive_model.dart';
 
 final di = GetIt.instance;
 
-void historyModule(Box<AppSettingsHiveModel> settingsBox, Box<WordHiveModel> historyBox) {
-  di.registerSingleton<HistoryRepository>(HistoryRepositoryImpl(historyBox, settingsBox));
+void historyModule(
+    Box<AppSettingsHiveModel> settingsBox, Box<WordHiveModel> historyBox) {
+  di.registerSingleton<HistoryRepository>(
+      HistoryRepositoryImpl(historyBox, settingsBox));
 }
