@@ -1,4 +1,5 @@
 import 'package:either_dart/either.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:rus_bal_dict/core/model/word/word.dart';
@@ -21,6 +22,7 @@ void main() {
       expect(savedWord.isLeft, isFalse);
       expect(savedWord.isRight, isTrue);
       expect(savedWord.right, mockWords.first);
+      debugPrint('Проверка на сохранение слова в избранном. Успешно');
     });
 
     test('Сохранение слова. Проверка ошибки на сохранение', () async {
@@ -32,6 +34,7 @@ void main() {
       expect(savedWordWithError.isLeft, isTrue);
       expect(savedWordWithError.isRight, isFalse);
       expect(savedWordWithError.left, isA<Exception>());
+      debugPrint('Проверка на ошибку сохранения в избранном. Успешно');
     });
 
     test('Получение сохраненных в избранном слов', () async {
@@ -42,6 +45,7 @@ void main() {
       expect(favoritesSuccessEither.isRight, isTrue);
       expect(favoritesSuccessEither.right, mockWords);
       expect(favoritesSuccessEither.right, isA<List<Word>>());
+      debugPrint('Получение слов из избранного. Успешно');
     });
 
     test('Тестирование ошибки получения сохраненных слов', () async {
@@ -51,6 +55,7 @@ void main() {
       expect(failFavoritesEither.isLeft, isTrue);
       expect(failFavoritesEither.isRight, isFalse);
       expect(failFavoritesEither.left, isA<Exception>());
+      debugPrint('Проверка на ошибку получения слов из избранного. Успешно');
     });
 
     test('Тестирование успешного удаления сохраненных в избранном слов', () async {
@@ -60,6 +65,7 @@ void main() {
       expect(deleteEitherSuccess.isLeft, isFalse);
       expect(deleteEitherSuccess.isRight, isTrue);
       expect(deleteEitherSuccess.right, testWord);
+      debugPrint('Удаление сохраненных в избранном слов. Успешно');
     });
 
     test('Тестирование ошибки удаления сохраненного в избранном слова', () async {
@@ -68,8 +74,7 @@ void main() {
       expect(deleteEitherFail.isLeft, isTrue);
       expect(deleteEitherFail.isRight, isFalse);
       expect(deleteEitherFail.left, isA<Exception>());
+      debugPrint('Проверка на ошибку удаления сохраненных слов. Успешно');
     });
-
-    
   });
 }

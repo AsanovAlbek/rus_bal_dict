@@ -1,3 +1,4 @@
+import 'package:mocktail/mocktail.dart';
 import 'package:rus_bal_dict/core/model/word/word.dart';
 
 var mockWords = [
@@ -6,3 +7,5 @@ var mockWords = [
 ];
 
 const testWord = Word(id: 1, word: 'АБА');
+
+void verifyOnce<T>(T Function() testAction) => verify(testAction).called(1);
