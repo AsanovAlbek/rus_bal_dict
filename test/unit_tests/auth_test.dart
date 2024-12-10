@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:either_dart/either.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:rus_bal_dict/core/model/user/user.dart';
@@ -37,6 +38,7 @@ void main() {
       expect(result.isLeft, isTrue);
       expect(result.isRight, isFalse);
       expect(result.left, isA<UserAlreadyExistException>());
+      debugPrint('Тест на регистрацию уже зарегистрированного пользователя. Успешно');
     });
 
     test('Регистрация пользователя. Проверка на то, что пользователь новый',
@@ -53,6 +55,7 @@ void main() {
       expect(result.isLeft, isFalse);
       expect(result.isRight, isTrue);
       expect(result.right, isA<User>());
+      debugPrint('Тест на регистрацию нового пользователя. Успешно');
     });
     test('Вход пользователя в аккаунт. Проверка на успешность входа', () async {
       const email = 'johndoe@example.com';
@@ -67,6 +70,7 @@ void main() {
       expect(signedUserEither.right.password, password);
       expect(signedUserEither.right, user);
       expect(signedUserEither.right, isA<User>());
+      debugPrint('Вход в аккаунт пользователя при правильных данных. Успешно');
     });
 
     test('Вход пользователя в аккаунт. Проверка на неправильные почту и пароль',
@@ -83,6 +87,7 @@ void main() {
       expect(user.email != email || user.password != password, isTrue);
       expect(signFailedEither.left, isException);
       expect(signFailedEither.left, isA<UserNotFoundException>());
+      debugPrint('Вход в аккаунт пользователя при неправильных данных. Успешно');
     });
 
     test('Проверка на успешный вызов функции выхода из аккаунта', () async {
@@ -92,6 +97,7 @@ void main() {
       await authRepository.signOut();
 
       verify(() => authRepository.signOut()).called(1);
+      debugPrint('Выход из аккаунта. Успешно');
     });
 
     test('Проверка на успешный вызов отправки кода восстановления пароля',
@@ -105,6 +111,7 @@ void main() {
       expect(code.isRight, isTrue);
       expect(code.right, randomCode);
       expect(code.right, isA<int>());
+      debugPrint('Отправка кода восстановления. Успешно');
     });
 
     test('Проверка на ошибку отправки кода.', () async {
@@ -117,6 +124,7 @@ void main() {
       expect(codeEitherWithError.isLeft, isTrue);
       expect(codeEitherWithError.isRight, isFalse);
       expect(codeEitherWithError.left, isA<Exception>());
+      debugPrint('Проверка на ошибку отправки кода восстановления. Успешно');
     });
 
     test('Проверка на смену пароля', () async {
@@ -130,6 +138,8 @@ void main() {
 
       verify(() => authRepository.resetUserPassword(
           email: email, newPassword: newPassword)).called(1);
+      
+      debugPrint('Проверка на смену пароля. Успешно');
     });
   });
 }

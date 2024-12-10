@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:either_dart/either.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:rus_bal_dict/feature/word_detail/domain/repository/detail_repository.dart';
@@ -25,6 +26,7 @@ void main() {
       expect(successEither.isRight, isTrue);
       expect(successEither.right, isNotNull);
       expect(successEither.right, isA<Uint8List?>());
+      debugPrint('Получение озвучки слова. Успешно');
     });
 
     test('Проверка на отсутсвие аудиозаписи по слову', () async {
@@ -38,6 +40,7 @@ void main() {
       expect(notFoundAudioEither.isRight, isTrue);
       expect(notFoundAudioEither.right, isNull);
       expect(notFoundAudioEither.right, isA<Uint8List?>());
+      debugPrint('Получение озвучки слова при отсутствии озвучки. Успешно');
     });
 
     test('Проверка на иную ошибку получения аудиозаписи', () async {
@@ -48,6 +51,7 @@ void main() {
       expect(errorEither.isLeft, isTrue);
       expect(errorEither.isRight, isFalse);
       expect(errorEither.left, isException);
+      debugPrint('Проверка ошибки при получении озвучки слова. Успешно');
     });
   });
 }

@@ -35,6 +35,7 @@ void main() {
         .thenAnswer((_) async =>
             Either.tryCatch<Exception, List<Word>, Exception>(
                 (e) => e, () => mockWords));
+
   });
 
   group('Тесты для получения слов из базы', () {
@@ -47,42 +48,15 @@ void main() {
 
       // Проверяем, что запрос к базе данных завершился успешно.
       expect(wordsEither.isRight, isTrue);
-    });
-
-    test('Получение списка не завершилось ошибкой', () async {
-      var wordsEither = await wordsListRepository.fetchWords(
-        query: '',
-        page: 0,
-        size: expectedWordsCount,
-      );
-
-      // Проверяем, что запрос к базе данных не завершился ошибкой.
       expect(wordsEither.isLeft, isFalse);
-    });
-
-    test('Количество слов совпадает с запрашиваемым количеством', () async {
-      var wordsEither = await wordsListRepository.fetchWords(
-        query: '',
-        page: 0,
-        size: expectedWordsCount,
-      );
-
-      // Проверяем, что количество полученных слов совпадает с запрашиваемым.
       expect(wordsEither.right.length, expectedWordsCount);
-    });
-
-    test('Все слова отсортированы по алфавиту', () async {
-      var wordsEither = await wordsListRepository.fetchWords(
-        query: '',
-        page: 0,
-        size: expectedWordsCount,
-      );
-
-      // Проверяем, что полученные слова отсортированы по алфавиту.
+      debugPrint('Количество слов совпадает с запрашиваемым. Успешно');
       debugPrint(wordsEither.right.toString());
       var isWordsSorted = wordsEither.right
           .isSorted((word, otherWord) => word.word.compareTo(otherWord.word));
       expect(isWordsSorted, isTrue);
+      debugPrint('Слова отсортированы по алфавиту. Успешно');
+      debugPrint('Получение части слов из базы. Успешно');
     });
   });
 }
