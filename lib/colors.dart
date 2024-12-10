@@ -11,6 +11,7 @@ class AppLightColors extends AppColors {
   static const onPrimaryColor = Colors.black;
   static const dividerColor = Color.fromRGBO(21, 171, 99, 0.54);
   static const starFilledColor = Color.fromRGBO(21, 171, 99, 0.92);
+  static const textFieldsErrorTextColor = Colors.red;
 }
 
 class AppDarkColors extends AppColors {
@@ -20,4 +21,5 @@ class AppDarkColors extends AppColors {
   static const dividerColor = Color.fromRGBO(227, 227, 227, 0.3);
   static const backgroundColor = Color.fromRGBO(44, 47, 59, 1);
   static const cardShadowColor = Color.fromRGBO(0, 0, 0, 0.25);
+  static const textFieldsErrorTextColor = Color.fromARGB(255, 223, 15, 15);
 }

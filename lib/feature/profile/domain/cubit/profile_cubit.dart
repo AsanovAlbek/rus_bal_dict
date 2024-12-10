@@ -63,13 +63,13 @@ class ProfileCubit extends Cubit<ProfileState> {
       _profile = _profile.copyWith(paymentInfo: info);
       emit(_profile);
       onSuccess?.call();
+      Talker().debug('Profile info = ${_profile.paymentInfo}');
     });
   }
 
   Future<void> checkLimits() async {
     await paymentRepository.decrementNonPremiumUserTries();
     await fetchUserPaymentInfo();
-    Talker().debug('limits checked');
   }
 
   Future<Uri?> paymentUri(

@@ -4,6 +4,7 @@ class AuthState {
   final int? codeFromEmail;
   final String? emailForRestorePassword;
   final bool policyAgree;
+  final bool termOfUseAgree;
   final String userName;
   final String email;
   final String password;
@@ -13,7 +14,8 @@ class AuthState {
       this.isPasswordMasked = true,
       this.codeFromEmail,
       this.emailForRestorePassword,
-      this.policyAgree = true,
+      this.policyAgree = false,
+      this.termOfUseAgree = false,
       this.email = '',
       this.password = '',
       this.userName = ''});
@@ -24,6 +26,7 @@ class AuthState {
     int? codeFromEmail,
     String? emailForRestorePassword,
     bool? policyAgree,
+    bool? termOfUseAgree,
     String? userName,
     String? email,
     String? password,
@@ -35,6 +38,7 @@ class AuthState {
         emailForRestorePassword:
             emailForRestorePassword ?? this.emailForRestorePassword,
         policyAgree: policyAgree ?? this.policyAgree,
+        termOfUseAgree: termOfUseAgree ?? this.termOfUseAgree,
         userName: userName ?? this.userName,
         email: email ?? this.email,
         password: password ?? this.password);

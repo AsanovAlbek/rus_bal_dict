@@ -106,9 +106,10 @@ class _WordsListScreenState extends State<WordsListScreen> {
                                 onPressed: (word) async {
                                   final profileCubit =
                                       context.read<ProfileCubit>();
-                                  await profileCubit.checkLimits();
+                                  //await profileCubit.checkLimits();
                                   final premiumInfo =
                                       profileCubit.state.paymentInfo;
+                                  Talker().debug('PREM INFO = $premiumInfo');
                                   if (!premiumInfo.isSubscribe) {
                                     Talker().debug(
                                         'Minus one free try. tries = ${premiumInfo.dayLimit}');
@@ -128,6 +129,7 @@ class _WordsListScreenState extends State<WordsListScreen> {
                                         '/word_list/word_detail',
                                         extra: word));
                                   }
+                                  await profileCubit.checkLimits();
                                 },
                                 saveEnable: false,
                                 onSaveWord: (word) {

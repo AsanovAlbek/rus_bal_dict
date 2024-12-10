@@ -44,6 +44,10 @@ sealed class AuthEvent {
   static ChangeAgreeWithPolicyAuthEvent changeAgree({required bool? agree}) =>
       ChangeAgreeWithPolicyAuthEvent(agree);
 
+  static ChangeAgreeWithTermOfUseEvent changeAgreeWithTermOfUse(
+          {required bool? agree}) =>
+      ChangeAgreeWithTermOfUseEvent(agree);
+
   static SaveUserSignUpInputAuthEvent saveUserSignUpInput(
           {required String name,
           required String email,
@@ -130,6 +134,13 @@ class ChangeAgreeWithPolicyAuthEvent extends AuthEvent {
   final bool? agreeWithPolicy;
 
   ChangeAgreeWithPolicyAuthEvent(this.agreeWithPolicy);
+}
+
+@immutable
+class ChangeAgreeWithTermOfUseEvent extends AuthEvent {
+  final bool? agreeWithTermOfUse;
+
+  ChangeAgreeWithTermOfUseEvent(this.agreeWithTermOfUse);
 }
 
 @immutable

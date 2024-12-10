@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:rus_bal_dict/core/constants/config.dart';
 import 'package:rus_bal_dict/feature/auth/domain/bloc/auth_bloc.dart';
 import 'package:rus_bal_dict/feature/auth/domain/repository/auth_repository.dart';
 import 'package:rus_bal_dict/feature/profile/domain/repository/payment_repository.dart';
@@ -22,27 +21,17 @@ Future<void> main() async {
   final favoritesBox = await Hive.openBox<FavoriteWordHiveModel>('favorites');
   final settingsBox = await Hive.openBox<AppSettingsHiveModel>('settings');
 
-  const configString =
-      String.fromEnvironment('dictionary', defaultValue: 'Default');
-  final currentConfig = EnvironmentConfig.values
-      .where((envConfig) =>
-          envConfig.name.toLowerCase() == configString.toLowerCase())
-      .firstOrNull;
-  if (currentConfig == null) {
-    throw Exception('Неверная переменная запуска $configString');
-  }
-
   if (!kIsWeb) {
     final tempDir = await getTemporaryDirectory();
-    coreModule(currentConfig, HiveCacheStore(tempDir.path));
+    coreModule(HiveCacheStore(tempDir.path));
   } else {
-    coreModule(currentConfig);
+    coreModule();
   }
 
-  authModule(settingsBox, currentConfig);
-  wordListModule(currentConfig);
+  authModule(settingsBox);
+  wordListModule();
   favoriteModule(settingsBox, favoritesBox);
-  detailModule(currentConfig);
+  detailModule();
   historyModule(settingsBox, historyBox);
   profileModule(settingsBox);
   runApp(MyApp());

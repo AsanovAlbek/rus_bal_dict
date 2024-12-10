@@ -7,7 +7,6 @@ import 'package:rus_bal_dict/export.dart';
 import 'package:rus_bal_dict/feature/auth/domain/bloc/auth_bloc.dart';
 import 'package:rus_bal_dict/feature/auth/domain/bloc/auth_event.dart';
 import 'package:rus_bal_dict/feature/auth/domain/bloc/auth_state.dart';
-import 'package:rus_bal_dict/feature/auth/domain/validator/validator.dart';
 
 class PolicyAgreeScreen extends StatelessWidget {
   const PolicyAgreeScreen({super.key});
@@ -17,7 +16,7 @@ class PolicyAgreeScreen extends StatelessWidget {
     return Scaffold(
       body: BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
         return CustomScrollView(slivers: [
-          const MyAppBar(title: 'Политика конфиденциальности'),
+          const MyAppBar(title: 'Подтверждение регистрации'),
           SliverToBoxAdapter(
               child: Padding(
             padding: const EdgeInsets.all(8),
@@ -32,7 +31,12 @@ class PolicyAgreeScreen extends StatelessWidget {
                 margin: EdgeInsets.all(8),
                 child: Padding(
                   padding: EdgeInsets.all(8),
-                  child: HtmlWidget(AppStrings.politics),
+                  child: Column(
+                    children: [
+                      HtmlWidget(AppStrings.politics),
+                      HtmlWidget(AppStrings.termOfUse),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -48,6 +52,20 @@ class PolicyAgreeScreen extends StatelessWidget {
                     context
                         .read<AuthBloc>()
                         .add(AuthEvent.changeAgree(agree: agree));
+                  }),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: CheckboxListTile.adaptive(
+                  title: const Text(
+                      'Я ознакомлен и согласен с условиями использования'),
+                  value: state.termOfUseAgree,
+                  onChanged: (agree) {
+                    context
+                        .read<AuthBloc>()
+                        .add(AuthEvent.changeAgreeWithTermOfUse(agree: agree));
                   }),
             ),
           ),
@@ -83,8 +101,7 @@ class PolicyAgreeScreen extends StatelessWidget {
           }
         },
         onUserNoAgreeWithPolicy: () {
-          context.showSnackBar(
-              'Вы не согласились с политикой конфиденциальности.');
+          context.showSnackBar('Вы не согласились с условиями.');
         }));
   }
 }

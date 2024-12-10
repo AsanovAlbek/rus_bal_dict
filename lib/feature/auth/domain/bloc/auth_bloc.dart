@@ -24,11 +24,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<SendCodeToEmailAuthEvent>(_sendCodeToEmail, transformer: droppable());
     on<UpdateUserPasswordAuthEvent>(_updateUserPassword);
     on<ChangeAgreeWithPolicyAuthEvent>(_changeAgreeWithPolicy);
+    on<ChangeAgreeWithTermOfUseEvent>(_changeAgreeWithTermOfUse);
     on<SaveUserSignUpInputAuthEvent>(_saveSignUpInput);
   }
 
   FutureOr<void> _signUp(SignUpEvent event, Emitter<AuthState> emit) async {
-    if (!state.policyAgree) {
+    if (!state.policyAgree || !state.termOfUseAgree) {
       Future.sync(() => event.onUserNoAgreeWithPolicy?.call());
       return;
     }
@@ -128,6 +129,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   FutureOr<void> _changeAgreeWithPolicy(
       ChangeAgreeWithPolicyAuthEvent event, Emitter<AuthState> emit) {
     emit(state.copyWith(policyAgree: event.agreeWithPolicy));
+  }
+
+  FutureOr<void> _changeAgreeWithTermOfUse(
+      ChangeAgreeWithTermOfUseEvent event, Emitter<AuthState> emit) {
+    emit(state.copyWith(termOfUseAgree: event.agreeWithTermOfUse));
   }
 
   FutureOr<void> _saveSignUpInput(

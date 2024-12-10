@@ -27,13 +27,9 @@ class FavoriteRepositoryImpl implements FavoritesRepository {
       var appSettings = settingsBox
           .get(_singleSettingsKey, defaultValue: AppSettingsHiveModel())!
           .toModel();
-      // Если понадобится хранить на сервере
-      // final wordDeleteResponse = await dio.delete('delete_favorite_word/',
-      //     queryParameters: {'user_id': appSettings.userInfo.id, 'word_id': favoriteWord.id});
       final hiveWord =
           favoriteWord.toFavoritesHive(userId: appSettings.userInfo.id ?? 0);
       favoritesBox.delete(hiveWord.wordId);
-      //return Right(Word.fromJson(wordDeleteResponse.data));
       return Right(favoriteWord);
     } on Exception catch (e) {
       return Left(e);
@@ -66,9 +62,6 @@ class FavoriteRepositoryImpl implements FavoritesRepository {
           .toModel();
       favoritesBox.put(favoriteWord.id,
           favoriteWord.toFavoritesHive(userId: appSettings.userInfo.id ?? 0));
-      // final favorite = FavoriteWord(id: 0, userId: appSettings.userInfo.id ?? 0, wordId: favoriteWord.id ?? 0);
-      // final favoriteAddResponse = await dio.post('add_favorite_word/', data: favorite.toJson());
-      // return Right(Word.fromJson(favoriteAddResponse.data));
       return Right(favoriteWord);
     } on Exception catch (e) {
       return Left(e);

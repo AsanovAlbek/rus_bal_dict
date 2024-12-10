@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive/hive.dart';
-import 'package:rus_bal_dict/core/constants/config.dart';
 import 'package:rus_bal_dict/core/hive/settings/app_settings_hive.dart';
 import 'package:rus_bal_dict/core/model/settings/converter.dart';
 import 'package:rus_bal_dict/core/navigation/navigation_args.dart';
@@ -40,9 +39,8 @@ final _profileScreenNavigationKey =
     GlobalKey<NavigatorState>(debugLabel: 'settings shell');
 
 class AppRouter {
-  final EnvironmentConfig config;
   late final GoRouter router;
-  AppRouter(this.config) {
+  AppRouter() {
     router = GoRouter(
         navigatorKey: _rootNavigatorKey,
         initialLocation: '/auth',

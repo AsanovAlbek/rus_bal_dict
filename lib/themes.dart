@@ -13,6 +13,7 @@ final lightTheme = ThemeData.light().copyWith(
     scaffoldBackgroundColor: AppLightColors.backgroundColor,
     colorScheme: ColorScheme.fromSeed(
         seedColor: AppLightColors.surfaceContainerColor,
+        error: Colors.red,
         onPrimary: Colors.black),
     bottomNavigationBarTheme: bottomBarThemeLight,
     cardTheme: const CardTheme(
@@ -32,6 +33,7 @@ final darkTheme = ThemeData.dark().copyWith(
     colorScheme: ColorScheme.fromSeed(
         seedColor: Colors.deepPurple,
         onPrimary: Colors.white,
+        error: Colors.redAccent,
         onSecondary: Colors.lightBlue[400],
         onSurface: Colors.white),
     bottomNavigationBarTheme: bottomBarThemeDark,
@@ -64,3 +66,11 @@ const bottomBarThemeDark = BottomNavigationBarThemeData(
 const dividerLightTheme = DividerThemeData(color: AppLightColors.dividerColor);
 
 const dividerDarkTheme = DividerThemeData(color: AppDarkColors.dividerColor);
+
+final errorTextStyleDark = textTheme.apply(
+  bodyColor: const Color.fromRGBO(216, 12, 12, 1)
+);
+
+final errorTextStyleLight = textTheme.apply(
+  bodyColor: Colors.red
+);

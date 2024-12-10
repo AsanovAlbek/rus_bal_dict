@@ -100,7 +100,7 @@ class AuthRepositoryImpl implements AuthRepository {
       int maxRandom = 999999;
       final int generatedRandomCode =
           Random().nextInt(maxRandom - minRandom) + minRandom;
-      await withoutBaseDio.post('https://files.howtosayve.com/email.php',
+      await withoutBaseDio.post('http://files.howtosayve.com/email.php',
           data:
               FormData.fromMap({'email': email, 'code': generatedRandomCode}));
       return Right(generatedRandomCode);

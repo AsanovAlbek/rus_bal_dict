@@ -8,7 +8,7 @@ class FeedbackScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(slivers: [
-      const MyAppBar(title: 'О приложении'),
+      const MyAppBar(title: 'Обратная связь'),
       SliverList.list(
           children: List.filled(
         10,
