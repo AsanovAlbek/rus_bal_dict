@@ -1,12 +1,14 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rus_bal_dict/core/model/user/user.dart';
 import 'package:rus_bal_dict/feature/auth/data/exceptions/exceptions.dart';
 import 'package:rus_bal_dict/feature/auth/domain/bloc/auth_event.dart';
 import 'package:rus_bal_dict/feature/auth/domain/bloc/auth_state.dart';
+import 'package:talker/talker.dart';
 
 import '../repository/auth_repository.dart';
 
@@ -19,11 +21,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<SignOutEvent>(_signOut);
     on<ChangeAuthPageEvent>(_changeAuthPage);
     on<MaskPasswordEvent>(_maskPassword);
+    on<SendCodeToEmailAuthEvent>(_sendCodeToEmail, transformer: droppable());
+    on<UpdateUserPasswordAuthEvent>(_updateUserPassword);
+    on<ChangeAgreeWithPolicyAuthEvent>(_changeAgreeWithPolicy);
+    on<ChangeAgreeWithTermOfUseEvent>(_changeAgreeWithTermOfUse);
+    on<SaveUserSignUpInputAuthEvent>(_saveSignUpInput);
   }
 
   FutureOr<void> _signUp(SignUpEvent event, Emitter<AuthState> emit) async {
+    if (!state.policyAgree || !state.termOfUseAgree) {
+      Future.sync(() => event.onUserNoAgreeWithPolicy?.call());
+      return;
+    }
     final deviceId = await _deviceId();
-    final user = User(name: event.name, email: event.email, password: event.password, imei: deviceId ?? 'unknown');
+    final user = User(
+        name: event.name,
+        email: event.email,
+        password: event.password,
+        imei: deviceId ?? 'unknown');
     final signUpEither = await repository.registerUser(user: user);
     signUpEither.either((userSignUpException) {
       String errorMessage = userSignUpException is UserAlreadyExistException
@@ -49,10 +64,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   FutureOr<void> _signIn(SignInEvent event, Emitter<AuthState> emit) async {
-    final signInEither = await repository.signIn(email: event.email, password: event.password);
+    final signInEither =
+        await repository.signIn(email: event.email, password: event.password);
     signInEither.either((userSignInException) {
-      String errorMessage =
-          userSignInException is UserNotFoundException ? userSignInException.message : 'Неизвестная ошибка';
+      String errorMessage = userSignInException is UserNotFoundException
+          ? userSignInException.message
+          : 'Неизвестная ошибка';
       event.onError?.call(errorMessage);
     }, (user) {
       event.onSuccess?.call(user, 'Вы успешно вошли');
@@ -63,11 +80,66 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     repository.signOut();
   }
 
-  FutureOr<void> _changeAuthPage(ChangeAuthPageEvent event, Emitter<AuthState> emit) {
+  FutureOr<void> _changeAuthPage(
+      ChangeAuthPageEvent event, Emitter<AuthState> emit) {
     emit(state.copyWith(pageState: event.pageState));
   }
 
-  FutureOr<void> _maskPassword(MaskPasswordEvent event, Emitter<AuthState> emit) {
+  FutureOr<void> _maskPassword(
+      MaskPasswordEvent event, Emitter<AuthState> emit) {
     emit(state.copyWith(isPasswordMasked: event.isPasswordMasked));
+  }
+
+  FutureOr<void> _sendCodeToEmail(
+      SendCodeToEmailAuthEvent event, Emitter<AuthState> emit) async {
+    final email =
+        event.email.isNotEmpty ? event.email : state.emailForRestorePassword;
+    final sendCodeEither =
+        await repository.sendCodeToEmail(email: email ?? event.email);
+    sendCodeEither.either((userSendCodeException) {
+      event.onError?.call(userSendCodeException.toString());
+    }, (code) {
+      emit(state.copyWith(
+          codeFromEmail: code, emailForRestorePassword: event.email));
+      event.onSuccess?.call(code);
+    });
+    if (event.email.trim().isNotEmpty) {
+      emit(state.copyWith(emailForRestorePassword: event.email));
+    }
+  }
+
+  FutureOr<void> _updateUserPassword(
+      UpdateUserPasswordAuthEvent event, Emitter<AuthState> emit) async {
+    try {
+      if (event.newPassword == event.confirmPassword) {
+        await repository.resetUserPassword(
+            email: event.email, newPassword: event.newPassword);
+        event.onSuccess?.call();
+        // Обнулить состояние
+        emit(AuthState());
+      } else {
+        event.onError?.call('Пароли не совпадают');
+      }
+    } on Exception catch (e, s) {
+      event.onError?.call(e.toString());
+      Talker().handle(e, s);
+    }
+  }
+
+  FutureOr<void> _changeAgreeWithPolicy(
+      ChangeAgreeWithPolicyAuthEvent event, Emitter<AuthState> emit) {
+    emit(state.copyWith(policyAgree: event.agreeWithPolicy));
+  }
+
+  FutureOr<void> _changeAgreeWithTermOfUse(
+      ChangeAgreeWithTermOfUseEvent event, Emitter<AuthState> emit) {
+    emit(state.copyWith(termOfUseAgree: event.agreeWithTermOfUse));
+  }
+
+  FutureOr<void> _saveSignUpInput(
+      SaveUserSignUpInputAuthEvent event, Emitter<AuthState> emit) {
+    emit(state.copyWith(
+        email: event.email, password: event.password, userName: event.name));
+    event.onComplete?.call();
   }
 }

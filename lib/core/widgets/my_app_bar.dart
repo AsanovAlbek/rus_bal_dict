@@ -27,26 +27,35 @@ class MyAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Color> appBarGradient(SettingsThemeMode appThemeMode) {
-      final darkGradientColors = [AppDarkColors.gradientStartColor, AppDarkColors.gradientEndColor];
-      final lightGradientColors = [AppLightColors.gradientStartColor, AppLightColors.gradientEndColor];
+      final darkGradientColors = [
+        AppDarkColors.gradientStartColor,
+        AppDarkColors.gradientEndColor
+      ];
+      final lightGradientColors = [
+        AppLightColors.gradientStartColor,
+        AppLightColors.gradientEndColor
+      ];
       return switch (appThemeMode) {
         SettingsThemeMode.light => lightGradientColors,
         SettingsThemeMode.dark => darkGradientColors,
-        SettingsThemeMode.system => MediaQuery.of(context).platformBrightness == Brightness.light
-            ? lightGradientColors
-            : darkGradientColors
+        SettingsThemeMode.system =>
+          MediaQuery.of(context).platformBrightness == Brightness.light
+              ? lightGradientColors
+              : darkGradientColors
       };
     }
 
     return ValueListenableBuilder(
       valueListenable: Hive.box<AppSettingsHiveModel>('settings').listenable(),
-      builder: (BuildContext context, Box<AppSettingsHiveModel> value, Widget? child) {
+      builder: (BuildContext context, Box<AppSettingsHiveModel> value,
+          Widget? child) {
         final themeMode = value.getAt(0)!.toModel().settings.themeMode;
         return SliverAppBar(
           pinned: true,
           expandedHeight: showSearchField ? 150 : null,
           flexibleSpace: Container(
-            decoration: BoxDecoration(gradient: LinearGradient(colors: appBarGradient(themeMode))),
+            decoration: BoxDecoration(
+                gradient: LinearGradient(colors: appBarGradient(themeMode))),
           ),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios),
@@ -60,13 +69,18 @@ class MyAppBar extends StatelessWidget {
                   builder: (dialogContext) {
                     final textStyle = Theme.of(context).textTheme.bodyMedium;
                     return AlertDialog(
-                      title: Text('Вы точно хотите выйти из приложения?', style: textStyle),
+                      title: Text('Вы точно хотите выйти из приложения?',
+                          style: textStyle),
                       actions: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            TextButton(onPressed: () => exit(0), child: const Text('Да')),
-                            TextButton(onPressed: () => dialogContext.pop(), child: const Text('Нет')),
+                            TextButton(
+                                onPressed: () => exit(0),
+                                child: const Text('Да')),
+                            TextButton(
+                                onPressed: () => dialogContext.pop(),
+                                child: const Text('Нет')),
                           ],
                         )
                       ],
@@ -77,7 +91,10 @@ class MyAppBar extends StatelessWidget {
           title: FittedBox(
               child: Text(
             title,
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w700),
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium
+                ?.copyWith(fontWeight: FontWeight.w700),
           )),
           bottom: showSearchField
               ? PreferredSize(

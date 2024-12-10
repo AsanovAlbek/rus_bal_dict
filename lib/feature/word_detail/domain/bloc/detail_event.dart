@@ -5,7 +5,7 @@ class GetAudioEvent extends DetailEvent {
   GetAudioEvent(this.audioUrl);
 }
 
-class ChangeFavoriteEvent extends DetailEvent{
+class ChangeFavoriteEvent extends DetailEvent {
   final bool isFavorite;
 
   ChangeFavoriteEvent(this.isFavorite);

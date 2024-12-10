@@ -19,19 +19,45 @@ class ProfileScreen extends StatelessWidget {
           slivers: [
             const MyAppBar(title: 'Профиль'),
             SliverList.list(children: [
-              ProfileItem(title: 'Настройки', onPress: () => context.go('/profile/settings')),
-              const ProfileItem(title: 'Предложить слово'),
-              const ProfileItem(title: 'Обратная связь'),
-              const ProfileItem(title: 'О приложении'),
-              const ProfileItem(title: 'Условия использования'),
+              ProfileItem(
+                  title: 'Настройки',
+                  onPress: () => context.go('/profile/settings')),
+              ProfileItem(
+                title: 'Предложить слово',
+                onPress: () => context.go('/profile/suggest_word'),
+              ),
+              ProfileItem(
+                title: 'Обратная связь',
+                onPress: () => context.go('/profile/feedback'),
+              ),
+              ProfileItem(
+                title: 'Подписка',
+                onPress: () async {
+                  await context.read<ProfileCubit>().fetchUserPaymentInfo(() {
+                    context.go('/profile/premium');
+                  });
+                },
+              ),
+              ProfileItem(
+                title: 'О приложении',
+                onPress: () => context.go('/profile/about_app'),
+              ),
+              ProfileItem(
+                title: 'Условия использования',
+                onPress: () => context.go('/profile/term_of_use'),
+              ),
+              ProfileItem(
+                title: 'Политика конфиденциальности',
+                onPress: () => context.go('/profile/privacy'),
+              ),
               ProfileItem(
                   title: 'Выход',
                   titleColor: Colors.red,
                   showDivider: false,
                   onPress: () {
                     context.read<ProfileCubit>().signOut();
-                    context.pushReplacement('/');
-                  })
+                    context.pushReplacement('/auth');
+                  }),
             ])
           ],
         );

@@ -13,18 +13,19 @@ class DetailRepositoryImpl implements DetailRepository {
   DetailRepositoryImpl({required this.dio});
 
   @override
-  Future<Either<Exception, Uint8List?>> getAudioByPath({required String audioPath}) async {
+  Future<Either<Exception, Uint8List?>> getAudioByPath(
+      {required String audioPath}) async {
     try {
-        debugPrint('audio path $audioPath');
-        final response = await dio.get('get_file/', queryParameters: {'file_path': audioPath});
-        try {
-          return Right(base64Decode(response.data!['contents']));
-        } catch (e) {
-          return const Right(null);
-        }
-    } on Exception catch(e) {
+      debugPrint('audio path $audioPath');
+      final response =
+          await dio.get('get_file/', queryParameters: {'file_path': audioPath});
+      try {
+        return Right(base64Decode(response.data!['contents']));
+      } catch (e) {
+        return const Right(null);
+      }
+    } on Exception catch (e) {
       return Left(e);
     }
   }
-
 }

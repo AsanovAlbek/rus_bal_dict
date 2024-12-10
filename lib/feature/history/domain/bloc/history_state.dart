@@ -2,11 +2,14 @@ import '../../../../core/model/word/word.dart';
 
 sealed class HistoryState {
   static HistoryStateLoading loading() => HistoryStateLoading();
-  static HistoryStateError error([String? message]) => HistoryStateError(message: message);
-  static HistoryStateLoaded loaded({List<Word> words = const <Word>[]}) => HistoryStateLoaded(wordsFromHistory: words);
+  static HistoryStateError error([String? message]) =>
+      HistoryStateError(message: message);
+  static HistoryStateLoaded loaded({List<Word> words = const <Word>[]}) =>
+      HistoryStateLoaded(wordsFromHistory: words);
 }
 
 class HistoryStateLoading extends HistoryState {}
+
 class HistoryStateError extends HistoryState {
   final String? message;
 

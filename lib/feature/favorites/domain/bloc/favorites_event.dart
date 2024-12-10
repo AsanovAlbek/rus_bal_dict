@@ -6,13 +6,16 @@ sealed class FavoritesEvent {
   static LoadFavoritesEvent load() => LoadFavoritesEvent();
 
   static DeleteFromFavoritesEvent deleteFromFavorites(
-          {required Word word, Function(Word)? onSuccess, Function(String?)? onError}) =>
+          {required Word word,
+          Function(Word)? onSuccess,
+          Function(String?)? onError}) =>
       DeleteFromFavoritesEvent(word: word);
 
-  static AddToFavoritesEvent addToFavorites({
-    required Word word,
-    Function(Word)? onSuccess,
-    Function(String?)? onError}) => AddToFavoritesEvent(word: word);
+  static AddToFavoritesEvent addToFavorites(
+          {required Word word,
+          Function(Word)? onSuccess,
+          Function(String?)? onError}) =>
+      AddToFavoritesEvent(word: word);
 }
 
 @immutable

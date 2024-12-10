@@ -1,9 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 
-sealed class DetailState {
-
-}
+sealed class DetailState {}
 
 class DetailStateLoaded extends DetailState with EquatableMixin {
   final Uint8List? bytes;
@@ -14,7 +12,8 @@ class DetailStateLoaded extends DetailState with EquatableMixin {
   List<Object?> get props => [bytes];
 
   DetailStateLoaded copyWith({Uint8List? bytes, bool? isFavorite}) {
-    return DetailStateLoaded(bytes: bytes ?? this.bytes, isFavorite: isFavorite ?? this.isFavorite);
+    return DetailStateLoaded(
+        bytes: bytes ?? this.bytes, isFavorite: isFavorite ?? this.isFavorite);
   }
 }
 
@@ -24,7 +23,6 @@ class DetailStateError extends DetailState {
   DetailStateError({this.exception});
 }
 
-class DetailStateLoading extends DetailState{
-
+class DetailStateLoading extends DetailState {
   DetailStateLoading();
 }

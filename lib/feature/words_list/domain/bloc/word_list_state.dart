@@ -20,7 +20,11 @@ sealed class WordsListState {
           canScrollUp: canScrollUp,
           totalWordsCount: totalWordsCount);
 
-  static WordsListStateError error({String? message}) => WordsListStateError(message: message);
+  static WordsListStateError error({String? message}) =>
+      WordsListStateError(message: message);
+  static WordsListStateEmpty empty(
+          {String message = 'Здесь пока ничего нет'}) =>
+      WordsListStateEmpty(message);
 }
 
 class WordsListStateLoading extends WordsListState {}
@@ -66,4 +70,9 @@ class WordsListStateError extends WordsListState {
   final String? message;
 
   WordsListStateError({this.message});
+}
+
+class WordsListStateEmpty extends WordsListState {
+  final String message;
+  WordsListStateEmpty(this.message);
 }

@@ -21,9 +21,9 @@ class HistoryRepositoryImpl implements HistoryRepository {
     final wordsFromHistory = _historyBox.values
         .where((historyWord) => historyWord.userId == (settings.userId ?? 0))
         .map((hiveModel) {
-          _historyBox.delete(hiveModel.id);
-          return hiveModel.toModel();
-        }).toList();
+      _historyBox.delete(hiveModel.id);
+      return hiveModel.toModel();
+    }).toList();
     return wordsFromHistory;
   }
 
@@ -35,13 +35,14 @@ class HistoryRepositoryImpl implements HistoryRepository {
         'model = ${hiveModel.id}, ${hiveModel.word} exists = ${_historyBox.containsKey(hiveModel.id)}');
     if (_historyBox.containsKey(hiveModel.id)) {
       await _historyBox.delete(hiveModel.id);
-      _talker.debug('after delete model exists = ${_historyBox.containsKey(hiveModel.id)}');
     }
     _historyBox.put(hiveModel.id, hiveModel);
   }
 
   @override
   Stream<Word> wordsFromHistory() {
-    return _historyBox.watch().map((event) => (event.value as WordHiveModel).toModel());
+    return _historyBox
+        .watch()
+        .map((event) => (event.value as WordHiveModel).toModel());
   }
 }

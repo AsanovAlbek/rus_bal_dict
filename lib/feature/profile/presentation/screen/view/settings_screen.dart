@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rus_bal_dict/core/utils/app_utils.dart';
 import 'package:rus_bal_dict/core/widgets/my_app_bar.dart';
 
-import '../../../../core/model/settings/theme_mode.dart';
-import '../../domain/cubit/profile_cubit.dart';
-import '../../domain/cubit/profile_state.dart';
+import '../../../../../core/model/settings/theme_mode.dart';
+import '../../../domain/cubit/profile_cubit.dart';
+import '../../../domain/cubit/profile_state.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -26,21 +26,24 @@ class SettingsScreen extends StatelessWidget {
                   showSelectedIcon: false,
                   selected: state.selectThemeTogglesSelection,
                   onSelectionChanged: context.read<ProfileCubit>().selectTheme,
-                  segments: SettingsThemeMode.values.map((mode) {
-                    return ButtonSegment(value: mode, label: Text(mode.label));
-                  }).toList()),
+                  segments: [
+                    for (final mode in SettingsThemeMode.values)
+                      ButtonSegment(value: mode, label: Text(mode.label))
+                  ]),
             ).asSliver,
             SliverPadding(
               padding: const EdgeInsets.all(8.0),
               sliver: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Flexible(child: Text('Размер текста: ${state.appSettings.settings.fontSize.toStringAsFixed(2)}')),
+                  Flexible(
+                      child: Text(
+                          'Размер текста: ${state.appSettings.settings.fontSize.toStringAsFixed(2)}')),
                   Flexible(
                     child: TextButton(
-                        onPressed: () {
-                          context.read<ProfileCubit>().changeTextScale(1.0);
-                        },
+                        onPressed: context
+                            .read<ProfileCubit>()
+                            .changeTextScaleToDefault,
                         child: const Text('По умолчанию')),
                   )
                 ],
@@ -53,9 +56,7 @@ class SettingsScreen extends StatelessWidget {
                 min: 0.8,
                 max: 1.5,
                 label: '${state.appSettings.settings.fontSize}',
-                onChanged: (sliderValue) {
-                  context.read<ProfileCubit>().changeTextScale(sliderValue);
-                },
+                onChanged: context.read<ProfileCubit>().changeTextScale,
               ),
             ).asSliver
           ],

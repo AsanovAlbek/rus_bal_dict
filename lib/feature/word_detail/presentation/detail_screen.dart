@@ -1,33 +1,4 @@
-import 'dart:async';
-import 'dart:typed_data';
-
-import 'package:audioplayers/audioplayers.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:get_it/get_it.dart';
-import 'package:go_router/go_router.dart';
-import 'package:hive_flutter/adapters.dart';
-import 'package:rus_bal_dict/core/hive/favorite_word/favorite_word_hive_model.dart';
-import 'package:rus_bal_dict/core/utils/app_utils.dart';
-import 'package:rus_bal_dict/core/widgets/favorites_icon_button.dart';
-import 'package:rus_bal_dict/core/widgets/my_app_bar.dart';
-import 'package:rus_bal_dict/feature/favorites/data/converter.dart';
-import 'package:rus_bal_dict/feature/favorites/domain/bloc/favorites_bloc.dart';
-import 'package:rus_bal_dict/feature/favorites/domain/bloc/favorites_state.dart';
-import 'package:rus_bal_dict/feature/history/domain/bloc/history_bloc.dart';
-import 'package:rus_bal_dict/feature/history/domain/bloc/history_event.dart';
-import 'package:rus_bal_dict/feature/profile/domain/cubit/profile_cubit.dart';
-import 'package:rus_bal_dict/feature/word_detail/domain/bloc/detail_bloc.dart';
-import 'package:rus_bal_dict/feature/word_detail/domain/bloc/detail_event.dart';
-import 'package:rus_bal_dict/feature/word_detail/domain/bloc/detail_state.dart';
-import 'package:talker/talker.dart';
-
-import '../../../core/model/word/word.dart';
-import '../domain/repository/detail_repository.dart';
-
-const double _normalSpeed = 1.0;
-const double _slowSpeed = 0.5;
+import 'detail.dart';
 
 class WordsDetailScreen extends StatefulWidget {
   final Word? word;
@@ -40,25 +11,19 @@ class WordsDetailScreen extends StatefulWidget {
 
 class _WordsDetailScreenState extends State<WordsDetailScreen> {
   final AudioPlayer player = GetIt.I<AudioPlayer>();
-  late final StreamSubscription<PlayerState> _playerStateListener;
-  IconData _iconData = Icons.play_arrow;
 
   @override
   void initState() {
-    _playerStateListener = player.onPlayerStateChanged.listen((state) {
-      setState(() {
-        _iconData = state == PlayerState.playing ? Icons.pause : Icons.play_arrow;
-      });
-    });
     if (mounted && widget.word != null) {
-      context.read<HistoryBloc>().add(HistoryEvent.addToHistory(word: widget.word!));
+      context
+          .read<HistoryBloc>()
+          .add(HistoryEvent.addToHistory(word: widget.word!));
     }
     super.initState();
   }
 
   @override
   void dispose() {
-    _playerStateListener.cancel();
     super.dispose();
   }
 
@@ -72,62 +37,30 @@ class _WordsDetailScreenState extends State<WordsDetailScreen> {
           context.pop();
         },
         child: ValueListenableBuilder(
-          valueListenable: Hive.box<FavoriteWordHiveModel>('favorites').listenable(),
-          builder: (BuildContext context, Box<FavoriteWordHiveModel> value, Widget? child) {
+          valueListenable:
+              Hive.box<FavoriteWordHiveModel>('favorites').listenable(),
+          builder: (BuildContext context, Box<FavoriteWordHiveModel> value,
+              Widget? child) {
             return BlocProvider(
-              create: (context) =>
-                  DetailBloc(GetIt.I<DetailRepository>())..add(GetAudioEvent(widget.word?.audioUrl)),
+              create: (context) => DetailBloc(GetIt.I<DetailRepository>())
+                ..add(GetAudioEvent(widget.word?.audioUrl)),
               child: BlocBuilder<DetailBloc, DetailState>(
                 builder: (context, state) {
-                  final iconColor = Theme.of(context).iconTheme.color ?? Colors.black;
                   final favoritesState = context.read<FavoritesBloc>().state;
                   if (favoritesState is FavoritesStateLoaded) {
-                    context
-                        .read<DetailBloc>()
-                        .add(ChangeFavoriteEvent(favoritesState.favorites.contains(widget.word)));
+                    context.read<DetailBloc>().add(ChangeFavoriteEvent(
+                        favoritesState.favorites.contains(widget.word)));
                   }
                   return switch (state) {
-                    DetailStateLoaded(bytes: final bytes, isFavorite: final isFavorite) =>
-                      CustomScrollView(controller: ScrollController(), slivers: [
-                        MyAppBar(
-                          title: widget.word?.word.toCapitalized() ?? '',
-                          actions: [
-                            IconButton(
-                                onPressed: () => _playMusic(bytes: state.bytes),
-                                icon: SvgPicture.asset(
-                                  'assets/images/play_audio.svg',
-                                  colorFilter: ColorFilter.mode(iconColor, BlendMode.srcIn),
-                                )),
-                            FavoritesIconButton(
-                              isFavorite: Hive.box<FavoriteWordHiveModel>('favorites')
-                                  .containsKey(widget.word?.id ?? 0),
-                              onPressed: () {
-                                if (widget.word != null) {
-                                  int wordId = widget.word?.id ?? 0;
-                                  if (value.containsKey(wordId)) {
-                                    value.delete(wordId);
-                                  } else {
-                                    int userId =
-                                        context.read<ProfileCubit>().state.appSettings.userInfo.id ?? 0;
-                                    value.put(wordId, widget.word!.toFavoritesHive(userId: userId));
-                                  }
-                                  //context.read<WordsListBloc>().add(WordsListEvent.fetch());
-                                }
-                              },
-                            )
-                          ],
-                        ),
-                        const SizedBox(height: 12).asSliver,
-                        SliverPadding(
-                            padding: const EdgeInsets.all(12),
-                            sliver: Card(
-                                child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text("${widget.word?.meaning.toCapitalized()}"),
-                            )).asSliver)
-                      ]),
-                    DetailStateError(exception: final exception) => Center(child: Text('$exception')),
-                    DetailStateLoading() => const Center(child: CircularProgressIndicator()),
+                    DetailStateLoaded() => DetailContent(
+                        favoritesBox: value,
+                        word: widget.word,
+                        playAudio: () => _playMusic(bytes: state.bytes),
+                      ),
+                    DetailStateError(exception: final exception) =>
+                      Center(child: Text('$exception')),
+                    DetailStateLoading() =>
+                      const Center(child: CircularProgressIndicator()),
                   };
                 },
               ),
@@ -138,7 +71,7 @@ class _WordsDetailScreenState extends State<WordsDetailScreen> {
     );
   }
 
-  void _playMusic({Uint8List? bytes, double speed = _normalSpeed}) {
+  void _playMusic({Uint8List? bytes}) {
     Source? audioSource;
     if (bytes != null) {
       audioSource = BytesSource(bytes);
@@ -147,11 +80,68 @@ class _WordsDetailScreenState extends State<WordsDetailScreen> {
       if (player.state == PlayerState.playing) {
         player.stop();
       } else {
-        player.setPlaybackRate(speed);
         player.setSource(audioSource);
         player.play(audioSource);
       }
     }
     Talker().debug('bytes = $bytes source = $audioSource');
+  }
+}
+
+class DetailContent extends StatelessWidget {
+  final Function()? playAudio;
+  final Word? word;
+  final Box<FavoriteWordHiveModel> favoritesBox;
+
+  const DetailContent(
+      {super.key, this.playAudio, this.word, required this.favoritesBox});
+
+  @override
+  Widget build(BuildContext context) {
+    final iconColor = Theme.of(context).iconTheme.color ?? Colors.black;
+    return CustomScrollView(controller: ScrollController(), slivers: [
+      MyAppBar(
+        title: word?.word.toCapitalized() ?? '',
+        actions: [
+          IconButton(
+              onPressed: playAudio,
+              icon: SvgPicture.asset(
+                'assets/images/play_audio.svg',
+                colorFilter: ColorFilter.mode(iconColor, BlendMode.srcIn),
+              )),
+          FavoritesIconButton(
+            isFavorite: Hive.box<FavoriteWordHiveModel>('favorites')
+                .containsKey(word?.id ?? 0),
+            onPressed: () {
+              if (word != null) {
+                int wordId = word?.id ?? 0;
+                if (favoritesBox.containsKey(wordId)) {
+                  favoritesBox.delete(wordId);
+                } else {
+                  int userId = context
+                          .read<ProfileCubit>()
+                          .state
+                          .appSettings
+                          .userInfo
+                          .id ??
+                      0;
+                  favoritesBox.put(
+                      wordId, word!.toFavoritesHive(userId: userId));
+                }
+                //context.read<WordsListBloc>().add(WordsListEvent.fetch());
+              }
+            },
+          )
+        ],
+      ),
+      const SizedBox(height: 12).asSliver,
+      SliverPadding(
+          padding: const EdgeInsets.all(12),
+          sliver: Card(
+              child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: HtmlWidget("${word?.meaning.toCapitalized()}"),
+          )).asSliver)
+    ]);
   }
 }

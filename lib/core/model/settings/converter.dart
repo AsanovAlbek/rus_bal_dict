@@ -10,16 +10,21 @@ extension AppSettingsToHive on AppSettings {
         isUserSignedIn: userInfo.isUserSignIn,
         themeMode: settings.themeMode.index,
         fontSize: settings.fontSize,
-        historyStaleLimitTime: settings.historyStaleLimitTime);
+        historyStaleLimitTime: settings.historyStaleLimitTime,
+        email: userInfo.email,
+        premiumDays: userInfo.premiumDays ?? 0);
   }
 }
 
 extension HiveToAppSettings on AppSettingsHiveModel {
   AppSettings toModel() {
     return AppSettings(
-        userInfo: UserInfo(id: userId,
+        userInfo: UserInfo(
+            id: userId,
             name: userName,
-            isUserSignIn: isUserSignedIn),
+            isUserSignIn: isUserSignedIn,
+            email: email,
+            premiumDays: premiumDays),
         settings: Settings(
             themeMode: SettingsThemeMode.values[themeMode],
             fontSize: fontSize ?? 1.0,

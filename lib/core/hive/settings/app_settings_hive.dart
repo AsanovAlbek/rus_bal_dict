@@ -29,10 +29,17 @@ class AppSettingsHiveModel extends HiveObject {
   double? fontSize;
 
   @HiveField(5, defaultValue: null)
+
   /// Настройки времени жизни записей в истории.
   /// Все записи, срок которых истек удаляются
   /// Если null, то записи не удаляются из истории
   Duration? historyStaleLimitTime;
+
+  @HiveField(6, defaultValue: null)
+  String? email;
+
+  @HiveField(7, defaultValue: 0)
+  int premiumDays;
 
   AppSettingsHiveModel(
       {this.userId,
@@ -40,5 +47,7 @@ class AppSettingsHiveModel extends HiveObject {
       this.isUserSignedIn = false,
       this.themeMode = 0,
       this.fontSize,
-      this.historyStaleLimitTime});
+      this.historyStaleLimitTime,
+      this.email,
+      this.premiumDays = 0});
 }

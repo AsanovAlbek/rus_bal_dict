@@ -45,6 +45,7 @@ class AuthForm extends StatelessWidget {
               controller: emailController,
               style: Theme.of(context).textTheme.bodyMedium,
               validator: AuthValidator.validateEmail,
+              keyboardType: TextInputType.emailAddress,
               decoration: const InputDecoration(
                   labelText: 'Почта',
                   hintText: 'ivanov@mail.ru',
@@ -64,7 +65,9 @@ class AuthForm extends StatelessWidget {
                   border: const OutlineInputBorder(),
                   suffixIcon: IconButton(
                       onPressed: onChangePasswordVisibility,
-                      icon: Icon(isPasswordMasked ? Icons.visibility_off : Icons.visibility))),
+                      icon: Icon(isPasswordMasked
+                          ? Icons.visibility_off
+                          : Icons.visibility))),
               maxLines: 1,
               obscureText: isPasswordMasked,
             ),

@@ -35,7 +35,9 @@ class WordListItem extends StatelessWidget {
         ListTile(
           leading: Visibility(
             visible: saveEnable,
-            child: FavoritesIconButton(onPressed: () => onSaveWord?.call(word), isFavorite: isFavorite),
+            child: FavoritesIconButton(
+                onPressed: () => onSaveWord?.call(word),
+                isFavorite: isFavorite),
           ),
           title: Text(
             word.word.toCapitalized(),
