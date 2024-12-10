@@ -18,4 +18,4 @@ jobs:
         channel: 'stable' # or: 'beta', 'dev' or 'master'
         flutter-version: '2.5.1'
     - name: Lint and test code
-      run: cd rus_bal_dict && flutter pub get && flutter analyze && flutter test
+      run: flutter pub get && flutter analyze && flutter test
