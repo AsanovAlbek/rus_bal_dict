@@ -16,6 +16,6 @@ jobs:
     - uses: subosito/flutter-action@v1
       with:
         channel: 'stable' # or: 'beta', 'dev' or 'master'
-        flutter-version: '2.5.1'
+        flutter-version: '3.22.2'
     - name: Lint and test code
       run: flutter pub get && flutter analyze && flutter test
