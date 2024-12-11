@@ -42,4 +42,4 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-lib/core/constants/private.dart
+#lib/core/constants/private.dart
