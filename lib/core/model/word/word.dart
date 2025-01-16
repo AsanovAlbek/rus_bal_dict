@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_annotation_target
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'word.freezed.dart';
@@ -10,6 +12,7 @@ class Word with _$Word {
       @JsonKey(name: 'name') @Default('') String word,
       @JsonKey(name: 'meaning') @Default('') String meaning,
       @JsonKey(name: 'audio_url') @Default('') String audioUrl,
+      @JsonKey(name: 'audio_path') @Default('') String audioPath,
       @JsonKey(includeToJson: false, includeFromJson: false)
       @Default(false)
       bool isFavorite}) = _Word;
