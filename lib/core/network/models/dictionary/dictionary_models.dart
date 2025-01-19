@@ -11,7 +11,7 @@ part 'dictionary_models.g.dart';
 class WordActionResponse with _$WordActionResponse {
   const factory WordActionResponse({
     @JsonKey(name: 'message') @Default('') String message,
-    @JsonKey(name: 'word') @Default('') Word word
+    @JsonKey(name: 'word') @Default(Word()) Word word
   }) = _WordActionResponse;
 
   factory WordActionResponse.fromJson(Map<String, dynamic> json) => _$WordActionResponseFromJson(json);

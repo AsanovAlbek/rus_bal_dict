@@ -92,6 +92,32 @@ Map<String, dynamic> _$$RefreshTokenResponseImplToJson(
       'token_type': instance.tokenType,
     };
 
+_$UserActivationResponseImpl _$$UserActivationResponseImplFromJson(
+        Map<String, dynamic> json) =>
+    _$UserActivationResponseImpl(
+      message: json['message'] as String? ?? '',
+    );
+
+Map<String, dynamic> _$$UserActivationResponseImplToJson(
+        _$UserActivationResponseImpl instance) =>
+    <String, dynamic>{
+      'message': instance.message,
+    };
+
+_$ConfirmResetPasswordResponseImpl _$$ConfirmResetPasswordResponseImplFromJson(
+        Map<String, dynamic> json) =>
+    _$ConfirmResetPasswordResponseImpl(
+      message: json['message'] as String? ?? '',
+      success: json['success'] as bool? ?? false,
+    );
+
+Map<String, dynamic> _$$ConfirmResetPasswordResponseImplToJson(
+        _$ConfirmResetPasswordResponseImpl instance) =>
+    <String, dynamic>{
+      'message': instance.message,
+      'success': instance.success,
+    };
+
 _$UserLoginBodyImpl _$$UserLoginBodyImplFromJson(Map<String, dynamic> json) =>
     _$UserLoginBodyImpl(
       grantType: json['grant_type'] as String? ?? '',

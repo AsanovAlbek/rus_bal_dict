@@ -1084,6 +1084,334 @@ abstract class _RefreshTokenResponse implements RefreshTokenResponse {
       get copyWith => throw _privateConstructorUsedError;
 }
 
+UserActivationResponse _$UserActivationResponseFromJson(
+    Map<String, dynamic> json) {
+  return _UserActivationResponse.fromJson(json);
+}
+
+/// @nodoc
+mixin _$UserActivationResponse {
+  @JsonKey(name: 'message')
+  String get message => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $UserActivationResponseCopyWith<UserActivationResponse> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $UserActivationResponseCopyWith<$Res> {
+  factory $UserActivationResponseCopyWith(UserActivationResponse value,
+          $Res Function(UserActivationResponse) then) =
+      _$UserActivationResponseCopyWithImpl<$Res, UserActivationResponse>;
+  @useResult
+  $Res call({@JsonKey(name: 'message') String message});
+}
+
+/// @nodoc
+class _$UserActivationResponseCopyWithImpl<$Res,
+        $Val extends UserActivationResponse>
+    implements $UserActivationResponseCopyWith<$Res> {
+  _$UserActivationResponseCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(_value.copyWith(
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$UserActivationResponseImplCopyWith<$Res>
+    implements $UserActivationResponseCopyWith<$Res> {
+  factory _$$UserActivationResponseImplCopyWith(
+          _$UserActivationResponseImpl value,
+          $Res Function(_$UserActivationResponseImpl) then) =
+      __$$UserActivationResponseImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({@JsonKey(name: 'message') String message});
+}
+
+/// @nodoc
+class __$$UserActivationResponseImplCopyWithImpl<$Res>
+    extends _$UserActivationResponseCopyWithImpl<$Res,
+        _$UserActivationResponseImpl>
+    implements _$$UserActivationResponseImplCopyWith<$Res> {
+  __$$UserActivationResponseImplCopyWithImpl(
+      _$UserActivationResponseImpl _value,
+      $Res Function(_$UserActivationResponseImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(_$UserActivationResponseImpl(
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$UserActivationResponseImpl implements _UserActivationResponse {
+  const _$UserActivationResponseImpl(
+      {@JsonKey(name: 'message') this.message = ''});
+
+  factory _$UserActivationResponseImpl.fromJson(Map<String, dynamic> json) =>
+      _$$UserActivationResponseImplFromJson(json);
+
+  @override
+  @JsonKey(name: 'message')
+  final String message;
+
+  @override
+  String toString() {
+    return 'UserActivationResponse(message: $message)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UserActivationResponseImpl &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, message);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UserActivationResponseImplCopyWith<_$UserActivationResponseImpl>
+      get copyWith => __$$UserActivationResponseImplCopyWithImpl<
+          _$UserActivationResponseImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$UserActivationResponseImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _UserActivationResponse implements UserActivationResponse {
+  const factory _UserActivationResponse(
+          {@JsonKey(name: 'message') final String message}) =
+      _$UserActivationResponseImpl;
+
+  factory _UserActivationResponse.fromJson(Map<String, dynamic> json) =
+      _$UserActivationResponseImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'message')
+  String get message;
+  @override
+  @JsonKey(ignore: true)
+  _$$UserActivationResponseImplCopyWith<_$UserActivationResponseImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+ConfirmResetPasswordResponse _$ConfirmResetPasswordResponseFromJson(
+    Map<String, dynamic> json) {
+  return _ConfirmResetPasswordResponse.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ConfirmResetPasswordResponse {
+  @JsonKey(name: 'message')
+  String get message => throw _privateConstructorUsedError;
+  @JsonKey(name: 'success')
+  bool get success => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ConfirmResetPasswordResponseCopyWith<ConfirmResetPasswordResponse>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ConfirmResetPasswordResponseCopyWith<$Res> {
+  factory $ConfirmResetPasswordResponseCopyWith(
+          ConfirmResetPasswordResponse value,
+          $Res Function(ConfirmResetPasswordResponse) then) =
+      _$ConfirmResetPasswordResponseCopyWithImpl<$Res,
+          ConfirmResetPasswordResponse>;
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'message') String message,
+      @JsonKey(name: 'success') bool success});
+}
+
+/// @nodoc
+class _$ConfirmResetPasswordResponseCopyWithImpl<$Res,
+        $Val extends ConfirmResetPasswordResponse>
+    implements $ConfirmResetPasswordResponseCopyWith<$Res> {
+  _$ConfirmResetPasswordResponseCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = null,
+    Object? success = null,
+  }) {
+    return _then(_value.copyWith(
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+      success: null == success
+          ? _value.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$ConfirmResetPasswordResponseImplCopyWith<$Res>
+    implements $ConfirmResetPasswordResponseCopyWith<$Res> {
+  factory _$$ConfirmResetPasswordResponseImplCopyWith(
+          _$ConfirmResetPasswordResponseImpl value,
+          $Res Function(_$ConfirmResetPasswordResponseImpl) then) =
+      __$$ConfirmResetPasswordResponseImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'message') String message,
+      @JsonKey(name: 'success') bool success});
+}
+
+/// @nodoc
+class __$$ConfirmResetPasswordResponseImplCopyWithImpl<$Res>
+    extends _$ConfirmResetPasswordResponseCopyWithImpl<$Res,
+        _$ConfirmResetPasswordResponseImpl>
+    implements _$$ConfirmResetPasswordResponseImplCopyWith<$Res> {
+  __$$ConfirmResetPasswordResponseImplCopyWithImpl(
+      _$ConfirmResetPasswordResponseImpl _value,
+      $Res Function(_$ConfirmResetPasswordResponseImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = null,
+    Object? success = null,
+  }) {
+    return _then(_$ConfirmResetPasswordResponseImpl(
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+      success: null == success
+          ? _value.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$ConfirmResetPasswordResponseImpl
+    implements _ConfirmResetPasswordResponse {
+  const _$ConfirmResetPasswordResponseImpl(
+      {@JsonKey(name: 'message') this.message = '',
+      @JsonKey(name: 'success') this.success = false});
+
+  factory _$ConfirmResetPasswordResponseImpl.fromJson(
+          Map<String, dynamic> json) =>
+      _$$ConfirmResetPasswordResponseImplFromJson(json);
+
+  @override
+  @JsonKey(name: 'message')
+  final String message;
+  @override
+  @JsonKey(name: 'success')
+  final bool success;
+
+  @override
+  String toString() {
+    return 'ConfirmResetPasswordResponse(message: $message, success: $success)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ConfirmResetPasswordResponseImpl &&
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.success, success) || other.success == success));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, message, success);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ConfirmResetPasswordResponseImplCopyWith<
+          _$ConfirmResetPasswordResponseImpl>
+      get copyWith => __$$ConfirmResetPasswordResponseImplCopyWithImpl<
+          _$ConfirmResetPasswordResponseImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ConfirmResetPasswordResponseImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _ConfirmResetPasswordResponse
+    implements ConfirmResetPasswordResponse {
+  const factory _ConfirmResetPasswordResponse(
+          {@JsonKey(name: 'message') final String message,
+          @JsonKey(name: 'success') final bool success}) =
+      _$ConfirmResetPasswordResponseImpl;
+
+  factory _ConfirmResetPasswordResponse.fromJson(Map<String, dynamic> json) =
+      _$ConfirmResetPasswordResponseImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'message')
+  String get message;
+  @override
+  @JsonKey(name: 'success')
+  bool get success;
+  @override
+  @JsonKey(ignore: true)
+  _$$ConfirmResetPasswordResponseImplCopyWith<
+          _$ConfirmResetPasswordResponseImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
 UserLoginBody _$UserLoginBodyFromJson(Map<String, dynamic> json) {
   return _UserLoginBody.fromJson(json);
 }

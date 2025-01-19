@@ -70,6 +70,27 @@ class RefreshTokenResponse with _$RefreshTokenResponse {
       _$RefreshTokenResponseFromJson(json);
 }
 
+@freezed
+class UserActivationResponse with _$UserActivationResponse {
+  const factory UserActivationResponse(
+          {@JsonKey(name: 'message') @Default('') String message}) =
+      _UserActivationResponse;
+
+  factory UserActivationResponse.fromJson(Map<String, dynamic> json) =>
+      _$UserActivationResponseFromJson(json);
+}
+
+@freezed
+class ConfirmResetPasswordResponse with _$ConfirmResetPasswordResponse {
+  const factory ConfirmResetPasswordResponse({
+    @JsonKey(name: 'message') @Default('') String message,
+    @JsonKey(name: 'success') @Default(false) bool success,
+  }) = _ConfirmResetPasswordResponse;
+
+  factory ConfirmResetPasswordResponse.fromJson(Map<String, dynamic> json) =>
+      _$ConfirmResetPasswordResponseFromJson(json);
+}
+
 // Bodies
 
 @freezed

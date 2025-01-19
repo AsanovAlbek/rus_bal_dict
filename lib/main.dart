@@ -17,6 +17,7 @@ Future<void> main() async {
   Hive.registerAdapter(WordHiveModelAdapter());
   Hive.registerAdapter(AppSettingsHiveModelAdapter());
   Hive.registerAdapter(FavoriteWordHiveModelAdapter());
+
   final historyBox = await Hive.openBox<WordHiveModel>('history');
   final favoritesBox = await Hive.openBox<FavoriteWordHiveModel>('favorites');
   final settingsBox = await Hive.openBox<AppSettingsHiveModel>('settings');

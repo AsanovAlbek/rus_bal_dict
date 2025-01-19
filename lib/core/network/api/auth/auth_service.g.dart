@@ -179,7 +179,7 @@ class _AuthService implements AuthService {
   }
 
   @override
-  Future<dynamic> userActivation(
+  Future<UserActivationResponse> userActivation(
     dynamic authorizationHeader,
     String code,
   ) async {
@@ -191,7 +191,7 @@ class _AuthService implements AuthService {
     };
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<dynamic>(Options(
+    final _options = _setStreamType<UserActivationResponse>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -207,13 +207,19 @@ class _AuthService implements AuthService {
           _dio.options.baseUrl,
           baseUrl,
         )));
-    final _result = await _dio.fetch(_options);
-    final _value = _result.data;
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late UserActivationResponse _value;
+    try {
+      _value = UserActivationResponse.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
     return _value;
   }
 
   @override
-  Future<dynamic> resetPassword(
+  Future<ConfirmResetPasswordResponse> confirmResetPassword(
     String email,
     String code,
   ) async {
@@ -225,14 +231,14 @@ class _AuthService implements AuthService {
     final _headers = <String, dynamic>{r'Accept': 'application/json'};
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<dynamic>(Options(
+    final _options = _setStreamType<ConfirmResetPasswordResponse>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
         .compose(
           _dio.options,
-          '/reset_password',
+          '/confirm_reset_password',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -241,8 +247,14 @@ class _AuthService implements AuthService {
           _dio.options.baseUrl,
           baseUrl,
         )));
-    final _result = await _dio.fetch(_options);
-    final _value = _result.data;
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ConfirmResetPasswordResponse _value;
+    try {
+      _value = ConfirmResetPasswordResponse.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
     return _value;
   }
 

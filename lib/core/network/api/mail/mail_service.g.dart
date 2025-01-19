@@ -41,7 +41,7 @@ class _MailService implements MailService {
     )
         .compose(
           _dio.options,
-          '/mail/get_reset_code',
+          '/get_reset_code',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -79,7 +79,7 @@ class _MailService implements MailService {
     )
         .compose(
           _dio.options,
-          '/mail/get_activation_code',
+          '/get_activation_code',
           queryParameters: queryParameters,
           data: _data,
         )

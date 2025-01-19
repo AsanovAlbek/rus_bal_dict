@@ -60,12 +60,16 @@ class UserInfo with EquatableMixin {
   final bool isUserSignIn;
   final String? email;
   final int? premiumDays;
+  final bool? isAdmin;
+  final bool? isActive;
 
   const UserInfo(
       {this.id,
       this.name,
       this.isUserSignIn = false,
       this.email,
+      this.isActive,
+      this.isAdmin,
       this.premiumDays});
 
   UserInfo copyWith(
@@ -73,16 +77,22 @@ class UserInfo with EquatableMixin {
       String? name,
       bool? isUserSignIn,
       String? email,
+      bool? isActive,
+      bool? isAdmin,
       int? premiumDays}) {
     return UserInfo(
       id: id ?? this.id,
       name: name ?? this.name,
       isUserSignIn: isUserSignIn ?? this.isUserSignIn,
+      email: email ?? this.email,
+      isActive: isActive ?? this.isActive,
+      isAdmin: isAdmin ?? this.isAdmin,
+      premiumDays: premiumDays ?? this.premiumDays
     );
   }
 
   @override
-  List<Object?> get props => [id, name, email];
+  List<Object?> get props => [id, name, email, isActive, isAdmin, isUserSignIn];
 
   @override
   bool? get stringify => true;

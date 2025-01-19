@@ -41,6 +41,12 @@ class AppSettingsHiveModel extends HiveObject {
   @HiveField(7, defaultValue: 0)
   int premiumDays;
 
+  @HiveField(8, defaultValue: false)
+  bool isAdmin;
+
+  @HiveField(9, defaultValue: false)
+  bool isActive;
+
   AppSettingsHiveModel(
       {this.userId,
       this.userName,
@@ -49,5 +55,7 @@ class AppSettingsHiveModel extends HiveObject {
       this.fontSize,
       this.historyStaleLimitTime,
       this.email,
-      this.premiumDays = 0});
+      this.premiumDays = 0,
+      this.isAdmin = false,
+      this.isActive = false});
 }

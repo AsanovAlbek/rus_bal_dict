@@ -9,14 +9,14 @@ part 'mail_service.g.dart';
 abstract class MailService {
   factory MailService(Dio dio, {String? baseUrl}) = _MailService;
 
-  @POST('/mail/get_reset_code')
+  @POST('/get_reset_code')
   @Headers(<String, dynamic>{
     'Content-Type': 'application/json',
     'accept': 'application/json',
   })
   Future<GetCodeResponse> sendResetCode(@Query('email') String email);
 
-  @POST('/mail/get_activation_code')
+  @POST('/get_activation_code')
   @Headers(<String, dynamic>{'Accept': 'application/json'})
   Future<GetCodeResponse> sendActivationCode(
       @Header('Authorization') authorizationHeader);
