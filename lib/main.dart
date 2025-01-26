@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:rus_bal_dict/feature/auth/domain/bloc/auth_bloc.dart';
 import 'package:rus_bal_dict/feature/auth/domain/repository/auth_repository.dart';
+import 'package:rus_bal_dict/feature/auth/domain/repository/new_auth_repository.dart';
 import 'package:rus_bal_dict/feature/profile/domain/repository/payment_repository.dart';
 
 import 'export.dart';
@@ -49,7 +50,7 @@ class MyApp extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-              create: (context) => AuthBloc(GetIt.I<AuthRepository>())),
+              create: (context) => AuthBloc(GetIt.I<AuthRepository>(), GetIt.I<NewAuthRepository>())),
           BlocProvider(
               create: (context) => ProfileCubit(
                   GetIt.I<ProfileRepository>(), GetIt.I<PaymentRepository>()))

@@ -8,6 +8,7 @@ import 'package:rus_bal_dict/feature/auth/data/repository/auth_repository_impl.d
 import 'package:rus_bal_dict/feature/auth/data/repository/new_auth_repository.dart';
 import 'package:rus_bal_dict/feature/auth/domain/repository/auth_repository.dart';
 import 'package:rus_bal_dict/feature/auth/domain/repository/new_auth_repository.dart';
+import 'package:talker/talker.dart';
 
 import '../../../core/hive/settings/app_settings_hive.dart';
 
@@ -23,5 +24,6 @@ void authModule(Box<AppSettingsHiveModel> settingsBox) {
       authService: di<AuthService>(),
       mailService: di<MailService>(),
       simpleDio: dioWithoutBaseUrl,
-      settingsBox: settingsBox));
+      settingsBox: settingsBox,
+      logger: di<Talker>()));
 }

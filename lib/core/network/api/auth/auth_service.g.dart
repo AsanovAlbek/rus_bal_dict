@@ -124,7 +124,7 @@ class _AuthService implements AuthService {
     )
         .compose(
           _dio.options,
-          '/get_current_user',
+          '/current_user',
           queryParameters: queryParameters,
           data: _data,
         )

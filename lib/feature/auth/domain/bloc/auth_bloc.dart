@@ -3,25 +3,29 @@ import 'dart:io';
 
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rus_bal_dict/core/model/user/user.dart';
 import 'package:rus_bal_dict/feature/auth/data/exceptions/exceptions.dart';
 import 'package:rus_bal_dict/feature/auth/domain/bloc/auth_event.dart';
 import 'package:rus_bal_dict/feature/auth/domain/bloc/auth_state.dart';
+import 'package:rus_bal_dict/feature/auth/domain/repository/new_auth_repository.dart';
 import 'package:talker/talker.dart';
 
 import '../repository/auth_repository.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository repository;
+  final NewAuthRepository newAuthRepository;
 
-  AuthBloc(this.repository) : super(AuthState()) {
+  AuthBloc(this.repository, this.newAuthRepository) : super(AuthState()) {
     on<SignUpEvent>(_signUp);
     on<SignInEvent>(_signIn);
     on<SignOutEvent>(_signOut);
     on<ChangeAuthPageEvent>(_changeAuthPage);
     on<MaskPasswordEvent>(_maskPassword);
-    on<SendCodeToEmailAuthEvent>(_sendCodeToEmail, transformer: droppable());
+    //on<SendCodeToEmailAuthEvent>(_sendCodeToEmail, transformer: droppable());
+    
     on<UpdateUserPasswordAuthEvent>(_updateUserPassword);
     on<ChangeAgreeWithPolicyAuthEvent>(_changeAgreeWithPolicy);
     on<ChangeAgreeWithTermOfUseEvent>(_changeAgreeWithTermOfUse);
@@ -34,19 +38,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       return;
     }
     final deviceId = await _deviceId();
-    final user = User(
-        name: event.name,
+    // final user = User(
+    //     name: event.name,
+    //     email: event.email,
+    //     password: event.password,
+    //     imei: deviceId ?? 'unknown');
+    //final signUpEither = await repository.registerUser(user: user);
+    final signUpEither = await newAuthRepository.register(
         email: event.email,
         password: event.password,
+        name: event.name,
         imei: deviceId ?? 'unknown');
-    final signUpEither = await repository.registerUser(user: user);
     signUpEither.either((userSignUpException) {
       String errorMessage = userSignUpException is UserAlreadyExistException
           ? userSignUpException.message
           : 'Неизвестная ошибка';
       event.onError?.call(errorMessage);
-    }, (newUser) {
-      event.onSuccess?.call(newUser, 'Вы успешно зарегистрировались');
+    }, (registerMessage) {
+      event.onSuccess?.call(registerMessage);
     });
   }
 
@@ -64,20 +73,47 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   FutureOr<void> _signIn(SignInEvent event, Emitter<AuthState> emit) async {
-    final signInEither =
-        await repository.signIn(email: event.email, password: event.password);
+    // final signInEither =
+    //     await repository.signIn(email: event.email, password: event.password);
+    final signInEither = await newAuthRepository.login(
+        email: event.email, password: event.password);
     signInEither.either((userSignInException) {
-      String errorMessage = userSignInException is UserNotFoundException
-          ? userSignInException.message
-          : 'Неизвестная ошибка';
-      event.onError?.call(errorMessage);
-    }, (user) {
-      event.onSuccess?.call(user, 'Вы успешно вошли');
+      if (userSignInException is DioException) {
+        var statusCode = userSignInException.response?.statusCode ?? 0;
+        var message = switch (statusCode) {
+          401 => 'Неверный логин или пароль',
+          _ => statusCode >= 500
+              ? 'Код ошибки $statusCode. Технические неполадки. Попробуйте позже'
+              : 'Ошибка регистрации',
+        };
+        event.onError?.call(message);
+      } else {
+        event.onError?.call('Ошибка входа');
+      }
+    }, (token) async {
+      final authEither = await newAuthRepository.getUser();
+      authEither.either((authError) {
+        if (authError is DioException) {
+          var statusCode = authError.response?.statusCode ?? 0;
+          var message = switch (statusCode) {
+            401 => 'Неверный логин или пароль',
+            _ => statusCode >= 500
+                ? 'Код ошибки $statusCode. Технические неполадки. Попробуйте позже'
+                : 'Ошибка регистрации',
+          };
+          event.onError?.call(message);
+        } else {
+          event.onError?.call('Ошибка авторизации');
+        }
+      }, (user) {
+        event.onSuccess?.call(user, 'Вы успешно вошли');
+      });
     });
   }
 
   FutureOr<void> _signOut(SignOutEvent event, Emitter<AuthState> emit) async {
-    repository.signOut();
+    //repository.signOut();
+    await newAuthRepository.logout();
   }
 
   FutureOr<void> _changeAuthPage(
@@ -94,17 +130,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       SendCodeToEmailAuthEvent event, Emitter<AuthState> emit) async {
     final email =
         event.email.isNotEmpty ? event.email : state.emailForRestorePassword;
-    final sendCodeEither =
-        await repository.sendCodeToEmail(email: email ?? event.email);
-    sendCodeEither.either((userSendCodeException) {
-      event.onError?.call(userSendCodeException.toString());
-    }, (code) {
-      emit(state.copyWith(
-          codeFromEmail: code, emailForRestorePassword: event.email));
-      event.onSuccess?.call(code);
-    });
-    if (event.email.trim().isNotEmpty) {
-      emit(state.copyWith(emailForRestorePassword: event.email));
+    // final sendCodeEither =
+    //     await repository.sendCodeToEmail(email: email ?? event.email);
+    // sendCodeEither.either((userSendCodeException) {
+    //   event.onError?.call(userSendCodeException.toString());
+    // }, (code) {
+    //   emit(state.copyWith(
+    //       codeFromEmail: code, emailForRestorePassword: event.email));
+    //   event.onSuccess?.call(code);
+    // });
+    // if (event.email.trim().isNotEmpty) {
+    //   emit(state.copyWith(emailForRestorePassword: event.email));
+    // }
+    try {
+      final sendCodeResponseMessage =
+          await newAuthRepository.sendResetCode(email ?? 'unknown email');
+      event.onSuccess?.call(sendCodeResponseMessage);
+    } on Exception catch (e) {
+      event.onError?.call(e.toString());
     }
   }
 
@@ -112,11 +155,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       UpdateUserPasswordAuthEvent event, Emitter<AuthState> emit) async {
     try {
       if (event.newPassword == event.confirmPassword) {
-        await repository.resetUserPassword(
-            email: event.email, newPassword: event.newPassword);
-        event.onSuccess?.call();
-        // Обнулить состояние
-        emit(AuthState());
+        // await repository.resetUserPassword(
+        //     email: event.email, newPassword: event.newPassword);
+        // event.onSuccess?.call();
+        // // Обнулить состояние
+        // emit(AuthState());
+        final changePasswordMessage = await newAuthRepository.changePassword(
+            event.email, event.newPassword);
+        event.onSuccess?.call(changePasswordMessage);
       } else {
         event.onError?.call('Пароли не совпадают');
       }

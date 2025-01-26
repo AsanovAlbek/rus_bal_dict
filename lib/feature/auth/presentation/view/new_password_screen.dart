@@ -48,7 +48,7 @@ class _NewPasswordState extends State<NewPasswordScreen> {
                         suffixIcon: IconButton(
                             onPressed: () {
                               context.read<AuthBloc>().add(
-                                  AuthEvent.maskPassword(
+                                  MaskPasswordEvent(
                                       isPasswordMasked:
                                           !state.isPasswordMasked));
                             },
@@ -75,7 +75,7 @@ class _NewPasswordState extends State<NewPasswordScreen> {
                         suffixIcon: IconButton(
                             onPressed: () {
                               context.read<AuthBloc>().add(
-                                  AuthEvent.maskPassword(
+                                  MaskPasswordEvent(
                                       isPasswordMasked:
                                           !state.isPasswordMasked));
                             },
@@ -96,15 +96,17 @@ class _NewPasswordState extends State<NewPasswordScreen> {
                                       newPasswordController.text.trim(),
                                   confirmPassword:
                                       repeatPasswordController.text.trim(),
-                                  onSuccess: () {
-                                    context.showSnackBar(
-                                        'Вы успешно сменили пароль');
-                                    context.go('/auth');
-                                  },
-                                  onError: (message) {
-                                    context.showSnackBar(message ??
-                                        'Ошибка при восстановлении пароля');
-                                  }));
+                                  // onSuccess: () {
+                                  //   context.showSnackBar(
+                                  //       'Вы успешно сменили пароль');
+                                  //   context.go('/auth');
+                                  // },
+                                  // onError: (message) {
+                                  //   context.showSnackBar(message ??
+                                  //       'Ошибка при восстановлении пароля');
+                                  // }
+                                  )
+                                );
                         }
                       },
                       child: const Text('Подтвердить'))

@@ -31,7 +31,7 @@ class SignInWidget extends StatelessWidget {
             FocusManager.instance.primaryFocus?.unfocus();
             context
                 .read<AuthBloc>()
-                .add(AuthEvent.changeAuthPage(pageState: AuthPageState.signUp));
+                .add(ChangeAuthPageEvent(pageState: AuthPageState.signUp));
           },
           child: const Text('Нет аккаунта? Зарегистрироваться'),
         ),

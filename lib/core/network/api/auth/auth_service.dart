@@ -25,7 +25,7 @@ abstract class AuthService {
   })
   Future<RegisterResponse> register(@Body() UserRegisterBody userRegisterBody);
 
-  @GET('/get_current_user')
+  @GET('/current_user')
   @Headers(<String, dynamic>{
     'Content-Type': 'application/x-www-form-urlencoded',
     'accept': 'application/json'

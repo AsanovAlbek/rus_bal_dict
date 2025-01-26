@@ -51,7 +51,7 @@ class PolicyAgreeScreen extends StatelessWidget {
                   onChanged: (agree) {
                     context
                         .read<AuthBloc>()
-                        .add(AuthEvent.changeAgree(agree: agree));
+                        .add(ChangeAgreeWithPolicyAuthEvent(agree));
                   }),
             ),
           ),
@@ -65,7 +65,7 @@ class PolicyAgreeScreen extends StatelessWidget {
                   onChanged: (agree) {
                     context
                         .read<AuthBloc>()
-                        .add(AuthEvent.changeAgreeWithTermOfUse(agree: agree));
+                        .add(ChangeAgreeWithTermOfUseEvent(agree));
                   }),
             ),
           ),
@@ -83,25 +83,26 @@ class PolicyAgreeScreen extends StatelessWidget {
   }
 
   void _signUp(BuildContext context, AuthState state) {
-    context.read<AuthBloc>().add(AuthEvent.signUp(
-        name: state.userName,
-        email: state.email,
-        password: state.password,
-        onSuccess: (user, message) {
-          context.showSnackBar(message);
-          context.go('/word_list');
-          context
-              .read<AuthBloc>()
-              .add(AuthEvent.changeAuthPage(pageState: AuthPageState.signIn));
-          context.read<ProfileCubit>().fetchUserPaymentInfo();
-        },
-        onError: (message) {
-          if (message != null) {
-            context.showSnackBar(message);
-          }
-        },
-        onUserNoAgreeWithPolicy: () {
-          context.showSnackBar('Вы не согласились с условиями.');
-        }));
+    context.read<AuthBloc>().add(SignUpEvent(
+        name: state.userName ?? '',
+        email: state.email ?? '',
+        password: state.password ?? '',
+        // onSuccess: (user, message) {
+        //   context.showSnackBar(message);
+        //   context.go('/word_list');
+        //   context
+        //       .read<AuthBloc>()
+        //       .add(AuthEvent.changeAuthPage(pageState: AuthPageState.signIn));
+        //   context.read<ProfileCubit>().fetchUserPaymentInfo();
+        // },
+        // onError: (message) {
+        //   if (message != null) {
+        //     context.showSnackBar(message);
+        //   }
+        // },
+        // onUserNoAgreeWithPolicy: () {
+        //   context.showSnackBar('Вы не согласились с условиями.');
+        // }
+        ));
   }
 }

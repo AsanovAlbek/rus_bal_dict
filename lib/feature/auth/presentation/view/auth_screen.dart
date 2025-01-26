@@ -40,7 +40,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 AuthForm(
                   formKey: _formKey,
                   onChangePasswordVisibility: () {
-                    context.read<AuthBloc>().add(AuthEvent.maskPassword(
+                    context.read<AuthBloc>().add(MaskPasswordEvent(
                         isPasswordMasked: !state.isPasswordMasked));
                   },
                   pageState: state.pageState,
@@ -57,7 +57,7 @@ class _AuthScreenState extends State<AuthScreen> {
                         onSignUp: (context, isValid) {
                           if (isValid ?? false) {
                             context.read<AuthBloc>().add(
-                                AuthEvent.saveUserSignUpInput(
+                                SaveUserSignUpInputAuthEvent(
                                     name: _nameController.text.trim(),
                                     email: _emailController.text.trim(),
                                     password: _passwordController.text.trim(),
@@ -76,7 +76,7 @@ class _AuthScreenState extends State<AuthScreen> {
 
   void _signIn(BuildContext context, bool? isValid) {
     if (isValid ?? false) {
-      context.read<AuthBloc>().add(AuthEvent.signIn(
+      context.read<AuthBloc>().add(SignInEvent(
           email: _emailController.text.trim(),
           password: _passwordController.text.trim(),
           onSuccess: (user, message) {

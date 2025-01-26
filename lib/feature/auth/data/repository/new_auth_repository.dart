@@ -7,6 +7,7 @@ import 'package:rus_bal_dict/core/model/user/user.dart';
 import 'package:rus_bal_dict/core/network/api/auth/auth_service.dart';
 import 'package:rus_bal_dict/core/network/api/mail/mail_service.dart';
 import 'package:rus_bal_dict/core/network/models/auth/auth_models.dart';
+import 'package:rus_bal_dict/core/network/network_extension.dart';
 import 'package:rus_bal_dict/core/secure_storage/token/token_secure_storage.dart';
 import 'package:rus_bal_dict/export.dart';
 import 'package:rus_bal_dict/feature/auth/data/exceptions/mapper.dart';
@@ -58,6 +59,7 @@ class NewAuthRepositoryImpl implements NewAuthRepository {
   Future<Either<Exception, User>> getUser() async {
     try {
       final token = await _tokenStorage.get();
+      logger?.debug('get user from local token = ${token.accessToken}');
       final authResponse =
           await authService.getCurrentUser('Bearer ${token.accessToken}');
       final user = authResponse.toUser();
@@ -67,7 +69,7 @@ class NewAuthRepositoryImpl implements NewAuthRepository {
       logger?.handle(e, s, 'Get user exception');
       if (e is DioException) {
         logger?.debug(
-            'Dio get user error. code=${e.response?.statusCode}, body=${e.response?.data}');
+            'Dio get user error. code=${e.response?.statusCode}, body=${e.response?.data}, message = ${e.response?.statusMessage}');
       }
       return Left(e);
     }
@@ -79,6 +81,7 @@ class NewAuthRepositoryImpl implements NewAuthRepository {
     try {
       final tokenResponse = await authService.login(email, password);
       final token = tokenResponse.toToken();
+      logger?.debug('login token = ${token.accessToken}');
       await _tokenStorage.set(token);
       return Right(token);
     } on Exception catch (e, s) {
@@ -151,7 +154,8 @@ class NewAuthRepositoryImpl implements NewAuthRepository {
   Future<String> sendActivationCode(String email) async {
     try {
       final token = await _tokenStorage.get();
-      final sendResponse = await mailService.sendActivationCode('Bearer ${token.accessToken}');
+      final sendResponse =
+          await mailService.sendActivationCode('Bearer ${token.accessToken}');
       return sendResponse.message;
     } on Exception catch (e, s) {
       logger?.handle(e, s, "Send activation code error");
@@ -164,7 +168,7 @@ class NewAuthRepositoryImpl implements NewAuthRepository {
     try {
       final sendResponse = await mailService.sendResetCode(email);
       return sendResponse.message;
-    } on Exception catch(e, s) {
+    } on Exception catch (e, s) {
       logger?.handle(e, s, "Send reset code error");
       rethrow;
     }
@@ -174,27 +178,29 @@ class NewAuthRepositoryImpl implements NewAuthRepository {
   Future<Either<Exception, User>> startSession() async {
     try {
       final token = await _tokenStorage.get();
-      final userResponse = await authService.getCurrentUser('Bearer ${token.accessToken}');
+      final userResponse =
+          await authService.getCurrentUser('Bearer ${token.accessToken}');
       _saveUser(userResponse.toUser());
       return Right(userResponse.toUser());
-    } on DioException catch(dioErr, stack) {
+    } on DioException catch (dioErr, stack) {
       logger?.handle(dioErr, stack, 'Auth Error, try refresh token');
       try {
         if (dioErr.response?.statusCode == 401) {
           await refreshToken();
           final token = await _tokenStorage.get();
-          final userResponse = await authService.getCurrentUser('Bearer ${token.accessToken}');
+          final userResponse =
+              await authService.getCurrentUser('Bearer ${token.accessToken}');
           _saveUser(userResponse.toUser());
           return Right(userResponse.toUser());
         } else {
           rethrow;
         }
-      } on DioException catch(e, s) {
+      } on DioException catch (e, s) {
         logger?.handle(e, s, "Auth error. Token refresh failed. Logout");
         await logout();
         return Left(e);
       }
-    } on Exception catch(e, s) {
+    } on Exception catch (e, s) {
       logger?.handle(e, s, "Start session error");
       return Left(e);
     }
