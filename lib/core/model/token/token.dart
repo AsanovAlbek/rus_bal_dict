@@ -9,7 +9,7 @@ part 'token.g.dart';
 class Token with _$Token {
   const factory Token({
     @JsonKey(name: 'access_token') @Default('') String accessToken,
-    @JsonKey(name: 'refresh_token') @Default('') String refreshToken, 
+    @JsonKey(name: 'refresh_token') @Default('') String refreshToken,
     @JsonKey(name: 'token_type') @Default('Bearer') String tokenType,
   }) = _Token;
 

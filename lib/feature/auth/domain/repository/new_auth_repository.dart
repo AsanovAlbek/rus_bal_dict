@@ -3,7 +3,8 @@ import 'package:rus_bal_dict/core/model/token/token.dart';
 import 'package:rus_bal_dict/core/model/user/user.dart';
 
 abstract interface class NewAuthRepository {
-  Future<Either<Exception, Token>> login({required String email, required String password});
+  Future<Either<Exception, Token>> login(
+      {required String email, required String password});
   Future<void> logout();
   Future<Either<Exception, String>> register(
       {required String email,

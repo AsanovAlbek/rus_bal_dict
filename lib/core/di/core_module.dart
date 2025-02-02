@@ -20,9 +20,7 @@ const dioWithoutBaseUrlInstanceName = 'dioWithoutBaswUrl';
 void coreModule([CacheStore? cacheStore]) {
   di.registerSingleton<GoRouter>(AppRouter().router);
   final options = BaseOptions(
-      connectTimeout: const Duration(seconds: 5),
-      baseUrl: balRusBaseUrl
-      );
+      connectTimeout: const Duration(seconds: 5), baseUrl: balRusBaseUrl);
 
   final dio = Dio(options);
   dio.interceptors.add(RedirectInterceptor(dio));

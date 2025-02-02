@@ -9,7 +9,8 @@ class SuggestWordRepositoryImpl implements SuggestWordRepository {
   final Dio dio;
   SuggestWordRepositoryImpl(this.dio);
   @override
-  Future<Either<Exception, SuggestResponse>> suggestWord(SuggestWord word) async {
+  Future<Either<Exception, SuggestResponse>> suggestWord(
+      SuggestWord word) async {
     try {
       await dio.post('suggest_word/', data: word.toJson()..remove('id'));
       return const Right(SuggestResponse());
@@ -25,7 +26,7 @@ class SuggestWordRepositoryImpl implements SuggestWordRepository {
     // TODO: implement suggestedWords
     throw UnimplementedError();
   }
-  
+
   @override
   Future<Either<Exception, int>> suggestsCount({String name = ''}) {
     // TODO: implement suggestsCount

@@ -9,18 +9,18 @@ class PrivacyPolicyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const CustomScrollView(slivers: [
-        MyAppBar(title: 'Политика конфиденциальности'),
-        SliverToBoxAdapter(
-          child: SingleChildScrollView(
-            child: Card(
-              margin: EdgeInsets.all(8),
-              child: Padding(
-                padding: EdgeInsets.all(8),
-                child: HtmlWidget(AppStrings.politics),
-              ),
+      MyAppBar(title: 'Политика конфиденциальности'),
+      SliverToBoxAdapter(
+        child: SingleChildScrollView(
+          child: Card(
+            margin: EdgeInsets.all(8),
+            child: Padding(
+              padding: EdgeInsets.all(8),
+              child: HtmlWidget(AppStrings.politics),
             ),
           ),
         ),
-      ]);
+      ),
+    ]);
   }
 }

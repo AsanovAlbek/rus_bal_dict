@@ -7,10 +7,7 @@ import 'package:rus_bal_dict/feature/auth/domain/bloc/auth_state.dart';
 import '../../domain/bloc/auth_event.dart';
 
 class SignInWidget extends StatelessWidget {
-  const SignInWidget(
-      {super.key,
-      required this.authFormKey,
-      this.onSignIn});
+  const SignInWidget({super.key, required this.authFormKey, this.onSignIn});
   final GlobalKey<FormState> authFormKey;
   final Function(BuildContext context, bool? isValid)? onSignIn;
 

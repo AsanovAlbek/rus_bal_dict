@@ -81,14 +81,13 @@ class UserInfo with EquatableMixin {
       bool? isAdmin,
       int? premiumDays}) {
     return UserInfo(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      isUserSignIn: isUserSignIn ?? this.isUserSignIn,
-      email: email ?? this.email,
-      isActive: isActive ?? this.isActive,
-      isAdmin: isAdmin ?? this.isAdmin,
-      premiumDays: premiumDays ?? this.premiumDays
-    );
+        id: id ?? this.id,
+        name: name ?? this.name,
+        isUserSignIn: isUserSignIn ?? this.isUserSignIn,
+        email: email ?? this.email,
+        isActive: isActive ?? this.isActive,
+        isAdmin: isAdmin ?? this.isAdmin,
+        premiumDays: premiumDays ?? this.premiumDays);
   }
 
   @override

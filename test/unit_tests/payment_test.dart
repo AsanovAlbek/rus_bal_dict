@@ -72,7 +72,8 @@ void main() {
       expect(freeUserInfo.right, isA<UserPaymentInfo>());
       expect(freeUserInfo.right, freeUserPaymentInfo);
       expect(freeUserInfo.right.isSubscribe, isFalse);
-      expect(freeUserInfo.right.dayLimit, lessThanOrEqualTo(freeUserTriesLimit));
+      expect(
+          freeUserInfo.right.dayLimit, lessThanOrEqualTo(freeUserTriesLimit));
       debugPrint('Получение данных о пользователе без подписки. Успешно');
     });
 
@@ -100,15 +101,18 @@ void main() {
     });
 
     test('Тест на уменьшение попыток не премиум пользователя', () async {
-      when(() => repository.decrementNonPremiumUserTries()).thenAnswer((_) async {});
+      when(() => repository.decrementNonPremiumUserTries())
+          .thenAnswer((_) async {});
       await repository.decrementNonPremiumUserTries();
       verifyOnce(() => repository.decrementNonPremiumUserTries());
       debugPrint('Уменьшение бесплатных попыток. Успешно');
     });
 
     test('Тест на ошибку уменьшения попыток не премиум пользователя', () {
-      when(() => repository.decrementNonPremiumUserTries()).thenThrow(Exception());
-      expect(() => repository.decrementNonPremiumUserTries(), throwsA(isA<Exception>()));
+      when(() => repository.decrementNonPremiumUserTries())
+          .thenThrow(Exception());
+      expect(() => repository.decrementNonPremiumUserTries(),
+          throwsA(isA<Exception>()));
       debugPrint('Проверка на ошибку уменьшения бесплатных попыток. Успешно');
     });
   });

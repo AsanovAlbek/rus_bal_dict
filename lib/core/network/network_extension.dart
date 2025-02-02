@@ -1,5 +1,3 @@
-import 'dart:nativewrappers/_internal/vm/lib/ffi_allocation_patch.dart';
-
 import 'package:either_dart/either.dart';
 import 'package:rus_bal_dict/feature/history/presentation/history.dart';
 

@@ -13,17 +13,18 @@ class AuthState with EquatableMixin {
   final String? password;
   final User? user;
 
-  AuthState(
-      {this.pageState = AuthPageState.signIn,
-      this.isPasswordMasked = true,
-      this.codeFromEmail,
-      this.emailForRestorePassword,
-      this.policyAgree = false,
-      this.termOfUseAgree = false,
-      this.email,
-      this.user,
-      this.password,
-      this.userName,});
+  AuthState({
+    this.pageState = AuthPageState.signIn,
+    this.isPasswordMasked = true,
+    this.codeFromEmail,
+    this.emailForRestorePassword,
+    this.policyAgree = false,
+    this.termOfUseAgree = false,
+    this.email,
+    this.user,
+    this.password,
+    this.userName,
+  });
 
   AuthState copyWith({
     AuthPageState? pageState,
@@ -50,19 +51,19 @@ class AuthState with EquatableMixin {
         password: password ?? this.password,
         user: user ?? this.user);
   }
-  
+
   @override
   List<Object?> get props => [
-    pageState,
-    isPasswordMasked,
-    codeFromEmail,
-    emailForRestorePassword,
-    policyAgree,
-    termOfUseAgree,
-    userName,
-    email,
-    password,
-  ];
+        pageState,
+        isPasswordMasked,
+        codeFromEmail,
+        emailForRestorePassword,
+        policyAgree,
+        termOfUseAgree,
+        userName,
+        email,
+        password,
+      ];
 }
 
 enum AuthPageState {

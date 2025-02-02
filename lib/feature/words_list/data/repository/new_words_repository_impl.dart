@@ -16,7 +16,7 @@ class NewWordsRepositoryImpl implements WordsListRepository {
     try {
       final words = await dictionaryService.getWords(query, page, size);
       return Right(words);
-    } on Exception catch(e, s) {
+    } on Exception catch (e, s) {
       logger?.handle(e, s, 'Fetch words repo error');
       return Left(e);
     }
@@ -27,7 +27,7 @@ class NewWordsRepositoryImpl implements WordsListRepository {
     try {
       final wordsCount = await dictionaryService.wordsCount(query);
       return Right(wordsCount);
-    } on Exception catch(e, s) {
+    } on Exception catch (e, s) {
       logger?.handle(e, s, 'Words count repo error');
       return Left(e);
     }

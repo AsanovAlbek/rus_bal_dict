@@ -45,9 +45,7 @@ abstract class AuthService {
   @POST('/confirm_reset_password')
   @Headers(<String, dynamic>{'Accept': 'application/json'})
   Future<ConfirmResetPasswordResponse> confirmResetPassword(
-    @Query('email') String email,
-    @Query('code') String code
-  );
+      @Query('email') String email, @Query('code') String code);
 
   @POST('/change_password')
   @Headers(<String, dynamic>{

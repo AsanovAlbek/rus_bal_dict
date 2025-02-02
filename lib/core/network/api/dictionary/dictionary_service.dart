@@ -21,11 +21,8 @@ abstract class DictionaryService {
   Future<WordActionResponse> deleteWord(@Body() RemoveWordBody removeBody);
 
   @GET('/get_words')
-  Future<List<Word>> getWords(
-    @Query('name') String name,
-    @Query('page') int page,
-    @Query('size') int size
-  );
+  Future<List<Word>> getWords(@Query('name') String name,
+      @Query('page') int page, @Query('size') int size);
 
   @GET('/words_count')
   Future<int> wordsCount(@Query('name') String name);

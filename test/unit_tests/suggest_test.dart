@@ -10,18 +10,22 @@ class MockSuggestRepository extends Mock implements SuggestWordRepository {}
 
 void main() {
   final repository = MockSuggestRepository();
-  const testSuggestWord = SuggestWord(id: 1, word: 'word', meaning: 'meaning', userId: 1);
-  group('Проверка на предложение слова пользователем',() {
+  const testSuggestWord =
+      SuggestWord(id: 1, word: 'word', meaning: 'meaning', userId: 1);
+  group('Проверка на предложение слова пользователем', () {
     test('Тест на успешное предложение слова', () async {
-      when(() => repository.suggestWord(testSuggestWord)).thenAnswer((_) => Future.value(null));
+      when(() => repository.suggestWord(testSuggestWord))
+          .thenAnswer((_) => Future.value(null));
       await repository.suggestWord(testSuggestWord);
       verifyOnce(() => repository.suggestWord(testSuggestWord));
       debugPrint('Предложить слово. Успешно');
     });
 
     test('Тест на успешное предложение слова', () async {
-      when(() => repository.suggestWord(testSuggestWord)).thenThrow(Exception());
-      expect(() => repository.suggestWord(testSuggestWord), throwsA(isA<Exception>()));
+      when(() => repository.suggestWord(testSuggestWord))
+          .thenThrow(Exception());
+      expect(() => repository.suggestWord(testSuggestWord),
+          throwsA(isA<Exception>()));
       debugPrint('Проверка на ошибку при предложении слова. Успешно');
     });
   });

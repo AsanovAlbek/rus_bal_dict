@@ -67,10 +67,7 @@ const dividerLightTheme = DividerThemeData(color: AppLightColors.dividerColor);
 
 const dividerDarkTheme = DividerThemeData(color: AppDarkColors.dividerColor);
 
-final errorTextStyleDark = textTheme.apply(
-  bodyColor: const Color.fromRGBO(216, 12, 12, 1)
-);
+final errorTextStyleDark =
+    textTheme.apply(bodyColor: const Color.fromRGBO(216, 12, 12, 1));
 
-final errorTextStyleLight = textTheme.apply(
-  bodyColor: Colors.red
-);
+final errorTextStyleLight = textTheme.apply(bodyColor: Colors.red);

@@ -30,7 +30,5 @@ abstract class SuggestsService {
 
   @POST('/suggests_count')
   Future<int> getUserSuggestsWordsCount(
-    @Header('Authorization') authHeader,
-    @Field('name') String name
-  );
+      @Header('Authorization') authHeader, @Field('name') String name);
 }

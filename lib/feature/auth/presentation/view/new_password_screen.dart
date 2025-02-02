@@ -47,10 +47,8 @@ class _NewPasswordState extends State<NewPasswordScreen> {
                         border: const OutlineInputBorder(),
                         suffixIcon: IconButton(
                             onPressed: () {
-                              context.read<AuthBloc>().add(
-                                  MaskPasswordEvent(
-                                      isPasswordMasked:
-                                          !state.isPasswordMasked));
+                              context.read<AuthBloc>().add(MaskPasswordEvent(
+                                  isPasswordMasked: !state.isPasswordMasked));
                             },
                             icon: Icon(state.isPasswordMasked
                                 ? Icons.visibility_off
@@ -74,10 +72,8 @@ class _NewPasswordState extends State<NewPasswordScreen> {
                         border: const OutlineInputBorder(),
                         suffixIcon: IconButton(
                             onPressed: () {
-                              context.read<AuthBloc>().add(
-                                  MaskPasswordEvent(
-                                      isPasswordMasked:
-                                          !state.isPasswordMasked));
+                              context.read<AuthBloc>().add(MaskPasswordEvent(
+                                  isPasswordMasked: !state.isPasswordMasked));
                             },
                             icon: Icon(state.isPasswordMasked
                                 ? Icons.visibility_off
@@ -89,24 +85,22 @@ class _NewPasswordState extends State<NewPasswordScreen> {
                   ElevatedButton(
                       onPressed: () {
                         if (formKey.currentState?.validate() ?? false) {
-                          context.read<AuthBloc>().add(
-                              UpdateUserPasswordAuthEvent(
-                                  email: state.emailForRestorePassword ?? '',
-                                  newPassword:
-                                      newPasswordController.text.trim(),
-                                  confirmPassword:
-                                      repeatPasswordController.text.trim(),
-                                  // onSuccess: () {
-                                  //   context.showSnackBar(
-                                  //       'Вы успешно сменили пароль');
-                                  //   context.go('/auth');
-                                  // },
-                                  // onError: (message) {
-                                  //   context.showSnackBar(message ??
-                                  //       'Ошибка при восстановлении пароля');
-                                  // }
-                                  )
-                                );
+                          context
+                              .read<AuthBloc>()
+                              .add(UpdateUserPasswordAuthEvent(
+                                email: state.emailForRestorePassword ?? '',
+                                newPassword: newPasswordController.text.trim(),
+                                confirmPassword:
+                                    repeatPasswordController.text.trim(),
+                                onSuccess: ([message]) {
+                                  context.showSnackBar(message ?? 'Пароль успешно сменен');
+                                  context.read<AuthBloc>().add(ChangeAuthPageEvent(pageState: AuthPageState.signIn));
+                                  context.go('/auth');
+                                },
+                                onError: ([message]) {
+                                  context.showSnackBar(message ??'Ошибка при восстановлении пароля');
+                                }
+                              ));
                         }
                       },
                       child: const Text('Подтвердить'))

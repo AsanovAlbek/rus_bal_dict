@@ -38,7 +38,8 @@ void main() {
       expect(result.isLeft, isTrue);
       expect(result.isRight, isFalse);
       expect(result.left, isA<UserAlreadyExistException>());
-      debugPrint('Тест на регистрацию уже зарегистрированного пользователя. Успешно');
+      debugPrint(
+          'Тест на регистрацию уже зарегистрированного пользователя. Успешно');
     });
 
     test('Регистрация пользователя. Проверка на то, что пользователь новый',
@@ -87,7 +88,8 @@ void main() {
       expect(user.email != email || user.password != password, isTrue);
       expect(signFailedEither.left, isException);
       expect(signFailedEither.left, isA<UserNotFoundException>());
-      debugPrint('Вход в аккаунт пользователя при неправильных данных. Успешно');
+      debugPrint(
+          'Вход в аккаунт пользователя при неправильных данных. Успешно');
     });
 
     test('Проверка на успешный вызов функции выхода из аккаунта', () async {
@@ -138,7 +140,7 @@ void main() {
 
       verify(() => authRepository.resetUserPassword(
           email: email, newPassword: newPassword)).called(1);
-      
+
       debugPrint('Проверка на смену пароля. Успешно');
     });
   });

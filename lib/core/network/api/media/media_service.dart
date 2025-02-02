@@ -9,7 +9,6 @@ part 'media_service.g.dart';
 
 @RestApi(baseUrl: '$testBaseUrl/media')
 abstract class MediaService {
-
   factory MediaService(Dio dio, {String? baseUrl}) = _MediaService;
 
   @POST('/upload_file')

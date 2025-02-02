@@ -73,36 +73,18 @@ class PolicyAgreeScreen extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
-                  onPressed: () => _signUp(context, state),
-                  child: const Text('Зарегистрироваться')),
+                  onPressed: () {
+                    if (state.policyAgree && state.termOfUseAgree) {
+                      context.go('auth/register_agree/activate');
+                    } else {
+                      context.showSnackBar('Нужно согласиться с политикой');
+                    }
+                  },
+                  child: const Text('Далее')),
             ),
           )
         ]);
       }),
     );
-  }
-
-  void _signUp(BuildContext context, AuthState state) {
-    context.read<AuthBloc>().add(SignUpEvent(
-        name: state.userName ?? '',
-        email: state.email ?? '',
-        password: state.password ?? '',
-        // onSuccess: (user, message) {
-        //   context.showSnackBar(message);
-        //   context.go('/word_list');
-        //   context
-        //       .read<AuthBloc>()
-        //       .add(AuthEvent.changeAuthPage(pageState: AuthPageState.signIn));
-        //   context.read<ProfileCubit>().fetchUserPaymentInfo();
-        // },
-        // onError: (message) {
-        //   if (message != null) {
-        //     context.showSnackBar(message);
-        //   }
-        // },
-        // onUserNoAgreeWithPolicy: () {
-        //   context.showSnackBar('Вы не согласились с условиями.');
-        // }
-        ));
   }
 }
