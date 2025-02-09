@@ -25,8 +25,12 @@ mixin _$GetCodeResponse {
   @JsonKey(name: 'message')
   String get message => throw _privateConstructorUsedError;
 
+  /// Serializes this GetCodeResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of GetCodeResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $GetCodeResponseCopyWith<GetCodeResponse> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -52,6 +56,8 @@ class _$GetCodeResponseCopyWithImpl<$Res, $Val extends GetCodeResponse>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of GetCodeResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -92,6 +98,8 @@ class __$$GetCodeResponseImplCopyWithImpl<$Res>
       _$GetCodeResponseImpl _value, $Res Function(_$GetCodeResponseImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of GetCodeResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -142,11 +150,13 @@ class _$GetCodeResponseImpl implements _GetCodeResponse {
             (identical(other.message, message) || other.message == message));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, success, message);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of GetCodeResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$GetCodeResponseImplCopyWith<_$GetCodeResponseImpl> get copyWith =>
@@ -175,8 +185,11 @@ abstract class _GetCodeResponse implements GetCodeResponse {
   @override
   @JsonKey(name: 'message')
   String get message;
+
+  /// Create a copy of GetCodeResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$GetCodeResponseImplCopyWith<_$GetCodeResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

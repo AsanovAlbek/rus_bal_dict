@@ -45,9 +45,7 @@ class NewAuthRepositoryImpl implements NewAuthRepository {
   @override
   Future<String> changePassword(String email, String newPassword) async {
     try {
-      final token = await _tokenStorage.get();
-      final message = await authService.changePassword(
-          'Bearer ${token.accessToken}', email, newPassword);
+      final message = await authService.changePassword(email, newPassword);
       return message;
     } on Exception catch (e, s) {
       logger?.handle(e, s, 'User change password error');
@@ -151,7 +149,7 @@ class NewAuthRepositoryImpl implements NewAuthRepository {
   }
 
   @override
-  Future<String> sendActivationCode(String email) async {
+  Future<String> sendActivationCode() async {
     try {
       final token = await _tokenStorage.get();
       final sendResponse =

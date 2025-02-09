@@ -32,5 +32,7 @@ extension StringExt on String {
 }
 
 extension DioExt on DioException {
-  String get deails => (response?.data as Map<String, String>?)?["details"] ?? 'Неизвестная ошибка';
+  String get deails =>
+      (response?.data as Map<String, dynamic>?)?["detail"] ??
+      'Неизвестная ошибка';
 }

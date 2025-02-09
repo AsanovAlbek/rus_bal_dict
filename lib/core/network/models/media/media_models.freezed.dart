@@ -27,8 +27,12 @@ mixin _$UploadFileResponse {
   @JsonKey(name: 'file_url')
   String get fileUrl => throw _privateConstructorUsedError;
 
+  /// Serializes this UploadFileResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of UploadFileResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $UploadFileResponseCopyWith<UploadFileResponse> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -55,6 +59,8 @@ class _$UploadFileResponseCopyWithImpl<$Res, $Val extends UploadFileResponse>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of UploadFileResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -101,6 +107,8 @@ class __$$UploadFileResponseImplCopyWithImpl<$Res>
       $Res Function(_$UploadFileResponseImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of UploadFileResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -162,11 +170,13 @@ class _$UploadFileResponseImpl implements _UploadFileResponse {
             (identical(other.fileUrl, fileUrl) || other.fileUrl == fileUrl));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, message, filePath, fileUrl);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of UploadFileResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$UploadFileResponseImplCopyWith<_$UploadFileResponseImpl> get copyWith =>
@@ -200,8 +210,11 @@ abstract class _UploadFileResponse implements UploadFileResponse {
   @override
   @JsonKey(name: 'file_url')
   String get fileUrl;
+
+  /// Create a copy of UploadFileResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$UploadFileResponseImplCopyWith<_$UploadFileResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -217,8 +230,12 @@ mixin _$DeleteFileResponse {
   @JsonKey(name: 'file_path')
   String get filePath => throw _privateConstructorUsedError;
 
+  /// Serializes this DeleteFileResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of DeleteFileResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $DeleteFileResponseCopyWith<DeleteFileResponse> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -244,6 +261,8 @@ class _$DeleteFileResponseCopyWithImpl<$Res, $Val extends DeleteFileResponse>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of DeleteFileResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -284,6 +303,8 @@ class __$$DeleteFileResponseImplCopyWithImpl<$Res>
       $Res Function(_$DeleteFileResponseImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of DeleteFileResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -335,11 +356,13 @@ class _$DeleteFileResponseImpl implements _DeleteFileResponse {
                 other.filePath == filePath));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, message, filePath);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of DeleteFileResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$DeleteFileResponseImplCopyWith<_$DeleteFileResponseImpl> get copyWith =>
@@ -369,8 +392,11 @@ abstract class _DeleteFileResponse implements DeleteFileResponse {
   @override
   @JsonKey(name: 'file_path')
   String get filePath;
+
+  /// Create a copy of DeleteFileResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DeleteFileResponseImplCopyWith<_$DeleteFileResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -386,8 +412,12 @@ mixin _$GetFileResponse {
   @JsonKey(name: 'file_bytes')
   String get rawFileBytes => throw _privateConstructorUsedError;
 
+  /// Serializes this GetFileResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of GetFileResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $GetFileResponseCopyWith<GetFileResponse> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -413,6 +443,8 @@ class _$GetFileResponseCopyWithImpl<$Res, $Val extends GetFileResponse>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of GetFileResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -453,6 +485,8 @@ class __$$GetFileResponseImplCopyWithImpl<$Res>
       _$GetFileResponseImpl _value, $Res Function(_$GetFileResponseImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of GetFileResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -504,11 +538,13 @@ class _$GetFileResponseImpl implements _GetFileResponse {
                 other.rawFileBytes == rawFileBytes));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, message, rawFileBytes);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of GetFileResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$GetFileResponseImplCopyWith<_$GetFileResponseImpl> get copyWith =>
@@ -538,8 +574,11 @@ abstract class _GetFileResponse implements GetFileResponse {
   @override
   @JsonKey(name: 'file_bytes')
   String get rawFileBytes;
+
+  /// Create a copy of GetFileResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$GetFileResponseImplCopyWith<_$GetFileResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

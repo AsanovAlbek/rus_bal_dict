@@ -17,6 +17,6 @@ abstract interface class NewAuthRepository {
   Future<String> resetPassword(String email, String code);
   Future<String> changePassword(String email, String newPassword);
   Future<String> sendResetCode(String email);
-  Future<String> sendActivationCode(String email);
+  Future<String> sendActivationCode();
   Future<Either<Exception, User>> startSession();
 }

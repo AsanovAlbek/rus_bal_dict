@@ -198,7 +198,7 @@ class _AuthService implements AuthService {
     )
         .compose(
           _dio.options,
-          '/user_activation',
+          '/activate_user',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -228,8 +228,7 @@ class _AuthService implements AuthService {
       r'email': email,
       r'code': code,
     };
-    final _headers = <String, dynamic>{r'Accept': 'application/json'};
-    _headers.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<ConfirmResetPasswordResponse>(Options(
       method: 'POST',
@@ -260,7 +259,6 @@ class _AuthService implements AuthService {
 
   @override
   Future<String> changePassword(
-    dynamic authorizationHeader,
     String email,
     String newPassword,
   ) async {
@@ -272,7 +270,6 @@ class _AuthService implements AuthService {
     final _headers = <String, dynamic>{
       r'Content-Type': 'application/json',
       r'accept': 'application/json',
-      r'Authorization': authorizationHeader,
     };
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;

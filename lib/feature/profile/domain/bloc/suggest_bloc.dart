@@ -14,9 +14,8 @@ class SuggestBloc extends Bloc<SuggestEvent, SuggestState> {
 
   SuggestStateLoaded _loaded = SuggestStateLoaded();
 
-  FutureOr<void> _getUserSuggests(GetSuggestsEvent event, Emitter<SuggestState> emit) {
-  }
+  FutureOr<void> _getUserSuggests(
+      GetSuggestsEvent event, Emitter<SuggestState> emit) {}
 
-  FutureOr<void> _suggest(SuggestWordEvent event, Emitter<SuggestState> emit) {
-  }
+  FutureOr<void> _suggest(SuggestWordEvent event, Emitter<SuggestState> emit) {}
 }

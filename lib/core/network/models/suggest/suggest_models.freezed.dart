@@ -25,8 +25,12 @@ mixin _$SuggestResponse {
   @JsonKey(name: 'suggest_word')
   SuggestWord get suggestWord => throw _privateConstructorUsedError;
 
+  /// Serializes this SuggestResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of SuggestResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $SuggestResponseCopyWith<SuggestResponse> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -54,6 +58,8 @@ class _$SuggestResponseCopyWithImpl<$Res, $Val extends SuggestResponse>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of SuggestResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -72,6 +78,8 @@ class _$SuggestResponseCopyWithImpl<$Res, $Val extends SuggestResponse>
     ) as $Val);
   }
 
+  /// Create a copy of SuggestResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $SuggestWordCopyWith<$Res> get suggestWord {
@@ -105,6 +113,8 @@ class __$$SuggestResponseImplCopyWithImpl<$Res>
       _$SuggestResponseImpl _value, $Res Function(_$SuggestResponseImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SuggestResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -156,11 +166,13 @@ class _$SuggestResponseImpl implements _SuggestResponse {
                 other.suggestWord == suggestWord));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, message, suggestWord);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SuggestResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SuggestResponseImplCopyWith<_$SuggestResponseImpl> get copyWith =>
@@ -190,8 +202,11 @@ abstract class _SuggestResponse implements SuggestResponse {
   @override
   @JsonKey(name: 'suggest_word')
   SuggestWord get suggestWord;
+
+  /// Create a copy of SuggestResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SuggestResponseImplCopyWith<_$SuggestResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -210,8 +225,12 @@ mixin _$SuggestAcceptResponse {
   @JsonKey(name: 'word')
   Word get word => throw _privateConstructorUsedError;
 
+  /// Serializes this SuggestAcceptResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of SuggestAcceptResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $SuggestAcceptResponseCopyWith<SuggestAcceptResponse> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -242,6 +261,8 @@ class _$SuggestAcceptResponseCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of SuggestAcceptResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -265,6 +286,8 @@ class _$SuggestAcceptResponseCopyWithImpl<$Res,
     ) as $Val);
   }
 
+  /// Create a copy of SuggestAcceptResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $SuggestWordCopyWith<$Res> get suggestWord {
@@ -273,6 +296,8 @@ class _$SuggestAcceptResponseCopyWithImpl<$Res,
     });
   }
 
+  /// Create a copy of SuggestAcceptResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $WordCopyWith<$Res> get word {
@@ -311,6 +336,8 @@ class __$$SuggestAcceptResponseImplCopyWithImpl<$Res>
       $Res Function(_$SuggestAcceptResponseImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SuggestAcceptResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -372,11 +399,13 @@ class _$SuggestAcceptResponseImpl implements _SuggestAcceptResponse {
             (identical(other.word, word) || other.word == word));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, message, suggestWord, word);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SuggestAcceptResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SuggestAcceptResponseImplCopyWith<_$SuggestAcceptResponseImpl>
@@ -409,8 +438,11 @@ abstract class _SuggestAcceptResponse implements SuggestAcceptResponse {
   @override
   @JsonKey(name: 'word')
   Word get word;
+
+  /// Create a copy of SuggestAcceptResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SuggestAcceptResponseImplCopyWith<_$SuggestAcceptResponseImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -429,8 +461,12 @@ mixin _$SuggestRejectResponse {
   @JsonKey(name: 'word')
   Word get word => throw _privateConstructorUsedError;
 
+  /// Serializes this SuggestRejectResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of SuggestRejectResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $SuggestRejectResponseCopyWith<SuggestRejectResponse> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -461,6 +497,8 @@ class _$SuggestRejectResponseCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of SuggestRejectResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -484,6 +522,8 @@ class _$SuggestRejectResponseCopyWithImpl<$Res,
     ) as $Val);
   }
 
+  /// Create a copy of SuggestRejectResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $SuggestWordCopyWith<$Res> get suggestWord {
@@ -492,6 +532,8 @@ class _$SuggestRejectResponseCopyWithImpl<$Res,
     });
   }
 
+  /// Create a copy of SuggestRejectResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $WordCopyWith<$Res> get word {
@@ -530,6 +572,8 @@ class __$$SuggestRejectResponseImplCopyWithImpl<$Res>
       $Res Function(_$SuggestRejectResponseImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SuggestRejectResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -591,11 +635,13 @@ class _$SuggestRejectResponseImpl implements _SuggestRejectResponse {
             (identical(other.word, word) || other.word == word));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, message, suggestWord, word);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SuggestRejectResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SuggestRejectResponseImplCopyWith<_$SuggestRejectResponseImpl>
@@ -628,8 +674,11 @@ abstract class _SuggestRejectResponse implements SuggestRejectResponse {
   @override
   @JsonKey(name: 'word')
   Word get word;
+
+  /// Create a copy of SuggestRejectResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SuggestRejectResponseImplCopyWith<_$SuggestRejectResponseImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -649,8 +698,12 @@ mixin _$GetSuggestsBody {
   @JsonKey(name: 'size')
   int get size => throw _privateConstructorUsedError;
 
+  /// Serializes this GetSuggestsBody to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of GetSuggestsBody
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $GetSuggestsBodyCopyWith<GetSuggestsBody> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -678,6 +731,8 @@ class _$GetSuggestsBodyCopyWithImpl<$Res, $Val extends GetSuggestsBody>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of GetSuggestsBody
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -730,6 +785,8 @@ class __$$GetSuggestsBodyImplCopyWithImpl<$Res>
       _$GetSuggestsBodyImpl _value, $Res Function(_$GetSuggestsBodyImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of GetSuggestsBody
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -800,11 +857,13 @@ class _$GetSuggestsBodyImpl implements _GetSuggestsBody {
             (identical(other.size, size) || other.size == size));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, userId, name, page, size);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of GetSuggestsBody
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$GetSuggestsBodyImplCopyWith<_$GetSuggestsBodyImpl> get copyWith =>
@@ -841,8 +900,11 @@ abstract class _GetSuggestsBody implements GetSuggestsBody {
   @override
   @JsonKey(name: 'size')
   int get size;
+
+  /// Create a copy of GetSuggestsBody
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$GetSuggestsBodyImplCopyWith<_$GetSuggestsBodyImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -862,8 +924,12 @@ mixin _$GetAllSuggestsBody {
   @JsonKey(name: 'size')
   int get size => throw _privateConstructorUsedError;
 
+  /// Serializes this GetAllSuggestsBody to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of GetAllSuggestsBody
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $GetAllSuggestsBodyCopyWith<GetAllSuggestsBody> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -891,6 +957,8 @@ class _$GetAllSuggestsBodyCopyWithImpl<$Res, $Val extends GetAllSuggestsBody>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of GetAllSuggestsBody
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -943,6 +1011,8 @@ class __$$GetAllSuggestsBodyImplCopyWithImpl<$Res>
       $Res Function(_$GetAllSuggestsBodyImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of GetAllSuggestsBody
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1013,11 +1083,13 @@ class _$GetAllSuggestsBodyImpl implements _GetAllSuggestsBody {
             (identical(other.size, size) || other.size == size));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, userId, name, page, size);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of GetAllSuggestsBody
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$GetAllSuggestsBodyImplCopyWith<_$GetAllSuggestsBodyImpl> get copyWith =>
@@ -1054,8 +1126,11 @@ abstract class _GetAllSuggestsBody implements GetAllSuggestsBody {
   @override
   @JsonKey(name: 'size')
   int get size;
+
+  /// Create a copy of GetAllSuggestsBody
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$GetAllSuggestsBodyImplCopyWith<_$GetAllSuggestsBodyImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1071,8 +1146,12 @@ mixin _$CreateSuggestBody {
   @JsonKey(name: 'meaning')
   String get meaning => throw _privateConstructorUsedError;
 
+  /// Serializes this CreateSuggestBody to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CreateSuggestBody
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CreateSuggestBodyCopyWith<CreateSuggestBody> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1098,6 +1177,8 @@ class _$CreateSuggestBodyCopyWithImpl<$Res, $Val extends CreateSuggestBody>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CreateSuggestBody
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1138,6 +1219,8 @@ class __$$CreateSuggestBodyImplCopyWithImpl<$Res>
       $Res Function(_$CreateSuggestBodyImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CreateSuggestBody
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1188,11 +1271,13 @@ class _$CreateSuggestBodyImpl implements _CreateSuggestBody {
             (identical(other.meaning, meaning) || other.meaning == meaning));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, word, meaning);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CreateSuggestBody
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CreateSuggestBodyImplCopyWith<_$CreateSuggestBodyImpl> get copyWith =>
@@ -1222,8 +1307,11 @@ abstract class _CreateSuggestBody implements CreateSuggestBody {
   @override
   @JsonKey(name: 'meaning')
   String get meaning;
+
+  /// Create a copy of CreateSuggestBody
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CreateSuggestBodyImplCopyWith<_$CreateSuggestBodyImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

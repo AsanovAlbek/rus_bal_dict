@@ -37,13 +37,13 @@ abstract class AuthService {
   @Headers(<String, dynamic>{'Accept': 'application/json'})
   Future<RefreshTokenResponse> refreshToken(@Query('token') String token);
 
-  @POST('/user_activation')
+  @POST('/activate_user')
   @Headers(<String, dynamic>{'Accept': 'application/json'})
   Future<UserActivationResponse> userActivation(
       @Header('Authorization') authorizationHeader, @Query('code') String code);
 
   @POST('/confirm_reset_password')
-  @Headers(<String, dynamic>{'Accept': 'application/json'})
+  //@Headers(<String, dynamic>{'Accept': 'application/json'})
   Future<ConfirmResetPasswordResponse> confirmResetPassword(
       @Query('email') String email, @Query('code') String code);
 
@@ -52,6 +52,6 @@ abstract class AuthService {
     'Content-Type': 'application/json',
     'accept': 'application/json',
   })
-  Future<String> changePassword(@Header('Authorization') authorizationHeader,
+  Future<String> changePassword(
       @Query('email') String email, @Query('new_password') String newPassword);
 }

@@ -25,8 +25,12 @@ mixin _$WordActionResponse {
   @JsonKey(name: 'word')
   Word get word => throw _privateConstructorUsedError;
 
+  /// Serializes this WordActionResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of WordActionResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $WordActionResponseCopyWith<WordActionResponse> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -54,6 +58,8 @@ class _$WordActionResponseCopyWithImpl<$Res, $Val extends WordActionResponse>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of WordActionResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -72,6 +78,8 @@ class _$WordActionResponseCopyWithImpl<$Res, $Val extends WordActionResponse>
     ) as $Val);
   }
 
+  /// Create a copy of WordActionResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $WordCopyWith<$Res> get word {
@@ -105,6 +113,8 @@ class __$$WordActionResponseImplCopyWithImpl<$Res>
       $Res Function(_$WordActionResponseImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of WordActionResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -155,11 +165,13 @@ class _$WordActionResponseImpl implements _WordActionResponse {
             (identical(other.word, word) || other.word == word));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, message, word);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of WordActionResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$WordActionResponseImplCopyWith<_$WordActionResponseImpl> get copyWith =>
@@ -188,8 +200,11 @@ abstract class _WordActionResponse implements WordActionResponse {
   @override
   @JsonKey(name: 'word')
   Word get word;
+
+  /// Create a copy of WordActionResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$WordActionResponseImplCopyWith<_$WordActionResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -203,8 +218,12 @@ mixin _$OnlyWordBody {
   @JsonKey(name: 'word')
   Word get word => throw _privateConstructorUsedError;
 
+  /// Serializes this OnlyWordBody to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of OnlyWordBody
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $OnlyWordBodyCopyWith<OnlyWordBody> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -230,6 +249,8 @@ class _$OnlyWordBodyCopyWithImpl<$Res, $Val extends OnlyWordBody>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of OnlyWordBody
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -243,6 +264,8 @@ class _$OnlyWordBodyCopyWithImpl<$Res, $Val extends OnlyWordBody>
     ) as $Val);
   }
 
+  /// Create a copy of OnlyWordBody
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $WordCopyWith<$Res> get word {
@@ -274,6 +297,8 @@ class __$$OnlyWordBodyImplCopyWithImpl<$Res>
       _$OnlyWordBodyImpl _value, $Res Function(_$OnlyWordBodyImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of OnlyWordBody
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -313,11 +338,13 @@ class _$OnlyWordBodyImpl implements _OnlyWordBody {
             (identical(other.word, word) || other.word == word));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, word);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of OnlyWordBody
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$OnlyWordBodyImplCopyWith<_$OnlyWordBodyImpl> get copyWith =>
@@ -341,8 +368,11 @@ abstract class _OnlyWordBody implements OnlyWordBody {
   @override
   @JsonKey(name: 'word')
   Word get word;
+
+  /// Create a copy of OnlyWordBody
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$OnlyWordBodyImplCopyWith<_$OnlyWordBodyImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -356,8 +386,12 @@ mixin _$RemoveWordBody {
   @JsonKey(name: 'word_id')
   int get wordId => throw _privateConstructorUsedError;
 
+  /// Serializes this RemoveWordBody to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of RemoveWordBody
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $RemoveWordBodyCopyWith<RemoveWordBody> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -381,6 +415,8 @@ class _$RemoveWordBodyCopyWithImpl<$Res, $Val extends RemoveWordBody>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of RemoveWordBody
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -414,6 +450,8 @@ class __$$RemoveWordBodyImplCopyWithImpl<$Res>
       _$RemoveWordBodyImpl _value, $Res Function(_$RemoveWordBodyImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of RemoveWordBody
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -453,11 +491,13 @@ class _$RemoveWordBodyImpl implements _RemoveWordBody {
             (identical(other.wordId, wordId) || other.wordId == wordId));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, wordId);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of RemoveWordBody
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$RemoveWordBodyImplCopyWith<_$RemoveWordBodyImpl> get copyWith =>
@@ -482,8 +522,11 @@ abstract class _RemoveWordBody implements RemoveWordBody {
   @override
   @JsonKey(name: 'word_id')
   int get wordId;
+
+  /// Create a copy of RemoveWordBody
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$RemoveWordBodyImplCopyWith<_$RemoveWordBodyImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -501,8 +544,12 @@ mixin _$GetWordsBody {
   @JsonKey(name: 'size')
   int get size => throw _privateConstructorUsedError;
 
+  /// Serializes this GetWordsBody to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of GetWordsBody
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $GetWordsBodyCopyWith<GetWordsBody> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -529,6 +576,8 @@ class _$GetWordsBodyCopyWithImpl<$Res, $Val extends GetWordsBody>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of GetWordsBody
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -575,6 +624,8 @@ class __$$GetWordsBodyImplCopyWithImpl<$Res>
       _$GetWordsBodyImpl _value, $Res Function(_$GetWordsBodyImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of GetWordsBody
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -635,11 +686,13 @@ class _$GetWordsBodyImpl implements _GetWordsBody {
             (identical(other.size, size) || other.size == size));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, name, page, size);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of GetWordsBody
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$GetWordsBodyImplCopyWith<_$GetWordsBodyImpl> get copyWith =>
@@ -671,8 +724,11 @@ abstract class _GetWordsBody implements GetWordsBody {
   @override
   @JsonKey(name: 'size')
   int get size;
+
+  /// Create a copy of GetWordsBody
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$GetWordsBodyImplCopyWith<_$GetWordsBodyImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -686,8 +742,12 @@ mixin _$WordByIdBody {
   @JsonKey(name: 'id')
   int get id => throw _privateConstructorUsedError;
 
+  /// Serializes this WordByIdBody to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of WordByIdBody
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $WordByIdBodyCopyWith<WordByIdBody> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -711,6 +771,8 @@ class _$WordByIdBodyCopyWithImpl<$Res, $Val extends WordByIdBody>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of WordByIdBody
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -744,6 +806,8 @@ class __$$WordByIdBodyImplCopyWithImpl<$Res>
       _$WordByIdBodyImpl _value, $Res Function(_$WordByIdBodyImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of WordByIdBody
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -783,11 +847,13 @@ class _$WordByIdBodyImpl implements _WordByIdBody {
             (identical(other.id, id) || other.id == id));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of WordByIdBody
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$WordByIdBodyImplCopyWith<_$WordByIdBodyImpl> get copyWith =>
@@ -811,8 +877,11 @@ abstract class _WordByIdBody implements WordByIdBody {
   @override
   @JsonKey(name: 'id')
   int get id;
+
+  /// Create a copy of WordByIdBody
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$WordByIdBodyImplCopyWith<_$WordByIdBodyImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

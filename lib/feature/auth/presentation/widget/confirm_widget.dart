@@ -60,6 +60,7 @@ class _ConfirmWidgetState extends State<ConfirmWidget> {
               validator: AuthValidator.validateRestorePasswordCode,
               pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
               showCursor: true,
+              controller: _pinController,
               onChanged: (value) => setState(() {
                 enableConfirmButton = value.length == widget.codeLength;
               }),
@@ -78,6 +79,7 @@ class _ConfirmWidgetState extends State<ConfirmWidget> {
                   foregroundColor:
                       WidgetStatePropertyAll(Colors.deepPurple[400])),
               buttonOnTimerRunText: 'Отправить код повторно через ',
+              timerDuration: const Duration(minutes: 3),
               onPressed: widget.onSendCodeAgain),
           const SizedBox(
             height: 8,

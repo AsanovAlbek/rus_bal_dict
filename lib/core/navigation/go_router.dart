@@ -47,19 +47,11 @@ class AppRouter {
         navigatorKey: _rootNavigatorKey,
         initialLocation: '/splash_screen',
         routes: [
-          GoRoute(path: '/splash_screen', builder: (context, state) => const SplashScreen()),
+          GoRoute(
+              path: '/splash_screen',
+              builder: (context, state) => const SplashScreen()),
           GoRoute(
               path: '/auth',
-              // redirect: (context, state) {
-              //   final settingsBox = Hive.box<AppSettingsHiveModel>('settings');
-              //   final settings =
-              //       (settingsBox.getAt(0) ?? AppSettingsHiveModel()).toModel();
-              //   if (settings.userInfo.isUserSignIn &&
-              //       state.uri.path == '/auth') {
-              //     return '/word_list';
-              //   }
-              //   return null;
-              // },
               builder: (context, state) => const AuthScreen(),
               routes: [
                 GoRoute(
@@ -83,13 +75,9 @@ class AppRouter {
                       const Scaffold(body: PrivacyPolicyScreen()),
                 ),
                 GoRoute(
-                    path: 'register_agree',
-                    builder: (context, state) => const PolicyAgreeScreen(),
-                    routes: [
-                      GoRoute(
-                          path: 'activate',
-                          builder: (context, state) => const ActivationScreen())
-                    ])
+                  path: 'register_agree',
+                  builder: (context, state) => const PolicyAgreeScreen(),
+                )
               ]),
           StatefulShellRoute.indexedStack(
               builder: (context, state, navigationShell) {
@@ -199,7 +187,11 @@ class AppRouter {
                               path: 'privacy',
                               builder: (context, state) =>
                                   const PrivacyPolicyScreen(),
-                            )
+                            ),
+                            GoRoute(
+                                path: 'activate',
+                                builder: (context, state) =>
+                                    const ActivationScreen())
                           ])
                     ])
               ])

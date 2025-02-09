@@ -65,15 +65,6 @@ class ChangeAuthPageEvent extends AuthEvent {
   ChangeAuthPageEvent({required this.pageState});
 }
 
-@Deprecated('Use [SendRestoreCodeEvent] or [SendActivationCodeEvent]')
-@immutable
-class SendCodeToEmailAuthEvent extends AuthEvent {
-  final String email;
-  final Function(String?)? onSuccess;
-  final Function(String?)? onError;
-  SendCodeToEmailAuthEvent({required this.email, this.onSuccess, this.onError});
-}
-
 class SendRestoreCodeEvent extends AuthEvent {
   final String email;
   final Function()? onSuccess;

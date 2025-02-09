@@ -1,4 +1,5 @@
 import 'detail.dart';
+import 'package:just_audio/just_audio.dart' as just_audio;
 
 class WordsDetailScreen extends StatefulWidget {
   final Word? word;
@@ -14,12 +15,12 @@ class _WordsDetailScreenState extends State<WordsDetailScreen> {
 
   @override
   void initState() {
+    super.initState();
     if (mounted && widget.word != null) {
       context
           .read<HistoryBloc>()
           .add(HistoryEvent.addToHistory(word: widget.word!));
     }
-    super.initState();
   }
 
   @override
@@ -32,9 +33,9 @@ class _WordsDetailScreenState extends State<WordsDetailScreen> {
     return SafeArea(
       child: PopScope(
         canPop: false,
-        onPopInvoked: (didPop) {
+        onPopInvokedWithResult: (bool didPop, Object? result) async {
           if (didPop) return;
-          context.pop();
+          if (mounted) context.pop();
         },
         child: ValueListenableBuilder(
           valueListenable:
@@ -55,7 +56,8 @@ class _WordsDetailScreenState extends State<WordsDetailScreen> {
                     DetailStateLoaded() => DetailContent(
                         favoritesBox: value,
                         word: widget.word,
-                        playAudio: () => _playMusic(bytes: state.bytes),
+                        playAudio: () async =>
+                            _playMusicByUrl(widget.word?.audioUrl ?? ''),
                       ),
                     DetailStateError(exception: final exception) =>
                       Center(child: Text('$exception')),
@@ -71,25 +73,26 @@ class _WordsDetailScreenState extends State<WordsDetailScreen> {
     );
   }
 
-  void _playMusic({Uint8List? bytes}) {
-    Source? audioSource;
-    if (bytes != null) {
-      audioSource = BytesSource(bytes);
-    }
-    if (audioSource != null) {
-      if (player.state == PlayerState.playing) {
-        player.stop();
-      } else {
-        player.setSource(audioSource);
-        player.play(audioSource);
+  void _playMusicByUrl(String url) async {
+    String audioUrl = url;
+    Talker().debug('Sound url = http:/$audioUrl');
+    var audioPlayer = just_audio.AudioPlayer();
+    if (audioUrl.isEmpty) return;
+    if (audioPlayer.playing) {
+      await audioPlayer.stop();
+    } else {
+      try {
+        await audioPlayer.setUrl('http:/$audioUrl');
+        audioPlayer.play();
+      } catch (e, s) {
+        Talker().handle(e, s, 'Audio player fucking error');
       }
     }
-    Talker().debug('bytes = $bytes source = $audioSource');
   }
 }
 
 class DetailContent extends StatelessWidget {
-  final Function()? playAudio;
+  final Future<void> Function()? playAudio;
   final Word? word;
   final Box<FavoriteWordHiveModel> favoritesBox;
 
@@ -128,7 +131,6 @@ class DetailContent extends StatelessWidget {
                   favoritesBox.put(
                       wordId, word!.toFavoritesHive(userId: userId));
                 }
-                //context.read<WordsListBloc>().add(WordsListEvent.fetch());
               }
             },
           )

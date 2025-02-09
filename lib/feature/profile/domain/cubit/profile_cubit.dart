@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rus_bal_dict/core/model/settings/app_settings.dart';
+import 'package:rus_bal_dict/feature/auth/domain/repository/new_auth_repository.dart';
 import 'package:rus_bal_dict/feature/profile/domain/cubit/profile_state.dart';
 import 'package:rus_bal_dict/feature/profile/domain/repository/payment_repository.dart';
 import 'package:talker/talker.dart';
@@ -11,8 +12,9 @@ import '../repository/profile_repository.dart';
 class ProfileCubit extends Cubit<ProfileState> {
   final ProfileRepository repository;
   final PaymentRepository paymentRepository;
+  final NewAuthRepository authRepository;
 
-  ProfileCubit(this.repository, this.paymentRepository)
+  ProfileCubit(this.repository, this.paymentRepository, this.authRepository)
       : super(const ProfileState());
 
   var _profile = const ProfileState();

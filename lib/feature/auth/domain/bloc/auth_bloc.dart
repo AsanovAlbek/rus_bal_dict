@@ -43,7 +43,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       StartSessionEvent event, Emitter<AuthState> emit) async {
     final startSessionEither = await newAuthRepository.startSession();
     startSessionEither.either((error) {
-      event.onError?.call(error is DioException ? error.deails : 'Войдите снова');
+      event.onError
+          ?.call(error is DioException ? error.deails : 'Войдите снова');
     }, (user) {
       emit(state.copyWith(user: user));
       event.onSuccess?.call();
@@ -205,7 +206,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   FutureOr<void> _sendActivationCode(
       SendActivationCodeEvent event, Emitter<AuthState> emit) async {
     try {
-      await newAuthRepository.sendActivationCode('');
+      await newAuthRepository.sendActivationCode();
       event.onSuccess?.call();
     } on DioException catch (dioException, stack) {
       event.onError?.call();
@@ -219,12 +220,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   FutureOr<void> _confirmActivation(
       ConfirmUserActivationEvent event, Emitter<AuthState> emit) async {
     try {
-      await newAuthRepository.activateUser(event.code);
+      Talker().debug("user = ${state.user}, code = ${event.code}");
+      var activateMessage = await newAuthRepository.activateUser(event.code);
+      Talker().debug("Activate message = $activateMessage");
       var authEither = await newAuthRepository.getUser();
       authEither.either((error) {
         event.onError
             ?.call(error is DioException ? error.deails : error.toString());
       }, (user) {
+        Talker().debug("User = $user");
+        emit(state.copyWith(user: user));
         event.onSuccess?.call();
       });
     } on DioException catch (dioException, stack) {

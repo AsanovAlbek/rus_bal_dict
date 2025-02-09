@@ -104,32 +104,37 @@ class _WordsListScreenState extends State<WordsListScreen> {
                             return WordListItem(
                                 word: words[index],
                                 onPressed: (word) async {
-                                  final profileCubit =
-                                      context.read<ProfileCubit>();
-                                  //await profileCubit.checkLimits();
-                                  final premiumInfo =
-                                      profileCubit.state.paymentInfo;
-                                  Talker().debug('PREM INFO = $premiumInfo');
-                                  if (!premiumInfo.isSubscribe) {
-                                    Talker().debug(
-                                        'Minus one free try. tries = ${premiumInfo.dayLimit}');
-                                  }
-                                  // Если пользователь без подписки и его попытки кончились
-                                  if (!premiumInfo.isSubscribe &&
-                                      premiumInfo.dayLimit <= 0) {
-                                    Future.sync(() =>
-                                        showFreeTriesReachLimitDialog(context));
-                                  } else {
-                                    // Если у поисковой строки фокус и происходит переход к слову
-                                    // То после возврата фокус остаётся и открывается клавиатура
-                                    // Воизбежание такого поведения отнимаем фокус у поля
-                                    FocusManager.instance.primaryFocus
+                                  // final profileCubit =
+                                  //     context.read<ProfileCubit>();
+                                  // //await profileCubit.checkLimits();
+                                  // final premiumInfo =
+                                  //     profileCubit.state.paymentInfo;
+                                  // Talker().debug('PREM INFO = $premiumInfo');
+                                  // if (!premiumInfo.isSubscribe) {
+                                  //   Talker().debug(
+                                  //       'Minus one free try. tries = ${premiumInfo.dayLimit}');
+                                  // }
+                                  // // Если пользователь без подписки и его попытки кончились
+                                  // if (!premiumInfo.isSubscribe &&
+                                  //     premiumInfo.dayLimit <= 0) {
+                                  //   Future.sync(() =>
+                                  //       showFreeTriesReachLimitDialog(context));
+                                  // } else {
+                                  //   // Если у поисковой строки фокус и происходит переход к слову
+                                  //   // То после возврата фокус остаётся и открывается клавиатура
+                                  //   // Воизбежание такого поведения отнимаем фокус у поля
+                                  //   FocusManager.instance.primaryFocus
+                                  //       ?.unfocus();
+                                  //   Future.sync(() => context.go(
+                                  //       '/word_list/word_detail',
+                                  //       extra: word));
+                                  // }
+                                  // await profileCubit.checkLimits();
+                                  FocusManager.instance.primaryFocus
                                         ?.unfocus();
                                     Future.sync(() => context.go(
                                         '/word_list/word_detail',
                                         extra: word));
-                                  }
-                                  await profileCubit.checkLimits();
                                 },
                                 saveEnable: false,
                                 onSaveWord: (word) {

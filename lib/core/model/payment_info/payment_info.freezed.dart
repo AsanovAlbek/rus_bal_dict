@@ -25,8 +25,12 @@ mixin _$PaymentInfo {
   @JsonKey(name: 'subscription')
   String get subscription => throw _privateConstructorUsedError;
 
+  /// Serializes this PaymentInfo to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of PaymentInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $PaymentInfoCopyWith<PaymentInfo> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -52,6 +56,8 @@ class _$PaymentInfoCopyWithImpl<$Res, $Val extends PaymentInfo>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of PaymentInfo
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -92,6 +98,8 @@ class __$$PaymentInfoImplCopyWithImpl<$Res>
       _$PaymentInfoImpl _value, $Res Function(_$PaymentInfoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of PaymentInfo
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -144,11 +152,13 @@ class _$PaymentInfoImpl implements _PaymentInfo {
                 other.subscription == subscription));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, dayLimit, subscription);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of PaymentInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PaymentInfoImplCopyWith<_$PaymentInfoImpl> get copyWith =>
@@ -177,8 +187,11 @@ abstract class _PaymentInfo implements PaymentInfo {
   @override
   @JsonKey(name: 'subscription')
   String get subscription;
+
+  /// Create a copy of PaymentInfo
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PaymentInfoImplCopyWith<_$PaymentInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

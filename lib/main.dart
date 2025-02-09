@@ -55,8 +55,8 @@ class MyApp extends StatelessWidget {
                   GetIt.I<AuthRepository>(), GetIt.I<NewAuthRepository>(),
                   logger: GetIt.I<Talker>())),
           BlocProvider(
-              create: (context) => ProfileCubit(
-                  GetIt.I<ProfileRepository>(), GetIt.I<PaymentRepository>()))
+              create: (context) => ProfileCubit(GetIt.I<ProfileRepository>(),
+                  GetIt.I<PaymentRepository>(), GetIt.I<NewAuthRepository>()))
         ],
         child: ValueListenableBuilder(
           valueListenable:
