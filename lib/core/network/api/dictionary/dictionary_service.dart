@@ -7,7 +7,7 @@ import 'package:rus_bal_dict/core/network/models/dictionary/dictionary_models.da
 
 part 'dictionary_service.g.dart';
 
-@RestApi(baseUrl: '$testBaseUrl/dictionary')
+@RestApi(baseUrl: '$myApiUrl/dictionary')
 abstract class DictionaryService {
   factory DictionaryService(Dio dio, {String? baseUrl}) = _DictionaryService;
 

@@ -1,4 +1,6 @@
 import 'package:rus_bal_dict/export.dart';
+import 'package:rus_bal_dict/feature/word_detail/domain/bloc/detail_bloc.dart';
+import 'package:rus_bal_dict/feature/word_detail/domain/bloc/detail_event.dart';
 
 import 'words_list.dart';
 
@@ -130,11 +132,14 @@ class _WordsListScreenState extends State<WordsListScreen> {
                                   //       extra: word));
                                   // }
                                   // await profileCubit.checkLimits();
-                                  FocusManager.instance.primaryFocus
-                                        ?.unfocus();
-                                    Future.sync(() => context.go(
-                                        '/word_list/word_detail',
-                                        extra: word));
+                                  FocusManager.instance.primaryFocus?.unfocus();
+                                  Future.sync(() {
+                                    context
+                                        .read<DetailBloc>()
+                                        .add(OpenWordEvent(word, onOpen: () {
+                                          context.go('/word_list/word_detail');
+                                        }));
+                                  });
                                 },
                                 saveEnable: false,
                                 onSaveWord: (word) {

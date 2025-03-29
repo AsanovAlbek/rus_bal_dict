@@ -14,7 +14,7 @@ class _DictionaryService implements DictionaryService {
     this.baseUrl,
     this.errorLogger,
   }) {
-    baseUrl ??= 'http://192.168.177.2:8000//dictionary';
+    baseUrl ??= 'https://balrusapi.ru//dictionary';
   }
 
   final Dio _dio;

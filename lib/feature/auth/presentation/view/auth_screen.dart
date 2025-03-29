@@ -43,15 +43,24 @@ class _AuthScreenState extends State<AuthScreen> {
                     context.read<AuthBloc>().add(MaskPasswordEvent(
                         isPasswordMasked: !state.isPasswordMasked));
                   },
+                  onChangeRememberMe: (bool? rememberMe) {
+                    context
+                        .read<AuthBloc>()
+                        .add(ChangeRememberMeEvent(rememberMe));
+                  },
                   pageState: state.pageState,
                   isPasswordMasked: state.isPasswordMasked,
                   nameController: _nameController,
                   emailController: _emailController,
                   passwordController: _passwordController,
+                  loginData: state.loginData,
                 ),
                 const SizedBox(height: 8),
                 state.pageState == AuthPageState.signIn
-                    ? SignInWidget(authFormKey: _formKey, onSignIn: _signIn)
+                    ? SignInWidget(
+                        authFormKey: _formKey,
+                        onSignIn: _signIn,
+                      )
                     : SignUpWidget(
                         authFormKey: _formKey,
                         onSignUp: (context, isValid) {
@@ -76,7 +85,8 @@ class _AuthScreenState extends State<AuthScreen> {
 
   void _signIn(BuildContext context, bool? isValid) {
     if (isValid ?? false) {
-      context.read<AuthBloc>().add(SignInEvent(
+      var bloc = context.read<AuthBloc>();
+      bloc.add(SignInEvent(
           email: _emailController.text.trim(),
           password: _passwordController.text.trim(),
           onSuccess: (user, message) {

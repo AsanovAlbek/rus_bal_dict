@@ -1,3 +1,6 @@
+import 'package:equatable/equatable.dart';
+import 'package:rus_bal_dict/core/model/word/word.dart';
+
 sealed class DetailEvent {}
 
 class GetAudioEvent extends DetailEvent {
@@ -10,3 +13,14 @@ class ChangeFavoriteEvent extends DetailEvent {
 
   ChangeFavoriteEvent(this.isFavorite);
 }
+
+class OpenWordEvent extends DetailEvent with EquatableMixin {
+  final Word word;
+  final Function()? onOpen;
+  OpenWordEvent(this.word, {this.onOpen});
+  
+  @override
+  List<Object?> get props => [word];
+}
+
+class LoadLastWordEvent extends DetailEvent {}

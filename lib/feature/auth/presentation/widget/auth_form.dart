@@ -1,36 +1,57 @@
 import 'package:flutter/material.dart';
+import 'package:rus_bal_dict/core/model/login_data/login_data.dart';
 import 'package:rus_bal_dict/feature/auth/domain/bloc/auth_state.dart';
 
 import '../../domain/validator/validator.dart';
 
-class AuthForm extends StatelessWidget {
+class AuthForm extends StatefulWidget {
   final GlobalKey<FormState> formKey;
   final TextEditingController nameController;
   final TextEditingController emailController;
   final TextEditingController passwordController;
   final AuthPageState pageState;
   final bool isPasswordMasked;
+  final LoginData loginData;
   final void Function() onChangePasswordVisibility;
+  final void Function(bool? remember) onChangeRememberMe;
 
   const AuthForm(
       {super.key,
       required this.formKey,
       required this.onChangePasswordVisibility,
+      required this.onChangeRememberMe,
       required this.pageState,
       required this.isPasswordMasked,
+      required this.loginData,
       required this.nameController,
       required this.emailController,
       required this.passwordController});
 
   @override
+  State<AuthForm> createState() => _AuthFormState();
+}
+
+class _AuthFormState extends State<AuthForm> {
+  @override
+  void initState() {
+    if (mounted) {
+      if (widget.loginData.rememberMe) {
+        widget.emailController.text = widget.loginData.email;
+        widget.passwordController.text = widget.loginData.password;
+      }
+    }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Form(
-        key: formKey,
+        key: widget.formKey,
         child: Column(
           children: [
-            if (pageState == AuthPageState.signUp)
+            if (widget.pageState == AuthPageState.signUp)
               TextFormField(
-                controller: nameController,
+                controller: widget.nameController,
                 style: Theme.of(context).textTheme.bodyMedium,
                 validator: AuthValidator.validateUserName,
                 decoration: const InputDecoration(
@@ -42,7 +63,7 @@ class AuthForm extends StatelessWidget {
               ),
             const SizedBox(height: 8),
             TextFormField(
-              controller: emailController,
+              controller: widget.emailController,
               style: Theme.of(context).textTheme.bodyMedium,
               validator: AuthValidator.validateEmail,
               keyboardType: TextInputType.emailAddress,
@@ -55,7 +76,7 @@ class AuthForm extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             TextFormField(
-              controller: passwordController,
+              controller: widget.passwordController,
               style: Theme.of(context).textTheme.bodyMedium,
               validator: AuthValidator.validatePassword,
               decoration: InputDecoration(
@@ -64,13 +85,16 @@ class AuthForm extends StatelessWidget {
                   errorMaxLines: 3,
                   border: const OutlineInputBorder(),
                   suffixIcon: IconButton(
-                      onPressed: onChangePasswordVisibility,
-                      icon: Icon(isPasswordMasked
+                      onPressed: widget.onChangePasswordVisibility,
+                      icon: Icon(widget.isPasswordMasked
                           ? Icons.visibility_off
                           : Icons.visibility))),
               maxLines: 1,
-              obscureText: isPasswordMasked,
+              obscureText: widget.isPasswordMasked,
             ),
+            CheckboxListTile(
+                value: widget.loginData.rememberMe,
+                onChanged: widget.onChangeRememberMe),
           ],
         ));
   }

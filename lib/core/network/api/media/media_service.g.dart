@@ -14,7 +14,7 @@ class _MediaService implements MediaService {
     this.baseUrl,
     this.errorLogger,
   }) {
-    baseUrl ??= 'http://192.168.177.2:8000//media';
+    baseUrl ??= 'https://balrusapi.ru//media';
   }
 
   final Dio _dio;

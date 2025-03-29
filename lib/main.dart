@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:rus_bal_dict/feature/auth/domain/bloc/auth_bloc.dart';
+import 'package:rus_bal_dict/feature/auth/domain/bloc/auth_event.dart';
 import 'package:rus_bal_dict/feature/auth/domain/repository/auth_repository.dart';
 import 'package:rus_bal_dict/feature/auth/domain/repository/new_auth_repository.dart';
 import 'package:rus_bal_dict/feature/history/presentation/history.dart';
@@ -53,7 +54,8 @@ class MyApp extends StatelessWidget {
           BlocProvider(
               create: (context) => AuthBloc(
                   GetIt.I<AuthRepository>(), GetIt.I<NewAuthRepository>(),
-                  logger: GetIt.I<Talker>())),
+                  logger: GetIt.I<Talker>())
+                ..add(LoadLoginDataEvent())),
           BlocProvider(
               create: (context) => ProfileCubit(GetIt.I<ProfileRepository>(),
                   GetIt.I<PaymentRepository>(), GetIt.I<NewAuthRepository>()))

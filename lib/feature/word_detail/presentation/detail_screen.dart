@@ -2,9 +2,7 @@ import 'detail.dart';
 import 'package:just_audio/just_audio.dart' as just_audio;
 
 class WordsDetailScreen extends StatefulWidget {
-  final Word? word;
-
-  const WordsDetailScreen({super.key, this.word});
+  const WordsDetailScreen({super.key});
 
   @override
   State<WordsDetailScreen> createState() => _WordsDetailScreenState();
@@ -16,11 +14,6 @@ class _WordsDetailScreenState extends State<WordsDetailScreen> {
   @override
   void initState() {
     super.initState();
-    if (mounted && widget.word != null) {
-      context
-          .read<HistoryBloc>()
-          .add(HistoryEvent.addToHistory(word: widget.word!));
-    }
   }
 
   @override
@@ -42,30 +35,35 @@ class _WordsDetailScreenState extends State<WordsDetailScreen> {
               Hive.box<FavoriteWordHiveModel>('favorites').listenable(),
           builder: (BuildContext context, Box<FavoriteWordHiveModel> value,
               Widget? child) {
-            return BlocProvider(
-              create: (context) => DetailBloc(GetIt.I<DetailRepository>())
-                ..add(GetAudioEvent(widget.word?.audioUrl)),
-              child: BlocBuilder<DetailBloc, DetailState>(
-                builder: (context, state) {
-                  final favoritesState = context.read<FavoritesBloc>().state;
-                  if (favoritesState is FavoritesStateLoaded) {
+            return BlocBuilder<DetailBloc, DetailState>(
+              builder: (context, state) {
+                if (state is DetailStateLoaded) {
+                  GetIt.I<Talker>().info("state = $state");
+                }
+                final favoritesState = context.read<FavoritesBloc>().state;
+                if (favoritesState is FavoritesStateLoaded) {
+                  if (state is DetailStateLoaded) {
                     context.read<DetailBloc>().add(ChangeFavoriteEvent(
-                        favoritesState.favorites.contains(widget.word)));
+                        favoritesState.favorites.contains(state.word)));
                   }
-                  return switch (state) {
-                    DetailStateLoaded() => DetailContent(
-                        favoritesBox: value,
-                        word: widget.word,
-                        playAudio: () async =>
-                            _playMusicByUrl(widget.word?.audioUrl ?? ''),
-                      ),
-                    DetailStateError(exception: final exception) =>
-                      Center(child: Text('$exception')),
-                    DetailStateLoading() =>
-                      const Center(child: CircularProgressIndicator()),
-                  };
-                },
-              ),
+                }
+                return switch (state) {
+                  DetailStateLoaded(
+                    bytes: _,
+                    isFavorite: _,
+                    word: final word
+                  ) =>
+                    DetailContent(
+                      favoritesBox: value,
+                      word: word,
+                      playAudio: () async => _playMusicByUrl(word.audioUrl),
+                    ),
+                  DetailStateError(exception: final exception) =>
+                    Center(child: Text('$exception')),
+                  DetailStateLoading() =>
+                    const Center(child: CircularProgressIndicator()),
+                };
+              },
             );
           },
         ),
@@ -93,18 +91,21 @@ class _WordsDetailScreenState extends State<WordsDetailScreen> {
 
 class DetailContent extends StatelessWidget {
   final Future<void> Function()? playAudio;
-  final Word? word;
+  final Word word;
   final Box<FavoriteWordHiveModel> favoritesBox;
 
   const DetailContent(
-      {super.key, this.playAudio, this.word, required this.favoritesBox});
+      {super.key,
+      this.playAudio,
+      required this.word,
+      required this.favoritesBox});
 
   @override
   Widget build(BuildContext context) {
     final iconColor = Theme.of(context).iconTheme.color ?? Colors.black;
     return CustomScrollView(controller: ScrollController(), slivers: [
       MyAppBar(
-        title: word?.word.toCapitalized() ?? '',
+        title: word.word.toCapitalized(),
         actions: [
           IconButton(
               onPressed: playAudio,
@@ -114,23 +115,20 @@ class DetailContent extends StatelessWidget {
               )),
           FavoritesIconButton(
             isFavorite: Hive.box<FavoriteWordHiveModel>('favorites')
-                .containsKey(word?.id ?? 0),
+                .containsKey(word.id),
             onPressed: () {
-              if (word != null) {
-                int wordId = word?.id ?? 0;
-                if (favoritesBox.containsKey(wordId)) {
-                  favoritesBox.delete(wordId);
-                } else {
-                  int userId = context
-                          .read<ProfileCubit>()
-                          .state
-                          .appSettings
-                          .userInfo
-                          .id ??
-                      0;
-                  favoritesBox.put(
-                      wordId, word!.toFavoritesHive(userId: userId));
-                }
+              int wordId = word.id ?? 0;
+              if (favoritesBox.containsKey(wordId)) {
+                favoritesBox.delete(wordId);
+              } else {
+                int userId = context
+                        .read<ProfileCubit>()
+                        .state
+                        .appSettings
+                        .userInfo
+                        .id ??
+                    0;
+                favoritesBox.put(wordId, word.toFavoritesHive(userId: userId));
               }
             },
           )
@@ -142,8 +140,18 @@ class DetailContent extends StatelessWidget {
           sliver: Card(
               child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: HtmlWidget("${word?.meaning.toCapitalized()}"),
+            child: HtmlWidget(word.meaning.toCapitalized()),
           )).asSliver)
     ]);
   }
 }
+
+// @override
+  // void initState() {
+  //   super.initState();
+  //   if (mounted) {
+  //     context
+  //         .read<HistoryBloc>()
+  //         .add(HistoryEvent.addToHistory(word: widget.word));
+  //   }
+  // }

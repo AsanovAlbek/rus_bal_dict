@@ -7,7 +7,7 @@ import 'package:rus_bal_dict/core/constants/private.dart';
 
 part 'suggests_service.g.dart';
 
-@RestApi(baseUrl: '$testBaseUrl/suggestion')
+@RestApi(baseUrl: '$myApiUrl/suggestion')
 abstract class SuggestsService {
   factory SuggestsService(Dio dio, {String? baseUrl}) = _SuggestsService;
 

@@ -14,7 +14,7 @@ class _AuthService implements AuthService {
     this.baseUrl,
     this.errorLogger,
   }) {
-    baseUrl ??= 'http://192.168.177.2:8000//auth/jwt';
+    baseUrl ??= 'https://balrusapi.ru//auth/jwt';
   }
 
   final Dio _dio;

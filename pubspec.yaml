@@ -24,7 +24,7 @@ dependencies:
   #для переопределения сравнивания объектов
   equatable: ^2.0.5
   #локальное хранилище
-  shared_preferences: ^2.2.3
+  shared_preferences: ^2.5.3
   #http запросы
   dio: ^5.4.3+1
   #result api подобный функционал для обработки ошибок
@@ -54,11 +54,15 @@ dependencies:
   intl: ^0.19.0
   #вебвью
   webview_flutter: ^4.8.0
+  # для переходов по ссылкам
   url_launcher: ^6.3.0
-  flutter_flavorizr: ^2.2.3
+  # для кэширования запросов
   dio_cache_interceptor_hive_store: ^3.2.2
+  # для облегчения написания запросов в сеть
   retrofit: ^4.4.2
+  # для безопасного хранения данных
   flutter_secure_storage: 9.2.4
+  # проигрывание аудиозаписей
   just_audio: ^0.9.46
   
 
@@ -82,19 +86,3 @@ flutter:
     - assets/images/play_audio.svg
     - assets/images/favorites_filled.svg
   uses-material-design: true
-
-flavors:
-  balrus:
-    app:
-      name: "BalRus App"
-    android:
-      applicationId: "ru.kbnc.balrus"  
-    ios:
-      bundleId: "ru.kbnc.balrus"
-  rusbal:
-    app:
-      name: "RusBal App"
-    android:
-      applicationId: "ru.kbnc.rusbal"  
-    ios:
-      bundleId: "ru.kbnc.rusbal"

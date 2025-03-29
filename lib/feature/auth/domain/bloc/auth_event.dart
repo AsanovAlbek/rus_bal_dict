@@ -12,6 +12,8 @@ class StartSessionEvent extends AuthEvent {
   StartSessionEvent({this.onSuccess, this.onError});
 }
 
+class LoadLoginDataEvent extends AuthEvent {}
+
 @immutable
 class SignInEvent extends AuthEvent {
   final String email;
@@ -127,6 +129,12 @@ class ChangeAgreeWithTermOfUseEvent extends AuthEvent {
   final bool? agreeWithTermOfUse;
 
   ChangeAgreeWithTermOfUseEvent(this.agreeWithTermOfUse);
+}
+
+@immutable
+class ChangeRememberMeEvent extends AuthEvent {
+  final bool? rememberMe;
+  ChangeRememberMeEvent(this.rememberMe);
 }
 
 @immutable

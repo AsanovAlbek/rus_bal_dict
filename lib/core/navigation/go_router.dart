@@ -96,9 +96,7 @@ class AppRouter {
                               pageBuilder: (context, state) =>
                                   SliderTransitionPage(
                                       key: state.pageKey,
-                                      child: WordsDetailScreen(
-                                        word: state.extra as Word,
-                                      )),
+                                      child: const WordsDetailScreen()),
                             )
                           ]),
                     ]),
@@ -114,9 +112,7 @@ class AppRouter {
                                 pageBuilder: (context, state) =>
                                     SliderTransitionPage(
                                         key: state.pageKey,
-                                        child: WordsDetailScreen(
-                                          word: state.extra as Word,
-                                        )))
+                                        child: const WordsDetailScreen()))
                           ]),
                     ]),
                 StatefulShellBranch(
@@ -131,9 +127,7 @@ class AppRouter {
                                 pageBuilder: (context, state) =>
                                     SliderTransitionPage(
                                         key: state.pageKey,
-                                        child: WordsDetailScreen(
-                                          word: state.extra as Word,
-                                        )))
+                                        child: const WordsDetailScreen()))
                           ])
                     ]),
                 StatefulShellBranch(

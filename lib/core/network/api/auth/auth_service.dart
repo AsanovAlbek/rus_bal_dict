@@ -5,7 +5,7 @@ import 'package:rus_bal_dict/core/network/models/auth/auth_models.dart';
 
 part 'auth_service.g.dart';
 
-@RestApi(baseUrl: '$testBaseUrl/auth/jwt')
+@RestApi(baseUrl: '$myApiUrl/auth/jwt')
 abstract class AuthService {
   factory AuthService(Dio dio, {String? baseUrl}) = _AuthService;
 

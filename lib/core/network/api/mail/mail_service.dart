@@ -5,7 +5,7 @@ import 'package:rus_bal_dict/core/network/models/mail/mail_models.dart';
 
 part 'mail_service.g.dart';
 
-@RestApi(baseUrl: '$testBaseUrl/mail')
+@RestApi(baseUrl: '$myApiUrl/mail')
 abstract class MailService {
   factory MailService(Dio dio, {String? baseUrl}) = _MailService;
 

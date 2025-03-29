@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:rus_bal_dict/core/model/token/token.dart';
-import 'package:rus_bal_dict/core/secure_storage/token/secure_storage_base_wrapper.dart';
+import 'package:rus_bal_dict/core/secure_storage/secure_storage_base_wrapper.dart';
 import 'package:rus_bal_dict/core/constants/private.dart' as private
     show singleSettingsKey;
 

@@ -1,3 +1,8 @@
+import 'package:rus_bal_dict/feature/history/presentation/history.dart';
+import 'package:rus_bal_dict/feature/word_detail/domain/bloc/detail_bloc.dart';
+import 'package:rus_bal_dict/feature/word_detail/domain/bloc/detail_event.dart';
+import 'package:rus_bal_dict/feature/word_detail/domain/repository/detail_repository.dart';
+
 import 'home.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -20,6 +25,10 @@ class HomeScreen extends StatelessWidget {
               WordsListBloc(repository: GetIt.I<WordsListRepository>())
                 ..add(WordsListEvent.fetch()),
         ),
+        BlocProvider(
+            create: (context) => DetailBloc(GetIt.I<DetailRepository>(),
+                logger: GetIt.I<Talker>())
+              ..add(LoadLastWordEvent())),
         BlocProvider(
             create: (context) => HistoryBloc(GetIt.I<
                 HistoryRepository>())), //..add(HistoryEvent.getHistory())),

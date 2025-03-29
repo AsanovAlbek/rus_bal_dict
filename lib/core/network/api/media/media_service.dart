@@ -7,7 +7,7 @@ import 'package:rus_bal_dict/core/network/models/media/media_models.dart';
 
 part 'media_service.g.dart';
 
-@RestApi(baseUrl: '$testBaseUrl/media')
+@RestApi(baseUrl: '$myApiUrl/media')
 abstract class MediaService {
   factory MediaService(Dio dio, {String? baseUrl}) = _MediaService;
 

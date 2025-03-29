@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:rus_bal_dict/core/model/login_data/login_data.dart';
 import 'package:rus_bal_dict/core/model/user/user.dart';
 
 class AuthState with EquatableMixin {
@@ -12,6 +13,7 @@ class AuthState with EquatableMixin {
   final String? email;
   final String? password;
   final User? user;
+  final LoginData loginData;
 
   AuthState({
     this.pageState = AuthPageState.signIn,
@@ -24,6 +26,7 @@ class AuthState with EquatableMixin {
     this.user,
     this.password,
     this.userName,
+    this.loginData = const LoginData(),
   });
 
   AuthState copyWith({
@@ -37,6 +40,7 @@ class AuthState with EquatableMixin {
     String? email,
     String? password,
     User? user,
+    LoginData? loginData
   }) {
     return AuthState(
         pageState: pageState ?? this.pageState,
@@ -49,7 +53,8 @@ class AuthState with EquatableMixin {
         userName: userName ?? this.userName,
         email: email ?? this.email,
         password: password ?? this.password,
-        user: user ?? this.user);
+        user: user ?? this.user,
+        loginData: loginData ?? this.loginData,);
   }
 
   @override
@@ -63,6 +68,7 @@ class AuthState with EquatableMixin {
         userName,
         email,
         password,
+        loginData
       ];
 }
 

@@ -5,7 +5,9 @@ import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rus_bal_dict/core/model/login_data/login_data.dart';
 import 'package:rus_bal_dict/core/model/user/user.dart';
+import 'package:rus_bal_dict/core/secure_storage/login/login_secure_storage.dart';
 import 'package:rus_bal_dict/core/utils/app_utils.dart';
 import 'package:rus_bal_dict/feature/auth/data/exceptions/exceptions.dart';
 import 'package:rus_bal_dict/feature/auth/domain/bloc/auth_event.dart';
@@ -36,6 +38,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<UpdateUserPasswordAuthEvent>(_updateUserPassword);
     on<ChangeAgreeWithPolicyAuthEvent>(_changeAgreeWithPolicy);
     on<ChangeAgreeWithTermOfUseEvent>(_changeAgreeWithTermOfUse);
+    on<ChangeRememberMeEvent>(_changeRememberMe);
+    on<LoadLoginDataEvent>(_loadLoginDataEvent);
     on<SaveUserSignUpInputAuthEvent>(_saveSignUpInput);
   }
 
@@ -112,6 +116,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           event.onError?.call('Ошибка авторизации');
         }
       }, (user) {
+        var rememberMe = state.loginData.rememberMe;
+        LoginSecureStorage().set(LoginData(
+            email: rememberMe ? event.email : '',
+            password: rememberMe ? event.password : '',
+            rememberMe: rememberMe));
         event.onSuccess?.call(user, 'Вы успешно вошли');
       });
     });
@@ -119,7 +128,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   FutureOr<void> _signOut(SignOutEvent event, Emitter<AuthState> emit) async {
     //repository.signOut();
-    await newAuthRepository.logout();
+    try {
+      await newAuthRepository.logout();
+      event.onSuccess?.call();
+    } on Exception catch (e, s) {
+      Talker().handle(e, s, 'Logout error');
+      event.onError?.call('Ошибка выхода');
+    }
   }
 
   FutureOr<void> _changeAuthPage(
@@ -166,11 +181,28 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(state.copyWith(termOfUseAgree: event.agreeWithTermOfUse));
   }
 
+  FutureOr<void> _changeRememberMe(
+      ChangeRememberMeEvent event, Emitter<AuthState> emit) async {
+    emit(state.copyWith(
+        loginData:
+            state.loginData.copyWith(rememberMe: event.rememberMe ?? false)));
+  }
+
   FutureOr<void> _saveSignUpInput(
       SaveUserSignUpInputAuthEvent event, Emitter<AuthState> emit) {
     emit(state.copyWith(
         email: event.email, password: event.password, userName: event.name));
     event.onComplete?.call();
+  }
+
+  FutureOr<void> _loadLoginDataEvent(
+      LoadLoginDataEvent event, Emitter<AuthState> emit) async {
+    try {
+      final loginData = await LoginSecureStorage().get();
+      emit(state.copyWith(loginData: loginData));
+    } on Exception catch (e) {
+      Talker().error(e);
+    }
   }
 
   FutureOr<void> _sendRestoreCode(

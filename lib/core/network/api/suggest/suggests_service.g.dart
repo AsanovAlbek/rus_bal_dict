@@ -14,7 +14,7 @@ class _SuggestsService implements SuggestsService {
     this.baseUrl,
     this.errorLogger,
   }) {
-    baseUrl ??= 'http://192.168.177.2:8000//suggestion';
+    baseUrl ??= 'https://balrusapi.ru//suggestion';
   }
 
   final Dio _dio;
