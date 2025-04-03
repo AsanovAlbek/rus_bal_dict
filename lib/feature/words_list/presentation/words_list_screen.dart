@@ -1,4 +1,6 @@
 import 'package:rus_bal_dict/export.dart';
+import 'package:rus_bal_dict/feature/history/domain/bloc/history_bloc.dart';
+import 'package:rus_bal_dict/feature/history/domain/bloc/history_event.dart';
 import 'package:rus_bal_dict/feature/word_detail/domain/bloc/detail_bloc.dart';
 import 'package:rus_bal_dict/feature/word_detail/domain/bloc/detail_event.dart';
 
@@ -137,6 +139,7 @@ class _WordsListScreenState extends State<WordsListScreen> {
                                     context
                                         .read<DetailBloc>()
                                         .add(OpenWordEvent(word, onOpen: () {
+                                          context.read<HistoryBloc>().add(AddToHistoryEvent(word: word));
                                           context.go('/word_list/word_detail');
                                         }));
                                   });

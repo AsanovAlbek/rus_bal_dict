@@ -36,6 +36,9 @@ class SignUpEvent extends AuthEvent {
   final void Function(String)? onSuccess;
   final void Function(String?)? onError;
   final void Function()? onUserNoAgreeWithPolicy;
+  final bool isWeb;
+  final bool isAndroid;
+  final bool isIos;
 
   SignUpEvent(
       {required this.name,
@@ -43,7 +46,10 @@ class SignUpEvent extends AuthEvent {
       required this.password,
       this.onSuccess,
       this.onError,
-      this.onUserNoAgreeWithPolicy});
+      this.onUserNoAgreeWithPolicy,
+      this.isWeb = false,
+      this.isAndroid = false,
+      this.isIos = false});
 }
 
 @immutable

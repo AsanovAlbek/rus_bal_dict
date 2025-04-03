@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:device_info_plus/device_info_plus.dart';
@@ -60,7 +59,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       Future.sync(() => event.onUserNoAgreeWithPolicy?.call());
       return;
     }
-    final deviceId = await _deviceId();
+    String? deviceId = "unknown";
     // final user = User(
     //     name: event.name,
     //     email: event.email,
@@ -71,7 +70,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         email: event.email,
         password: event.password,
         name: event.name,
-        imei: deviceId ?? 'unknown');
+        imei: deviceId);
     signUpEither.either((error) {
       if (error is DioException) {
         event.onError?.call(error.deails);
@@ -83,12 +82,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     });
   }
 
-  Future<String?> _deviceId() async {
+  Future<String?> _deviceId(SignUpEvent event) async {
     var deviceInfo = DeviceInfoPlugin();
-    if (Platform.isAndroid) {
+    if (event.isAndroid) {
       final androidInfo = await deviceInfo.androidInfo;
       return androidInfo.id;
-    } else if (Platform.isIOS) {
+    } else if (event.isIos) {
       final iosInfo = await deviceInfo.iosInfo;
       return iosInfo.identifierForVendor;
     }
@@ -117,11 +116,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         }
       }, (user) {
         var rememberMe = state.loginData.rememberMe;
-        LoginSecureStorage().set(LoginData(
+        var loginData = LoginData(
             email: rememberMe ? event.email : '',
             password: rememberMe ? event.password : '',
-            rememberMe: rememberMe));
+            rememberMe: rememberMe);
+        LoginSecureStorage().set(loginData);
         event.onSuccess?.call(user, 'Вы успешно вошли');
+        Talker().debug("Saved login data = $loginData");
       });
     });
   }
@@ -199,6 +200,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       LoadLoginDataEvent event, Emitter<AuthState> emit) async {
     try {
       final loginData = await LoginSecureStorage().get();
+      Talker().debug("Loaded login data = $loginData");
       emit(state.copyWith(loginData: loginData));
     } on Exception catch (e) {
       Talker().error(e);

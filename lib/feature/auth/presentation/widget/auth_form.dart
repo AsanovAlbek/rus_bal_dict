@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rus_bal_dict/core/model/login_data/login_data.dart';
+import 'package:rus_bal_dict/core/secure_storage/login/login_secure_storage.dart';
 import 'package:rus_bal_dict/feature/auth/domain/bloc/auth_state.dart';
+import 'package:talker/talker.dart';
 
 import '../../domain/validator/validator.dart';
 
@@ -27,6 +29,7 @@ class AuthForm extends StatefulWidget {
       required this.emailController,
       required this.passwordController});
 
+
   @override
   State<AuthForm> createState() => _AuthFormState();
 }
@@ -35,10 +38,16 @@ class _AuthFormState extends State<AuthForm> {
   @override
   void initState() {
     if (mounted) {
-      if (widget.loginData.rememberMe) {
-        widget.emailController.text = widget.loginData.email;
-        widget.passwordController.text = widget.loginData.password;
-      }
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        try {
+          final loginData = await LoginSecureStorage().get();
+          widget.emailController.text = loginData.email;
+          widget.passwordController.text = loginData.password;
+        } catch(e) {
+          Talker().debug("Data not loaded");
+        }
+
+      });
     }
     super.initState();
   }
@@ -94,6 +103,7 @@ class _AuthFormState extends State<AuthForm> {
             ),
             CheckboxListTile(
                 value: widget.loginData.rememberMe,
+                title: const Text("Запомнить меня"),
                 onChanged: widget.onChangeRememberMe),
           ],
         ));
