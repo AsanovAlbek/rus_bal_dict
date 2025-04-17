@@ -15,3 +15,4 @@ export 'package:rus_bal_dict/themes.dart';
 
 export 'core/model/settings/theme_mode.dart';
 export 'core/hive/word/word_hive_model.dart';
+export 'core/constants/private.dart' show securitySettingsKey;

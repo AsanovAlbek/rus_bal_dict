@@ -5,3 +5,4 @@ const String singleSettingsKey = 'AppSettings';
 const String singleTokenKey = 'SingleTokenKey';
 const String loginDataKey = 'LoginDataKey';
 const String myApiUrl = "https://balrusapi.ru/";
+const String securitySettingsKey = "kbnc-security-settings-key-12345";

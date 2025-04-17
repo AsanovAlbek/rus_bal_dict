@@ -23,7 +23,10 @@ Future<void> main() async {
 
   final historyBox = await Hive.openBox<WordHiveModel>('history');
   final favoritesBox = await Hive.openBox<FavoriteWordHiveModel>('favorites');
-  final settingsBox = await Hive.openBox<AppSettingsHiveModel>('settings');
+  final settingsBox = await Hive.openBox<AppSettingsHiveModel>(
+    'settings', 
+    encryptionCipher: HiveAesCipher(securitySettingsKey.codeUnits)
+  );
 
   if (!kIsWeb) {
     final tempDir = await getTemporaryDirectory();
