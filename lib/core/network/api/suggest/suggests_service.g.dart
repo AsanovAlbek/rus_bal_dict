@@ -26,13 +26,17 @@ class _SuggestsService implements SuggestsService {
   @override
   Future<SuggestResponse> suggest(
     dynamic authHeader,
-    CreateSuggestBody body,
+    String word,
+    String meaning,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': authHeader};
     _headers.removeWhere((k, v) => v == null);
-    const Map<String, dynamic>? _data = null;
+    final _data = {
+      'word': word,
+      'meaning': meaning,
+    };
     final _options = _setStreamType<SuggestResponse>(Options(
       method: 'POST',
       headers: _headers,

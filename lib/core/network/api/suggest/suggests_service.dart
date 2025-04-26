@@ -13,8 +13,8 @@ abstract class SuggestsService {
 
   @POST('/suggest_word')
   Future<SuggestResponse> suggest(
-      @Header('Authorization') authHeader, CreateSuggestBody body);
-
+      @Header('Authorization') authHeader, @Field() String word, @Field() String meaning);
+ 
   @POST('/accept_suggest')
   Future<SuggestAcceptResponse> accept(@Field('suggest_id') int suggestId);
 

@@ -12,9 +12,10 @@ class GetSuggestsEvent extends SuggestEvent {
 }
 
 class SuggestWordEvent extends SuggestEvent {
-  final SuggestWord suggestWord;
+  final String word;
+  final String meaning;
   final Function(String? message)? onSuccess;
   final Function()? onError;
 
-  SuggestWordEvent(this.suggestWord, {this.onSuccess, this.onError});
+  SuggestWordEvent(this.word, this.meaning, {this.onSuccess, this.onError});
 }

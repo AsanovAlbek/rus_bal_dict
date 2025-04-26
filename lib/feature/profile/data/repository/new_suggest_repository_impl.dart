@@ -28,12 +28,12 @@ class NewSuggestRepositoryImpl implements NewSuggestRepository {
   }
 
   @override
-  Future<Either<Exception, SuggestResponse>> suggest(SuggestWord word) async {
+  Future<Either<Exception, SuggestResponse>> suggest(
+      String word, String meaning) async {
     try {
       final token = await _tokenStorage.get();
       final suggestResponse = await suggestsService.suggest(
-          'Bearer ${token.accessToken}',
-          CreateSuggestBody(word: word.word, meaning: word.meaning));
+          'Bearer ${token.accessToken}', word, meaning);
       return Right(suggestResponse);
     } on Exception catch (e, s) {
       logger?.handle(e, s, 'suggest repo error');
