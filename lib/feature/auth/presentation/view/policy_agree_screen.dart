@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:rus_bal_dict/core/constants/strings.dart';
@@ -51,7 +52,7 @@ class PolicyAgreeScreen extends StatelessWidget {
                   onChanged: (agree) {
                     context
                         .read<AuthBloc>()
-                        .add(AuthEvent.changeAgree(agree: agree));
+                        .add(ChangeAgreeWithPolicyAuthEvent(agree));
                   }),
             ),
           ),
@@ -65,7 +66,7 @@ class PolicyAgreeScreen extends StatelessWidget {
                   onChanged: (agree) {
                     context
                         .read<AuthBloc>()
-                        .add(AuthEvent.changeAgreeWithTermOfUse(agree: agree));
+                        .add(ChangeAgreeWithTermOfUseEvent(agree));
                   }),
             ),
           ),
@@ -73,8 +74,14 @@ class PolicyAgreeScreen extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
-                  onPressed: () => _signUp(context, state),
-                  child: const Text('Зарегистрироваться')),
+                  onPressed: () {
+                    if (state.policyAgree && state.termOfUseAgree) {
+                      _signUp(context, state);
+                    } else {
+                      context.showSnackBar('Нужно согласиться с политикой');
+                    }
+                  },
+                  child: const Text('Далее')),
             ),
           )
         ]);
@@ -83,25 +90,19 @@ class PolicyAgreeScreen extends StatelessWidget {
   }
 
   void _signUp(BuildContext context, AuthState state) {
-    context.read<AuthBloc>().add(AuthEvent.signUp(
-        name: state.userName,
-        email: state.email,
-        password: state.password,
-        onSuccess: (user, message) {
+    context.read<AuthBloc>().add(SignUpEvent(
+        name: state.userName ?? '',
+        email: state.email ?? '',
+        password: state.password ?? '',
+        onSuccess: (message) {
           context.showSnackBar(message);
-          context.go('/word_list');
           context
               .read<AuthBloc>()
-              .add(AuthEvent.changeAuthPage(pageState: AuthPageState.signIn));
-          context.read<ProfileCubit>().fetchUserPaymentInfo();
+              .add(ChangeAuthPageEvent(pageState: AuthPageState.signIn));
+          context.go('/auth');
         },
         onError: (message) {
-          if (message != null) {
-            context.showSnackBar(message);
-          }
-        },
-        onUserNoAgreeWithPolicy: () {
-          context.showSnackBar('Вы не согласились с условиями.');
+          context.showSnackBar(message ?? 'Ошибка');
         }));
   }
 }

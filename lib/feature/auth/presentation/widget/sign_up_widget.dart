@@ -54,7 +54,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
             FocusManager.instance.primaryFocus?.unfocus();
             context
                 .read<AuthBloc>()
-                .add(AuthEvent.changeAuthPage(pageState: AuthPageState.signIn));
+                .add(ChangeAuthPageEvent(pageState: AuthPageState.signIn));
           },
           child: const Text('Назад'),
         ),

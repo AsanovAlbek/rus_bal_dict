@@ -1,5 +1,5 @@
-import 'package:get_it/get_it.dart';
-import 'package:hive/hive.dart';
+﻿import 'package:get_it/get_it.dart';
+import 'package:hive_ce/hive_ce.dart';
 import 'package:rus_bal_dict/core/hive/word/converter.dart';
 import 'package:rus_bal_dict/core/model/word/word.dart';
 import 'package:rus_bal_dict/feature/history/domain/repository/history_repository.dart';

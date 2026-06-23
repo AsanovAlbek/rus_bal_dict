@@ -1,4 +1,8 @@
 import 'package:rus_bal_dict/export.dart';
+import 'package:rus_bal_dict/feature/history/domain/bloc/history_bloc.dart';
+import 'package:rus_bal_dict/feature/history/domain/bloc/history_event.dart';
+import 'package:rus_bal_dict/feature/word_detail/domain/bloc/detail_bloc.dart';
+import 'package:rus_bal_dict/feature/word_detail/domain/bloc/detail_event.dart';
 
 import 'words_list.dart';
 
@@ -104,32 +108,41 @@ class _WordsListScreenState extends State<WordsListScreen> {
                             return WordListItem(
                                 word: words[index],
                                 onPressed: (word) async {
-                                  final profileCubit =
-                                      context.read<ProfileCubit>();
-                                  //await profileCubit.checkLimits();
-                                  final premiumInfo =
-                                      profileCubit.state.paymentInfo;
-                                  Talker().debug('PREM INFO = $premiumInfo');
-                                  if (!premiumInfo.isSubscribe) {
-                                    Talker().debug(
-                                        'Minus one free try. tries = ${premiumInfo.dayLimit}');
-                                  }
-                                  // Если пользователь без подписки и его попытки кончились
-                                  if (!premiumInfo.isSubscribe &&
-                                      premiumInfo.dayLimit <= 0) {
-                                    Future.sync(() =>
-                                        showFreeTriesReachLimitDialog(context));
-                                  } else {
-                                    // Если у поисковой строки фокус и происходит переход к слову
-                                    // То после возврата фокус остаётся и открывается клавиатура
-                                    // Воизбежание такого поведения отнимаем фокус у поля
-                                    FocusManager.instance.primaryFocus
-                                        ?.unfocus();
-                                    Future.sync(() => context.go(
-                                        '/word_list/word_detail',
-                                        extra: word));
-                                  }
-                                  await profileCubit.checkLimits();
+                                  // final profileCubit =
+                                  //     context.read<ProfileCubit>();
+                                  // //await profileCubit.checkLimits();
+                                  // final premiumInfo =
+                                  //     profileCubit.state.paymentInfo;
+                                  // Talker().debug('PREM INFO = $premiumInfo');
+                                  // if (!premiumInfo.isSubscribe) {
+                                  //   Talker().debug(
+                                  //       'Minus one free try. tries = ${premiumInfo.dayLimit}');
+                                  // }
+                                  // // Если пользователь без подписки и его попытки кончились
+                                  // if (!premiumInfo.isSubscribe &&
+                                  //     premiumInfo.dayLimit <= 0) {
+                                  //   Future.sync(() =>
+                                  //       showFreeTriesReachLimitDialog(context));
+                                  // } else {
+                                  //   // Если у поисковой строки фокус и происходит переход к слову
+                                  //   // То после возврата фокус остаётся и открывается клавиатура
+                                  //   // Воизбежание такого поведения отнимаем фокус у поля
+                                  //   FocusManager.instance.primaryFocus
+                                  //       ?.unfocus();
+                                  //   Future.sync(() => context.go(
+                                  //       '/word_list/word_detail',
+                                  //       extra: word));
+                                  // }
+                                  // await profileCubit.checkLimits();
+                                  FocusManager.instance.primaryFocus?.unfocus();
+                                  Future.sync(() {
+                                    context
+                                        .read<DetailBloc>()
+                                        .add(OpenWordEvent(word, onOpen: () {
+                                          context.read<HistoryBloc>().add(AddToHistoryEvent(word: word));
+                                          context.go('/word_list/word_detail');
+                                        }));
+                                  });
                                 },
                                 saveEnable: false,
                                 onSaveWord: (word) {

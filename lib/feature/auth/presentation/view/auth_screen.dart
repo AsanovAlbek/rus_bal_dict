@@ -40,24 +40,33 @@ class _AuthScreenState extends State<AuthScreen> {
                 AuthForm(
                   formKey: _formKey,
                   onChangePasswordVisibility: () {
-                    context.read<AuthBloc>().add(AuthEvent.maskPassword(
+                    context.read<AuthBloc>().add(MaskPasswordEvent(
                         isPasswordMasked: !state.isPasswordMasked));
+                  },
+                  onChangeRememberMe: (bool? rememberMe) {
+                    context
+                        .read<AuthBloc>()
+                        .add(ChangeRememberMeEvent(rememberMe));
                   },
                   pageState: state.pageState,
                   isPasswordMasked: state.isPasswordMasked,
                   nameController: _nameController,
                   emailController: _emailController,
                   passwordController: _passwordController,
+                  loginData: state.loginData,
                 ),
                 const SizedBox(height: 8),
                 state.pageState == AuthPageState.signIn
-                    ? SignInWidget(authFormKey: _formKey, onSignIn: _signIn)
+                    ? SignInWidget(
+                        authFormKey: _formKey,
+                        onSignIn: _signIn,
+                      )
                     : SignUpWidget(
                         authFormKey: _formKey,
                         onSignUp: (context, isValid) {
                           if (isValid ?? false) {
                             context.read<AuthBloc>().add(
-                                AuthEvent.saveUserSignUpInput(
+                                SaveUserSignUpInputAuthEvent(
                                     name: _nameController.text.trim(),
                                     email: _emailController.text.trim(),
                                     password: _passwordController.text.trim(),
@@ -76,7 +85,8 @@ class _AuthScreenState extends State<AuthScreen> {
 
   void _signIn(BuildContext context, bool? isValid) {
     if (isValid ?? false) {
-      context.read<AuthBloc>().add(AuthEvent.signIn(
+      var bloc = context.read<AuthBloc>();
+      bloc.add(SignInEvent(
           email: _emailController.text.trim(),
           password: _passwordController.text.trim(),
           onSuccess: (user, message) {

@@ -1,3 +1,5 @@
+import 'package:rus_bal_dict/export.dart';
+
 import 'history.dart';
 
 class HistoryScreen extends StatelessWidget {

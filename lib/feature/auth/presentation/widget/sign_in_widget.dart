@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:rus_bal_dict/core/model/login_data/login_data.dart';
 import 'package:rus_bal_dict/feature/auth/domain/bloc/auth_bloc.dart';
 import 'package:rus_bal_dict/feature/auth/domain/bloc/auth_state.dart';
 
 import '../../domain/bloc/auth_event.dart';
 
 class SignInWidget extends StatelessWidget {
-  const SignInWidget(
-      {super.key,
-      required this.authFormKey,
-      this.onSignIn});
+  const SignInWidget({super.key, required this.authFormKey, this.onSignIn});
   final GlobalKey<FormState> authFormKey;
   final Function(BuildContext context, bool? isValid)? onSignIn;
 
@@ -31,7 +29,7 @@ class SignInWidget extends StatelessWidget {
             FocusManager.instance.primaryFocus?.unfocus();
             context
                 .read<AuthBloc>()
-                .add(AuthEvent.changeAuthPage(pageState: AuthPageState.signUp));
+                .add(ChangeAuthPageEvent(pageState: AuthPageState.signUp));
           },
           child: const Text('Нет аккаунта? Зарегистрироваться'),
         ),

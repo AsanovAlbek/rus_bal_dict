@@ -35,7 +35,6 @@ void main() {
         .thenAnswer((_) async =>
             Either.tryCatch<Exception, List<Word>, Exception>(
                 (e) => e, () => mockWords));
-
   });
 
   group('Тесты для получения слов из базы', () {

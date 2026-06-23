@@ -51,13 +51,13 @@ class _RestorePasswordScreenState extends State<RestorePasswordScreen> {
                 onPressed: () {
                   if (formKey.currentState?.validate() ?? false) {
                     Talker().debug('on press timer button');
-                    context.read<AuthBloc>().add(SendCodeToEmailAuthEvent(
+                    context.read<AuthBloc>().add(SendRestoreCodeEvent(
                         email: emailController.text.trim(),
-                        onSuccess: (code) {
-                          Talker().debug('code $code');
+                        onSuccess: () {
+                          Talker().debug('code sended');
                           context.go('/auth/restore_password/input_code');
                         },
-                        onError: (errorMessage) {
+                        onError: ([errorMessage]) {
                           context.showSnackBar(
                               errorMessage ?? 'Ошибка при отправлении кода');
                         }));

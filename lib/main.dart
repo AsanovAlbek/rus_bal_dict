@@ -1,10 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:rus_bal_dict/feature/auth/domain/bloc/auth_bloc.dart';
+import 'package:rus_bal_dict/feature/auth/domain/bloc/auth_event.dart';
 import 'package:rus_bal_dict/feature/auth/domain/repository/auth_repository.dart';
+import 'package:rus_bal_dict/feature/auth/domain/repository/new_auth_repository.dart';
+import 'package:rus_bal_dict/feature/history/presentation/history.dart';
 import 'package:rus_bal_dict/feature/profile/domain/repository/payment_repository.dart';
 
 import 'export.dart';
+import 'hive_registrar.g.dart';
 import 'feature/auth/di/auth_module.dart';
 import 'feature/favorites/di/favorite_module.dart';
 import 'feature/history/di/history_module.dart';
@@ -14,12 +18,14 @@ import 'feature/words_list/di/word_list_module.dart';
 
 Future<void> main() async {
   await Hive.initFlutter();
-  Hive.registerAdapter(WordHiveModelAdapter());
-  Hive.registerAdapter(AppSettingsHiveModelAdapter());
-  Hive.registerAdapter(FavoriteWordHiveModelAdapter());
+  Hive.registerAdapters();
+
   final historyBox = await Hive.openBox<WordHiveModel>('history');
   final favoritesBox = await Hive.openBox<FavoriteWordHiveModel>('favorites');
-  final settingsBox = await Hive.openBox<AppSettingsHiveModel>('settings');
+  final settingsBox = await Hive.openBox<AppSettingsHiveModel>(
+    'settings', 
+    encryptionCipher: HiveAesCipher(securitySettingsKey.codeUnits)
+  );
 
   if (!kIsWeb) {
     final tempDir = await getTemporaryDirectory();
@@ -48,10 +54,13 @@ class MyApp extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-              create: (context) => AuthBloc(GetIt.I<AuthRepository>())),
+              create: (context) => AuthBloc(
+                  GetIt.I<AuthRepository>(), GetIt.I<NewAuthRepository>(),
+                  logger: GetIt.I<Talker>())
+                ..add(LoadLoginDataEvent())),
           BlocProvider(
-              create: (context) => ProfileCubit(
-                  GetIt.I<ProfileRepository>(), GetIt.I<PaymentRepository>()))
+              create: (context) => ProfileCubit(GetIt.I<ProfileRepository>(),
+                  GetIt.I<PaymentRepository>(), GetIt.I<NewAuthRepository>()))
         ],
         child: ValueListenableBuilder(
           valueListenable:

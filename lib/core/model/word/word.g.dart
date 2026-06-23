@@ -11,6 +11,7 @@ _$WordImpl _$$WordImplFromJson(Map<String, dynamic> json) => _$WordImpl(
       word: json['name'] as String? ?? '',
       meaning: json['meaning'] as String? ?? '',
       audioUrl: json['audio_url'] as String? ?? '',
+      audioPath: json['audio_path'] as String? ?? '',
     );
 
 Map<String, dynamic> _$$WordImplToJson(_$WordImpl instance) =>
@@ -19,4 +20,5 @@ Map<String, dynamic> _$$WordImplToJson(_$WordImpl instance) =>
       'name': instance.word,
       'meaning': instance.meaning,
       'audio_url': instance.audioUrl,
+      'audio_path': instance.audioPath,
     };

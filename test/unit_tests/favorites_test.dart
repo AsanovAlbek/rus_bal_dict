@@ -11,7 +11,6 @@ class MockFavoritesRepository extends Mock implements FavoritesRepository {}
 
 void main() {
   final repository = MockFavoritesRepository();
-  
 
   group('Тестирование сохранения слов в избранное', () {
     test('Сохранение слова', () async {
@@ -38,8 +37,8 @@ void main() {
     });
 
     test('Получение сохраненных в избранном слов', () async {
-      when(() => repository.getFavoriteWords()).thenAnswer(
-          (_) async => Either.cond(true, Exception(), mockWords));
+      when(() => repository.getFavoriteWords())
+          .thenAnswer((_) async => Either.cond(true, Exception(), mockWords));
       final favoritesSuccessEither = await repository.getFavoriteWords();
       expect(favoritesSuccessEither.isLeft, isFalse);
       expect(favoritesSuccessEither.isRight, isTrue);
@@ -49,8 +48,8 @@ void main() {
     });
 
     test('Тестирование ошибки получения сохраненных слов', () async {
-      when(() => repository.getFavoriteWords()).thenAnswer(
-          (_) async => Either.cond(false, Exception(), mockWords));
+      when(() => repository.getFavoriteWords())
+          .thenAnswer((_) async => Either.cond(false, Exception(), mockWords));
       final failFavoritesEither = await repository.getFavoriteWords();
       expect(failFavoritesEither.isLeft, isTrue);
       expect(failFavoritesEither.isRight, isFalse);
@@ -58,18 +57,22 @@ void main() {
       debugPrint('Проверка на ошибку получения слов из избранного. Успешно');
     });
 
-    test('Тестирование успешного удаления сохраненных в избранном слов', () async {
-      when(() => repository.deleteFromFavorites(testWord)).thenAnswer(
-          (_) async => Either.cond(true, Exception(), testWord));
-      final deleteEitherSuccess = await repository.deleteFromFavorites(testWord);
+    test('Тестирование успешного удаления сохраненных в избранном слов',
+        () async {
+      when(() => repository.deleteFromFavorites(testWord))
+          .thenAnswer((_) async => Either.cond(true, Exception(), testWord));
+      final deleteEitherSuccess =
+          await repository.deleteFromFavorites(testWord);
       expect(deleteEitherSuccess.isLeft, isFalse);
       expect(deleteEitherSuccess.isRight, isTrue);
       expect(deleteEitherSuccess.right, testWord);
       debugPrint('Удаление сохраненных в избранном слов. Успешно');
     });
 
-    test('Тестирование ошибки удаления сохраненного в избранном слова', () async {
-      when(() => repository.deleteFromFavorites(testWord)).thenAnswer((_) async => Either.cond(false, Exception(), testWord));
+    test('Тестирование ошибки удаления сохраненного в избранном слова',
+        () async {
+      when(() => repository.deleteFromFavorites(testWord))
+          .thenAnswer((_) async => Either.cond(false, Exception(), testWord));
       final deleteEitherFail = await repository.deleteFromFavorites(testWord);
       expect(deleteEitherFail.isLeft, isTrue);
       expect(deleteEitherFail.isRight, isFalse);

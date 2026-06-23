@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:dio/dio.dart';
 import "package:flutter/material.dart";
 
 class AppUtils {
@@ -28,4 +29,10 @@ extension ContextExtension on BuildContext {
 extension StringExt on String {
   String toCapitalized() =>
       length > 0 ? '${this[0].toUpperCase()}${substring(1).toLowerCase()}' : '';
+}
+
+extension DioExt on DioException {
+  String get deails =>
+      (response?.data as Map<String, dynamic>?)?["detail"] ??
+      'Неизвестная ошибка';
 }

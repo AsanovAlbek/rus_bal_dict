@@ -5,6 +5,7 @@ import 'package:rus_bal_dict/feature/auth/domain/bloc/auth_bloc.dart';
 import 'package:rus_bal_dict/feature/auth/domain/bloc/auth_event.dart';
 import 'package:rus_bal_dict/feature/auth/domain/bloc/auth_state.dart';
 import 'package:rus_bal_dict/feature/auth/domain/validator/validator.dart';
+import 'package:rus_bal_dict/feature/auth/presentation/widget/confirm_widget.dart';
 import 'package:rus_bal_dict/feature/auth/presentation/widget/timer_button.dart';
 import 'package:talker/talker.dart';
 
@@ -23,68 +24,34 @@ class _InputCodeScreenState extends State<InputCodeScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Text(
-              'Введите код, который пришёл к вам на почту',
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Form(
-              key: formKey,
-              child: Pinput(
-                length: 6,
-                validator: AuthValidator.validateRestorePasswordCode,
-                pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
-                showCursor: true,
-                onCompleted: (pin) {
-                  if (state.codeFromEmail != null &&
-                      state.codeFromEmail == int.parse(pin)) {
-                    Future.delayed(
-                        Durations.medium4,
-                        () => context.go(
-                            '/auth/restore_password/input_code/new_password'));
-                  } else {
-                    context.showSnackBar('Неверный код');
-                  }
-                },
-              ),
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            const Text('Не пришел код?'),
-            const SizedBox(
-              height: 8,
-            ),
-            TimerButton(
-              buttonText: 'Отправить код повторно',
-              buttonStyle: ButtonStyle(
-                  foregroundColor:
-                      WidgetStatePropertyAll(Colors.deepPurple[400])),
-              buttonOnTimerRunText: 'Отправить код повторно через ',
-              onPressed: () {
-                Talker().debug('on press timer button');
-                context.read<AuthBloc>().add(SendCodeToEmailAuthEvent(
-                    email: state.emailForRestorePassword ?? '',
-                    onSuccess: (code) {
-                      Talker().debug('code $code');
-                    },
-                    onError: (errorMessage) {
-                      context.showSnackBar(
-                          errorMessage ?? 'Ошибка при отправлении кода');
-                    }));
-              },
-              onTimerEnd: () {
-                Talker().debug('on end timer');
-              },
-              timerFormat: 'HH:mm:ss',
-            )
-          ],
+        return PopScope(
+          canPop: false,
+          onPopInvokedWithResult: (didPop, result) {
+            if (didPop) return;
+            if (mounted && context.canPop()) context.pop();
+          },
+          child: ConfirmWidget(
+            title: 'Подтверждение',
+            subTitle: 'Мы отправили на вашу почту код для восстановления пароля',
+            confirmButtonText: 'Подтвердить',
+            onSendCodeAgain: () {
+              context.read<AuthBloc>().add(SendRestoreCodeEvent(
+                  email: state.emailForRestorePassword ?? '',
+                  onSuccess: () => context.showSnackBar('Код отправлен'),
+                  onError: ([message]) =>
+                      context.showSnackBar(message ?? 'Ошибка')));
+            },
+            onConfirmCode: (pin) {
+              context.read<AuthBloc>().add(ConfirmRestoreCodeEvent(
+                  email: state.emailForRestorePassword ?? '',
+                  code: pin ?? '',
+                  onSuccess: () {
+                    context.go('/auth/restore_password/input_code/new_password');
+                  },
+                  onError: ([errorMessage]) =>
+                      context.showSnackBar(errorMessage ?? 'Ошибка')));
+            },
+          ),
         );
       }),
     );

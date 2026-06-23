@@ -8,7 +8,7 @@ part of 'favorite_word_hive_model.dart';
 
 class FavoriteWordHiveModelAdapter extends TypeAdapter<FavoriteWordHiveModel> {
   @override
-  final int typeId = 2;
+  final typeId = 2;
 
   @override
   FavoriteWordHiveModel read(BinaryReader reader) {
@@ -17,13 +17,13 @@ class FavoriteWordHiveModelAdapter extends TypeAdapter<FavoriteWordHiveModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return FavoriteWordHiveModel(
-      id: fields[0] == null ? 0 : fields[0] as int,
-      wordId: fields[1] == null ? 0 : fields[1] as int,
-      userId: fields[2] == null ? 0 : fields[2] as int,
+      id: fields[0] == null ? 0 : (fields[0] as num).toInt(),
+      wordId: fields[1] == null ? 0 : (fields[1] as num).toInt(),
+      userId: fields[2] == null ? 0 : (fields[2] as num).toInt(),
       word: fields[3] == null ? '' : fields[3] as String,
       meaning: fields[4] == null ? '' : fields[4] as String,
       audioBytes: fields[5] as Uint8List?,
-      editedTime: fields[6] == null ? 0 : fields[6] as int,
+      editedTime: fields[6] == null ? 0 : (fields[6] as num).toInt(),
       audioUrl: fields[7] as String?,
     );
   }

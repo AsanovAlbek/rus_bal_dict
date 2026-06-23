@@ -1,9 +1,9 @@
-import 'dart:math';
+﻿import 'dart:math';
 
 import 'package:dio/dio.dart';
 import 'package:either_dart/src/either.dart' show Either, Left, Right;
 import 'package:get_it/get_it.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_ce/hive_ce.dart';
 import 'package:rus_bal_dict/core/model/settings/app_settings.dart';
 import 'package:rus_bal_dict/core/model/settings/converter.dart';
 import 'package:rus_bal_dict/core/model/user/user.dart';

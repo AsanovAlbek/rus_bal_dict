@@ -28,11 +28,19 @@ mixin _$User {
   String get email => throw _privateConstructorUsedError;
   @JsonKey(name: 'password')
   String get password => throw _privateConstructorUsedError;
+  @JsonKey(name: 'is_admin')
+  bool get isAdmin => throw _privateConstructorUsedError;
+  @JsonKey(name: 'is_active')
+  bool get isActive => throw _privateConstructorUsedError;
   @JsonKey(name: 'imei')
   String get imei => throw _privateConstructorUsedError;
 
+  /// Serializes this User to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of User
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $UserCopyWith<User> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -46,6 +54,8 @@ abstract class $UserCopyWith<$Res> {
       @JsonKey(name: 'name') String name,
       @JsonKey(name: 'email') String email,
       @JsonKey(name: 'password') String password,
+      @JsonKey(name: 'is_admin') bool isAdmin,
+      @JsonKey(name: 'is_active') bool isActive,
       @JsonKey(name: 'imei') String imei});
 }
 
@@ -59,6 +69,8 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of User
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -66,6 +78,8 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? name = null,
     Object? email = null,
     Object? password = null,
+    Object? isAdmin = null,
+    Object? isActive = null,
     Object? imei = null,
   }) {
     return _then(_value.copyWith(
@@ -85,6 +99,14 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String,
+      isAdmin: null == isAdmin
+          ? _value.isAdmin
+          : isAdmin // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isActive: null == isActive
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool,
       imei: null == imei
           ? _value.imei
           : imei // ignore: cast_nullable_to_non_nullable
@@ -105,6 +127,8 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       @JsonKey(name: 'name') String name,
       @JsonKey(name: 'email') String email,
       @JsonKey(name: 'password') String password,
+      @JsonKey(name: 'is_admin') bool isAdmin,
+      @JsonKey(name: 'is_active') bool isActive,
       @JsonKey(name: 'imei') String imei});
 }
 
@@ -115,6 +139,8 @@ class __$$UserImplCopyWithImpl<$Res>
   __$$UserImplCopyWithImpl(_$UserImpl _value, $Res Function(_$UserImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of User
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -122,6 +148,8 @@ class __$$UserImplCopyWithImpl<$Res>
     Object? name = null,
     Object? email = null,
     Object? password = null,
+    Object? isAdmin = null,
+    Object? isActive = null,
     Object? imei = null,
   }) {
     return _then(_$UserImpl(
@@ -141,6 +169,14 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String,
+      isAdmin: null == isAdmin
+          ? _value.isAdmin
+          : isAdmin // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isActive: null == isActive
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool,
       imei: null == imei
           ? _value.imei
           : imei // ignore: cast_nullable_to_non_nullable
@@ -157,6 +193,8 @@ class _$UserImpl implements _User {
       @JsonKey(name: 'name') this.name = '',
       @JsonKey(name: 'email') this.email = '',
       @JsonKey(name: 'password') this.password = '',
+      @JsonKey(name: 'is_admin') this.isAdmin = false,
+      @JsonKey(name: 'is_active') this.isActive = false,
       @JsonKey(name: 'imei') this.imei = ''});
 
   factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
@@ -175,12 +213,18 @@ class _$UserImpl implements _User {
   @JsonKey(name: 'password')
   final String password;
   @override
+  @JsonKey(name: 'is_admin')
+  final bool isAdmin;
+  @override
+  @JsonKey(name: 'is_active')
+  final bool isActive;
+  @override
   @JsonKey(name: 'imei')
   final String imei;
 
   @override
   String toString() {
-    return 'User(id: $id, name: $name, email: $email, password: $password, imei: $imei)';
+    return 'User(id: $id, name: $name, email: $email, password: $password, isAdmin: $isAdmin, isActive: $isActive, imei: $imei)';
   }
 
   @override
@@ -193,14 +237,20 @@ class _$UserImpl implements _User {
             (identical(other.email, email) || other.email == email) &&
             (identical(other.password, password) ||
                 other.password == password) &&
+            (identical(other.isAdmin, isAdmin) || other.isAdmin == isAdmin) &&
+            (identical(other.isActive, isActive) ||
+                other.isActive == isActive) &&
             (identical(other.imei, imei) || other.imei == imei));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, email, password, imei);
+  int get hashCode => Object.hash(
+      runtimeType, id, name, email, password, isAdmin, isActive, imei);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of User
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$UserImplCopyWith<_$UserImpl> get copyWith =>
@@ -220,6 +270,8 @@ abstract class _User implements User {
       @JsonKey(name: 'name') final String name,
       @JsonKey(name: 'email') final String email,
       @JsonKey(name: 'password') final String password,
+      @JsonKey(name: 'is_admin') final bool isAdmin,
+      @JsonKey(name: 'is_active') final bool isActive,
       @JsonKey(name: 'imei') final String imei}) = _$UserImpl;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
@@ -237,10 +289,19 @@ abstract class _User implements User {
   @JsonKey(name: 'password')
   String get password;
   @override
+  @JsonKey(name: 'is_admin')
+  bool get isAdmin;
+  @override
+  @JsonKey(name: 'is_active')
+  bool get isActive;
+  @override
   @JsonKey(name: 'imei')
   String get imei;
+
+  /// Create a copy of User
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$UserImplCopyWith<_$UserImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -1,10 +1,9 @@
-export 'dart:async';
+﻿export 'dart:async';
 
 export 'package:flutter/material.dart';
 export 'package:flutter_bloc/flutter_bloc.dart';
 export 'package:get_it/get_it.dart';
 export 'package:go_router/go_router.dart';
-export 'package:hive/hive.dart';
 export 'package:rus_bal_dict/core/widgets/my_app_bar.dart';
 export 'package:rus_bal_dict/core/widgets/word_list_item.dart';
 export 'package:rus_bal_dict/feature/favorites/domain/bloc/favorites_bloc.dart';

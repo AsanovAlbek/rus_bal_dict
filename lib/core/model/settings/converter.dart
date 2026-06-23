@@ -12,6 +12,8 @@ extension AppSettingsToHive on AppSettings {
         fontSize: settings.fontSize,
         historyStaleLimitTime: settings.historyStaleLimitTime,
         email: userInfo.email,
+        isActive: userInfo.isActive ?? false,
+        isAdmin: userInfo.isAdmin ?? false,
         premiumDays: userInfo.premiumDays ?? 0);
   }
 }
@@ -24,6 +26,8 @@ extension HiveToAppSettings on AppSettingsHiveModel {
             name: userName,
             isUserSignIn: isUserSignedIn,
             email: email,
+            isActive: isActive,
+            isAdmin: isAdmin,
             premiumDays: premiumDays),
         settings: Settings(
             themeMode: SettingsThemeMode.values[themeMode],

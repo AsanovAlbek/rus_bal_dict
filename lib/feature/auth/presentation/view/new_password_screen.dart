@@ -47,10 +47,8 @@ class _NewPasswordState extends State<NewPasswordScreen> {
                         border: const OutlineInputBorder(),
                         suffixIcon: IconButton(
                             onPressed: () {
-                              context.read<AuthBloc>().add(
-                                  AuthEvent.maskPassword(
-                                      isPasswordMasked:
-                                          !state.isPasswordMasked));
+                              context.read<AuthBloc>().add(MaskPasswordEvent(
+                                  isPasswordMasked: !state.isPasswordMasked));
                             },
                             icon: Icon(state.isPasswordMasked
                                 ? Icons.visibility_off
@@ -74,10 +72,8 @@ class _NewPasswordState extends State<NewPasswordScreen> {
                         border: const OutlineInputBorder(),
                         suffixIcon: IconButton(
                             onPressed: () {
-                              context.read<AuthBloc>().add(
-                                  AuthEvent.maskPassword(
-                                      isPasswordMasked:
-                                          !state.isPasswordMasked));
+                              context.read<AuthBloc>().add(MaskPasswordEvent(
+                                  isPasswordMasked: !state.isPasswordMasked));
                             },
                             icon: Icon(state.isPasswordMasked
                                 ? Icons.visibility_off
@@ -96,12 +92,15 @@ class _NewPasswordState extends State<NewPasswordScreen> {
                                       newPasswordController.text.trim(),
                                   confirmPassword:
                                       repeatPasswordController.text.trim(),
-                                  onSuccess: () {
+                                  onSuccess: ([message]) {
                                     context.showSnackBar(
-                                        'Вы успешно сменили пароль');
+                                        message ?? 'Пароль успешно сменен');
+                                    context.read<AuthBloc>().add(
+                                        ChangeAuthPageEvent(
+                                            pageState: AuthPageState.signIn));
                                     context.go('/auth');
                                   },
-                                  onError: (message) {
+                                  onError: ([message]) {
                                     context.showSnackBar(message ??
                                         'Ошибка при восстановлении пароля');
                                   }));

@@ -1,11 +1,12 @@
-import 'package:flutter/cupertino.dart';
+﻿import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_ce/hive_ce.dart';
 import 'package:rus_bal_dict/core/hive/settings/app_settings_hive.dart';
 import 'package:rus_bal_dict/core/model/settings/converter.dart';
 import 'package:rus_bal_dict/core/navigation/navigation_args.dart';
 import 'package:rus_bal_dict/core/navigation/slider_transition_page.dart';
 import 'package:rus_bal_dict/export.dart';
+import 'package:rus_bal_dict/feature/auth/presentation/view/activation/activation_screen.dart';
 import 'package:rus_bal_dict/feature/auth/presentation/view/auth_screen.dart';
 import 'package:rus_bal_dict/feature/auth/presentation/view/input_code_screen.dart';
 import 'package:rus_bal_dict/feature/auth/presentation/view/new_password_screen.dart';
@@ -24,6 +25,7 @@ import 'package:rus_bal_dict/feature/profile/presentation/screen/view/suggest_wo
 import 'package:rus_bal_dict/feature/profile/presentation/screen/view/terms_of_use_screen.dart';
 import 'package:rus_bal_dict/feature/word_detail/presentation/detail_screen.dart';
 import 'package:rus_bal_dict/feature/words_list/presentation/words_list_screen.dart';
+import 'package:rus_bal_dict/splash_screen.dart';
 
 import '../../feature/history/presentation/history_screen.dart';
 import '../model/word/word.dart';
@@ -43,20 +45,13 @@ class AppRouter {
   AppRouter() {
     router = GoRouter(
         navigatorKey: _rootNavigatorKey,
-        initialLocation: '/auth',
+        initialLocation: '/splash_screen',
         routes: [
           GoRoute(
+              path: '/splash_screen',
+              builder: (context, state) => const SplashScreen()),
+          GoRoute(
               path: '/auth',
-              redirect: (context, state) {
-                final settingsBox = Hive.box<AppSettingsHiveModel>('settings');
-                final settings =
-                    (settingsBox.getAt(0) ?? AppSettingsHiveModel()).toModel();
-                if (settings.userInfo.isUserSignIn &&
-                    state.uri.path == '/auth') {
-                  return '/word_list';
-                }
-                return null;
-              },
               builder: (context, state) => const AuthScreen(),
               routes: [
                 GoRoute(
@@ -101,9 +96,7 @@ class AppRouter {
                               pageBuilder: (context, state) =>
                                   SliderTransitionPage(
                                       key: state.pageKey,
-                                      child: WordsDetailScreen(
-                                        word: state.extra as Word,
-                                      )),
+                                      child: const WordsDetailScreen()),
                             )
                           ]),
                     ]),
@@ -119,9 +112,7 @@ class AppRouter {
                                 pageBuilder: (context, state) =>
                                     SliderTransitionPage(
                                         key: state.pageKey,
-                                        child: WordsDetailScreen(
-                                          word: state.extra as Word,
-                                        )))
+                                        child: const WordsDetailScreen()))
                           ]),
                     ]),
                 StatefulShellBranch(
@@ -136,9 +127,7 @@ class AppRouter {
                                 pageBuilder: (context, state) =>
                                     SliderTransitionPage(
                                         key: state.pageKey,
-                                        child: WordsDetailScreen(
-                                          word: state.extra as Word,
-                                        )))
+                                        child: const WordsDetailScreen()))
                           ])
                     ]),
                 StatefulShellBranch(
@@ -192,7 +181,11 @@ class AppRouter {
                               path: 'privacy',
                               builder: (context, state) =>
                                   const PrivacyPolicyScreen(),
-                            )
+                            ),
+                            GoRoute(
+                                path: 'activate',
+                                builder: (context, state) =>
+                                    const ActivationScreen())
                           ])
                     ])
               ])

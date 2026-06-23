@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_ce/hive_ce.dart';
 import 'package:rus_bal_dict/core/hive/favorite_word/favorite_word_hive_model.dart';
 import 'package:rus_bal_dict/core/utils/app_utils.dart';
 import 'package:rus_bal_dict/core/widgets/favorites_icon_button.dart';

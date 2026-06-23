@@ -16,7 +16,8 @@ void main() {
   });
   group('Проверка на детали слова', () {
     test('Тест на наличие аудиозаписи. Успешно', () async {
-      when(() => repository.getAudioByPath(audioPath: any<String>(named: 'audioPath')))
+      when(() => repository.getAudioByPath(
+              audioPath: any<String>(named: 'audioPath')))
           .thenAnswer(
               (_) async => Either.cond(true, Exception(), Uint8List(16)));
 
@@ -30,7 +31,8 @@ void main() {
     });
 
     test('Проверка на отсутсвие аудиозаписи по слову', () async {
-      when(() => repository.getAudioByPath(audioPath: any<String>(named: 'audioPath')))
+      when(() => repository.getAudioByPath(
+              audioPath: any<String>(named: 'audioPath')))
           .thenAnswer((_) async =>
               Either.cond<Exception, Uint8List?>(true, Exception(), null));
 
@@ -44,10 +46,12 @@ void main() {
     });
 
     test('Проверка на иную ошибку получения аудиозаписи', () async {
-      when(() => repository.getAudioByPath(audioPath: any<String>(named: 'audioPath')))
+      when(() => repository.getAudioByPath(
+              audioPath: any<String>(named: 'audioPath')))
           .thenAnswer(
               (_) async => Either.cond(false, Exception(), Uint8List(16)));
-      final errorEither = await repository.getAudioByPath(audioPath: testAudioPath);
+      final errorEither =
+          await repository.getAudioByPath(audioPath: testAudioPath);
       expect(errorEither.isLeft, isTrue);
       expect(errorEither.isRight, isFalse);
       expect(errorEither.left, isException);

@@ -3,9 +3,8 @@ import 'dart:math';
 import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
 import 'package:rus_bal_dict/core/constants/private.dart';
-import 'package:rus_bal_dict/core/hive/settings/app_settings_hive.dart';
 import 'package:rus_bal_dict/core/model/payment_info/payment_info.dart';
-import 'package:rus_bal_dict/core/model/settings/converter.dart';
+import 'package:rus_bal_dict/export.dart';
 import 'package:rus_bal_dict/feature/history/presentation/history.dart';
 import 'package:rus_bal_dict/feature/profile/domain/repository/payment_repository.dart';
 

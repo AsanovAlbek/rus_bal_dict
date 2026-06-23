@@ -8,7 +8,7 @@ part of 'app_settings_hive.dart';
 
 class AppSettingsHiveModelAdapter extends TypeAdapter<AppSettingsHiveModel> {
   @override
-  final int typeId = 1;
+  final typeId = 1;
 
   @override
   AppSettingsHiveModel read(BinaryReader reader) {
@@ -17,21 +17,23 @@ class AppSettingsHiveModelAdapter extends TypeAdapter<AppSettingsHiveModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return AppSettingsHiveModel(
-      userId: fields[0] == null ? 0 : fields[0] as int?,
+      userId: fields[0] == null ? 0 : (fields[0] as num?)?.toInt(),
       userName: fields[1] == null ? '' : fields[1] as String?,
       isUserSignedIn: fields[2] == null ? false : fields[2] as bool,
-      themeMode: fields[3] == null ? 0 : fields[3] as int,
-      fontSize: fields[4] == null ? 1.0 : fields[4] as double?,
+      themeMode: fields[3] == null ? 0 : (fields[3] as num).toInt(),
+      fontSize: fields[4] == null ? 1.0 : (fields[4] as num?)?.toDouble(),
       historyStaleLimitTime: fields[5] as Duration?,
       email: fields[6] as String?,
-      premiumDays: fields[7] == null ? 0 : fields[7] as int,
+      premiumDays: fields[7] == null ? 0 : (fields[7] as num).toInt(),
+      isAdmin: fields[8] == null ? false : fields[8] as bool,
+      isActive: fields[9] == null ? false : fields[9] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, AppSettingsHiveModel obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.userId)
       ..writeByte(1)
@@ -47,7 +49,11 @@ class AppSettingsHiveModelAdapter extends TypeAdapter<AppSettingsHiveModel> {
       ..writeByte(6)
       ..write(obj.email)
       ..writeByte(7)
-      ..write(obj.premiumDays);
+      ..write(obj.premiumDays)
+      ..writeByte(8)
+      ..write(obj.isAdmin)
+      ..writeByte(9)
+      ..write(obj.isActive);
   }
 
   @override

@@ -28,9 +28,9 @@ void main() {
       debugPrint('Проверка на ошибку получения истории слов. Успешно');
     });
 
-
     test('Тестирование сохранения слова в историю', () async {
-      when(() => repository.saveWord(testWord)).thenAnswer((_) => Future.value(null));
+      when(() => repository.saveWord(testWord))
+          .thenAnswer((_) => Future.value(null));
       await repository.saveWord(testWord);
       verify(() => repository.saveWord(testWord)).called(1);
       debugPrint('Сохранение слова в историю. Успешно');

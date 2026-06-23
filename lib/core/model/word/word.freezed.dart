@@ -28,11 +28,17 @@ mixin _$Word {
   String get meaning => throw _privateConstructorUsedError;
   @JsonKey(name: 'audio_url')
   String get audioUrl => throw _privateConstructorUsedError;
+  @JsonKey(name: 'audio_path')
+  String get audioPath => throw _privateConstructorUsedError;
   @JsonKey(includeToJson: false, includeFromJson: false)
   bool get isFavorite => throw _privateConstructorUsedError;
 
+  /// Serializes this Word to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Word
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $WordCopyWith<Word> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -46,6 +52,7 @@ abstract class $WordCopyWith<$Res> {
       @JsonKey(name: 'name') String word,
       @JsonKey(name: 'meaning') String meaning,
       @JsonKey(name: 'audio_url') String audioUrl,
+      @JsonKey(name: 'audio_path') String audioPath,
       @JsonKey(includeToJson: false, includeFromJson: false) bool isFavorite});
 }
 
@@ -59,6 +66,8 @@ class _$WordCopyWithImpl<$Res, $Val extends Word>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Word
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -66,6 +75,7 @@ class _$WordCopyWithImpl<$Res, $Val extends Word>
     Object? word = null,
     Object? meaning = null,
     Object? audioUrl = null,
+    Object? audioPath = null,
     Object? isFavorite = null,
   }) {
     return _then(_value.copyWith(
@@ -84,6 +94,10 @@ class _$WordCopyWithImpl<$Res, $Val extends Word>
       audioUrl: null == audioUrl
           ? _value.audioUrl
           : audioUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      audioPath: null == audioPath
+          ? _value.audioPath
+          : audioPath // ignore: cast_nullable_to_non_nullable
               as String,
       isFavorite: null == isFavorite
           ? _value.isFavorite
@@ -105,6 +119,7 @@ abstract class _$$WordImplCopyWith<$Res> implements $WordCopyWith<$Res> {
       @JsonKey(name: 'name') String word,
       @JsonKey(name: 'meaning') String meaning,
       @JsonKey(name: 'audio_url') String audioUrl,
+      @JsonKey(name: 'audio_path') String audioPath,
       @JsonKey(includeToJson: false, includeFromJson: false) bool isFavorite});
 }
 
@@ -115,6 +130,8 @@ class __$$WordImplCopyWithImpl<$Res>
   __$$WordImplCopyWithImpl(_$WordImpl _value, $Res Function(_$WordImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Word
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -122,6 +139,7 @@ class __$$WordImplCopyWithImpl<$Res>
     Object? word = null,
     Object? meaning = null,
     Object? audioUrl = null,
+    Object? audioPath = null,
     Object? isFavorite = null,
   }) {
     return _then(_$WordImpl(
@@ -141,6 +159,10 @@ class __$$WordImplCopyWithImpl<$Res>
           ? _value.audioUrl
           : audioUrl // ignore: cast_nullable_to_non_nullable
               as String,
+      audioPath: null == audioPath
+          ? _value.audioPath
+          : audioPath // ignore: cast_nullable_to_non_nullable
+              as String,
       isFavorite: null == isFavorite
           ? _value.isFavorite
           : isFavorite // ignore: cast_nullable_to_non_nullable
@@ -157,6 +179,7 @@ class _$WordImpl implements _Word {
       @JsonKey(name: 'name') this.word = '',
       @JsonKey(name: 'meaning') this.meaning = '',
       @JsonKey(name: 'audio_url') this.audioUrl = '',
+      @JsonKey(name: 'audio_path') this.audioPath = '',
       @JsonKey(includeToJson: false, includeFromJson: false)
       this.isFavorite = false});
 
@@ -176,12 +199,15 @@ class _$WordImpl implements _Word {
   @JsonKey(name: 'audio_url')
   final String audioUrl;
   @override
+  @JsonKey(name: 'audio_path')
+  final String audioPath;
+  @override
   @JsonKey(includeToJson: false, includeFromJson: false)
   final bool isFavorite;
 
   @override
   String toString() {
-    return 'Word(id: $id, word: $word, meaning: $meaning, audioUrl: $audioUrl, isFavorite: $isFavorite)';
+    return 'Word(id: $id, word: $word, meaning: $meaning, audioUrl: $audioUrl, audioPath: $audioPath, isFavorite: $isFavorite)';
   }
 
   @override
@@ -194,16 +220,20 @@ class _$WordImpl implements _Word {
             (identical(other.meaning, meaning) || other.meaning == meaning) &&
             (identical(other.audioUrl, audioUrl) ||
                 other.audioUrl == audioUrl) &&
+            (identical(other.audioPath, audioPath) ||
+                other.audioPath == audioPath) &&
             (identical(other.isFavorite, isFavorite) ||
                 other.isFavorite == isFavorite));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, word, meaning, audioUrl, isFavorite);
+  int get hashCode => Object.hash(
+      runtimeType, id, word, meaning, audioUrl, audioPath, isFavorite);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Word
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$WordImplCopyWith<_$WordImpl> get copyWith =>
@@ -223,6 +253,7 @@ abstract class _Word implements Word {
       @JsonKey(name: 'name') final String word,
       @JsonKey(name: 'meaning') final String meaning,
       @JsonKey(name: 'audio_url') final String audioUrl,
+      @JsonKey(name: 'audio_path') final String audioPath,
       @JsonKey(includeToJson: false, includeFromJson: false)
       final bool isFavorite}) = _$WordImpl;
 
@@ -241,10 +272,16 @@ abstract class _Word implements Word {
   @JsonKey(name: 'audio_url')
   String get audioUrl;
   @override
+  @JsonKey(name: 'audio_path')
+  String get audioPath;
+  @override
   @JsonKey(includeToJson: false, includeFromJson: false)
   bool get isFavorite;
+
+  /// Create a copy of Word
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$WordImplCopyWith<_$WordImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

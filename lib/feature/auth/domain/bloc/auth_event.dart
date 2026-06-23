@@ -2,60 +2,17 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:rus_bal_dict/core/model/user/user.dart';
 import 'package:rus_bal_dict/feature/auth/domain/bloc/auth_state.dart';
 
-sealed class AuthEvent {
-  static SignInEvent signIn(
-          {required String email,
-          required String password,
-          void Function(User, String)? onSuccess,
-          void Function(String?)? onError}) =>
-      SignInEvent(
-          email: email,
-          password: password,
-          onSuccess: onSuccess,
-          onError: onError);
+sealed class AuthEvent {}
 
-  static SignUpEvent signUp(
-          {required String name,
-          required String email,
-          required String password,
-          void Function(User, String)? onSuccess,
-          void Function(String?)? onError,
-          void Function()? onUserNoAgreeWithPolicy}) =>
-      SignUpEvent(
-          name: name,
-          email: email,
-          password: password,
-          onSuccess: onSuccess,
-          onError: onError,
-          onUserNoAgreeWithPolicy: onUserNoAgreeWithPolicy);
+@immutable
+class StartSessionEvent extends AuthEvent {
+  final Function()? onSuccess;
+  final Function([String? message])? onError;
 
-  static SignOutEvent signOut() => SignOutEvent();
-
-  static MaskPasswordEvent maskPassword({required bool isPasswordMasked}) =>
-      MaskPasswordEvent(isPasswordMasked: isPasswordMasked);
-
-  static ChangeAuthPageEvent changeAuthPage(
-          {required AuthPageState pageState}) =>
-      ChangeAuthPageEvent(pageState: pageState);
-
-  static SendCodeToEmailAuthEvent sendCodeToEmail({required String email}) =>
-      SendCodeToEmailAuthEvent(email: email);
-
-  static ChangeAgreeWithPolicyAuthEvent changeAgree({required bool? agree}) =>
-      ChangeAgreeWithPolicyAuthEvent(agree);
-
-  static ChangeAgreeWithTermOfUseEvent changeAgreeWithTermOfUse(
-          {required bool? agree}) =>
-      ChangeAgreeWithTermOfUseEvent(agree);
-
-  static SaveUserSignUpInputAuthEvent saveUserSignUpInput(
-          {required String name,
-          required String email,
-          required String password,
-          void Function()? onComplete}) =>
-      SaveUserSignUpInputAuthEvent(
-          email: email, password: password, name: name, onComplete: onComplete);
+  StartSessionEvent({this.onSuccess, this.onError});
 }
+
+class LoadLoginDataEvent extends AuthEvent {}
 
 @immutable
 class SignInEvent extends AuthEvent {
@@ -76,9 +33,12 @@ class SignUpEvent extends AuthEvent {
   final String name;
   final String email;
   final String password;
-  final void Function(User, String)? onSuccess;
+  final void Function(String)? onSuccess;
   final void Function(String?)? onError;
   final void Function()? onUserNoAgreeWithPolicy;
+  final bool isWeb;
+  final bool isAndroid;
+  final bool isIos;
 
   SignUpEvent(
       {required this.name,
@@ -86,11 +46,19 @@ class SignUpEvent extends AuthEvent {
       required this.password,
       this.onSuccess,
       this.onError,
-      this.onUserNoAgreeWithPolicy});
+      this.onUserNoAgreeWithPolicy,
+      this.isWeb = false,
+      this.isAndroid = false,
+      this.isIos = false});
 }
 
 @immutable
-class SignOutEvent extends AuthEvent {}
+class SignOutEvent extends AuthEvent {
+  final Function()? onSuccess;
+  final Function([String? message])? onError;
+
+  SignOutEvent({this.onSuccess, this.onError});
+}
 
 class MaskPasswordEvent extends AuthEvent {
   final bool isPasswordMasked;
@@ -105,12 +73,38 @@ class ChangeAuthPageEvent extends AuthEvent {
   ChangeAuthPageEvent({required this.pageState});
 }
 
-@immutable
-class SendCodeToEmailAuthEvent extends AuthEvent {
+class SendRestoreCodeEvent extends AuthEvent {
   final String email;
-  final Function(int?)? onSuccess;
-  final Function(String?)? onError;
-  SendCodeToEmailAuthEvent({required this.email, this.onSuccess, this.onError});
+  final Function()? onSuccess;
+  final Function([String? message])? onError;
+
+  SendRestoreCodeEvent({required this.email, this.onSuccess, this.onError});
+}
+
+class ConfirmRestoreCodeEvent extends AuthEvent {
+  final String email;
+  final String code;
+  final Function()? onSuccess;
+  final Function([String? message])? onError;
+
+  ConfirmRestoreCodeEvent(
+      {required this.email, required this.code, this.onSuccess, this.onError});
+}
+
+class SendActivationCodeEvent extends AuthEvent {
+  final Function()? onSuccess;
+  final Function()? onError;
+
+  SendActivationCodeEvent({this.onSuccess, this.onError});
+}
+
+class ConfirmUserActivationEvent extends AuthEvent {
+  final String code;
+  final Function()? onSuccess;
+  final Function([String? message])? onError;
+
+  ConfirmUserActivationEvent(
+      {required this.code, this.onSuccess, this.onError});
 }
 
 @immutable
@@ -118,8 +112,8 @@ class UpdateUserPasswordAuthEvent extends AuthEvent {
   final String email;
   final String newPassword;
   final String confirmPassword;
-  final Function()? onSuccess;
-  final Function(String?)? onError;
+  final Function([String?])? onSuccess;
+  final Function([String?])? onError;
 
   UpdateUserPasswordAuthEvent(
       {required this.email,
@@ -141,6 +135,12 @@ class ChangeAgreeWithTermOfUseEvent extends AuthEvent {
   final bool? agreeWithTermOfUse;
 
   ChangeAgreeWithTermOfUseEvent(this.agreeWithTermOfUse);
+}
+
+@immutable
+class ChangeRememberMeEvent extends AuthEvent {
+  final bool? rememberMe;
+  ChangeRememberMeEvent(this.rememberMe);
 }
 
 @immutable

@@ -1,5 +1,5 @@
-import 'package:dio/dio.dart';
-import 'package:hive/hive.dart';
+﻿import 'package:dio/dio.dart';
+import 'package:hive_ce/hive_ce.dart';
 import 'package:rus_bal_dict/core/constants/private.dart';
 import 'package:rus_bal_dict/core/model/settings/app_settings.dart';
 import 'package:rus_bal_dict/core/model/settings/converter.dart';
