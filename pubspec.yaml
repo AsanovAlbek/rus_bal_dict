@@ -12,13 +12,13 @@ dependencies:
   #ios иконки
   cupertino_icons: ^1.0.6
   #навигация
-  go_router: ^14.0.2
+  go_router: ^17.3.0
   #стейт менеджер
-  flutter_bloc: ^8.1.5
+  flutter_bloc: ^9.1.1
   #проигрывание аудио
   audioplayers: ^6.0.0
   #инъекция зависимостей (DI)
-  get_it: ^7.7.0
+  get_it: ^9.2.1
   #генерация data классов
   freezed_annotation: ^2.4.1
   #для переопределения сравнивания объектов
@@ -30,7 +30,7 @@ dependencies:
   #result api подобный функционал для обработки ошибок
   either_dart: ^1.0.0
   #логирование
-  talker: ^4.2.0
+  talker: ^5.1.17
   #локальное хранилище (база данных) (в дальнейшем возможно заменить на drift/realm)
   hive: ^2.2.3
   hive_flutter: ^1.1.0
@@ -39,31 +39,31 @@ dependencies:
   #для обращения в файловую систему (пока не нужно, возможно удалю)
   path_provider: ^2.1.3
   #удобные event transformers для flutter_bloc
-  bloc_concurrency: ^0.2.5
+  bloc_concurrency: ^0.3.0
   #плагин для получения информации об устройстве
-  device_info_plus: ^10.1.0
+  device_info_plus: ^12.4.0
   #шрифты от гугла
-  google_fonts: ^6.2.1
+  google_fonts: ^8.1.0
   #svg иконки
   flutter_svg: ^2.0.10+1
   #html текст
-  flutter_widget_from_html: ^0.15.1
+  flutter_widget_from_html: ^0.17.2
   #набирать код восстановления
-  pinput: ^5.0.0
+  pinput: ^6.0.2
   #работать с временем
-  intl: ^0.19.0
+  intl: ^0.20.2
   #вебвью
   webview_flutter: ^4.8.0
   url_launcher: ^6.3.0
   flutter_flavorizr: ^2.2.3
-  dio_cache_interceptor_hive_store: ^3.2.2
+  dio_cache_interceptor_hive_store: ^4.0.0
   
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.0
+  flutter_lints: ^6.0.0
   build_runner: ^2.4.9
   json_serializable: ^6.8.0
   freezed: ^2.5.2
