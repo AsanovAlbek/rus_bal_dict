@@ -1,6 +1,6 @@
-import 'package:dio/dio.dart';
+﻿import 'package:dio/dio.dart';
 import 'package:either_dart/src/either.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_ce/hive_ce.dart';
 import 'package:rus_bal_dict/core/model/settings/converter.dart';
 import 'package:rus_bal_dict/core/model/word/word.dart';
 import 'package:rus_bal_dict/feature/favorites/data/converter.dart';

@@ -1,10 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-import 'package:hive_flutter/adapters.dart';
-import 'package:rus_bal_dict/core/hive/favorite_word/favorite_word_hive_model.dart';
-import 'package:rus_bal_dict/core/widgets/my_app_bar.dart';
+﻿import 'package:rus_bal_dict/core/widgets/my_app_bar.dart';
 import 'package:rus_bal_dict/core/widgets/word_list_item.dart';
+import 'package:rus_bal_dict/export.dart';
 import 'package:rus_bal_dict/feature/favorites/data/converter.dart';
 import 'package:rus_bal_dict/feature/favorites/domain/bloc/favorites_bloc.dart';
 import 'package:rus_bal_dict/feature/favorites/domain/bloc/favorites_event.dart';

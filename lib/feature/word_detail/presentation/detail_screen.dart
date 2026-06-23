@@ -1,3 +1,5 @@
+import 'package:rus_bal_dict/export.dart';
+
 import 'detail.dart';
 import 'package:just_audio/just_audio.dart' as just_audio;
 

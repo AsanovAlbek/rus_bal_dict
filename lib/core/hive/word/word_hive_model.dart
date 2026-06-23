@@ -1,4 +1,4 @@
-import 'package:hive_flutter/adapters.dart';
+import 'package:hive_ce/hive_ce.dart';
 
 part 'word_hive_model.g.dart';
 

@@ -3,7 +3,7 @@ export 'package:flutter/material.dart';
 export 'package:flutter_bloc/flutter_bloc.dart';
 export 'package:get_it/get_it.dart';
 export 'package:go_router/go_router.dart';
-export 'package:hive_flutter/adapters.dart';
+export 'package:hive_ce_flutter/adapters.dart';
 export 'package:path_provider/path_provider.dart';
 export 'package:rus_bal_dict/core/di/core_module.dart';
 export 'package:rus_bal_dict/core/hive/favorite_word/favorite_word_hive_model.dart';

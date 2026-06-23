@@ -1,4 +1,4 @@
-export 'dart:async';
+﻿export 'dart:async';
 export 'dart:typed_data';
 
 export 'package:audioplayers/audioplayers.dart';
@@ -7,7 +7,6 @@ export 'package:flutter_bloc/flutter_bloc.dart';
 export 'package:flutter_svg/svg.dart';
 export 'package:get_it/get_it.dart';
 export 'package:go_router/go_router.dart';
-export 'package:hive_flutter/adapters.dart';
 export 'package:rus_bal_dict/core/hive/favorite_word/favorite_word_hive_model.dart';
 export 'package:rus_bal_dict/core/utils/app_utils.dart';
 export 'package:rus_bal_dict/core/widgets/favorites_icon_button.dart';

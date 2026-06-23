@@ -8,7 +8,7 @@ part of 'word_hive_model.dart';
 
 class WordHiveModelAdapter extends TypeAdapter<WordHiveModel> {
   @override
-  final int typeId = 0;
+  final typeId = 0;
 
   @override
   WordHiveModel read(BinaryReader reader) {
@@ -17,12 +17,12 @@ class WordHiveModelAdapter extends TypeAdapter<WordHiveModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return WordHiveModel(
-      id: fields[0] == null ? 0 : fields[0] as int,
+      id: fields[0] == null ? 0 : (fields[0] as num).toInt(),
       word: fields[1] == null ? '' : fields[1] as String,
       meaning: fields[2] == null ? '' : fields[2] as String,
       audioUrl: fields[3] == null ? '' : fields[3] as String,
-      createTime: fields[4] == null ? 0 : fields[4] as int,
-      userId: fields[5] == null ? 0 : fields[5] as int,
+      createTime: fields[4] == null ? 0 : (fields[4] as num).toInt(),
+      userId: fields[5] == null ? 0 : (fields[5] as num).toInt(),
     );
   }
 

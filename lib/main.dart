@@ -8,6 +8,7 @@ import 'package:rus_bal_dict/feature/history/presentation/history.dart';
 import 'package:rus_bal_dict/feature/profile/domain/repository/payment_repository.dart';
 
 import 'export.dart';
+import 'hive_registrar.g.dart';
 import 'feature/auth/di/auth_module.dart';
 import 'feature/favorites/di/favorite_module.dart';
 import 'feature/history/di/history_module.dart';
@@ -17,9 +18,7 @@ import 'feature/words_list/di/word_list_module.dart';
 
 Future<void> main() async {
   await Hive.initFlutter();
-  Hive.registerAdapter(WordHiveModelAdapter());
-  Hive.registerAdapter(AppSettingsHiveModelAdapter());
-  Hive.registerAdapter(FavoriteWordHiveModelAdapter());
+  Hive.registerAdapters();
 
   final historyBox = await Hive.openBox<WordHiveModel>('history');
   final favoritesBox = await Hive.openBox<FavoriteWordHiveModel>('favorites');

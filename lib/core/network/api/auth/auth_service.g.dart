@@ -6,15 +6,11 @@ part of 'auth_service.dart';
 // RetrofitGenerator
 // **************************************************************************
 
-// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element
+// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element,unnecessary_string_interpolations,unused_element_parameter
 
 class _AuthService implements AuthService {
-  _AuthService(
-    this._dio, {
-    this.baseUrl,
-    this.errorLogger,
-  }) {
-    baseUrl ??= 'https://balrusapi.ru//auth/jwt';
+  _AuthService(this._dio, {this.baseUrl, this.errorLogger}) {
+    baseUrl ??= 'http://10.0.0.62:8000//auth/jwt';
   }
 
   final Dio _dio;
@@ -24,10 +20,7 @@ class _AuthService implements AuthService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<TokenResponse> login(
-    String email,
-    String password,
-  ) async {
+  Future<TokenResponse> login(String email, String password) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{
@@ -35,27 +28,22 @@ class _AuthService implements AuthService {
       r'accept': 'application/json',
     };
     _headers.removeWhere((k, v) => v == null);
-    final _data = {
-      'username': email,
-      'password': password,
-    };
-    final _options = _setStreamType<TokenResponse>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-      contentType: 'application/x-www-form-urlencoded',
-    )
-        .compose(
-          _dio.options,
-          '/login',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
+    final _data = {'username': email, 'password': password};
+    final _options = _setStreamType<TokenResponse>(
+      Options(
+        method: 'POST',
+        headers: _headers,
+        extra: _extra,
+        contentType: 'application/x-www-form-urlencoded',
+      )
+          .compose(
+            _dio.options,
+            '/login',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
     late TokenResponse _value;
     try {
@@ -77,23 +65,21 @@ class _AuthService implements AuthService {
     };
     _headers.removeWhere((k, v) => v == null);
     final _data = userRegisterBody;
-    final _options = _setStreamType<RegisterResponse>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-      contentType: 'application/json',
-    )
-        .compose(
-          _dio.options,
-          '/register',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
+    final _options = _setStreamType<RegisterResponse>(
+      Options(
+        method: 'POST',
+        headers: _headers,
+        extra: _extra,
+        contentType: 'application/json',
+      )
+          .compose(
+            _dio.options,
+            '/register',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
     late RegisterResponse _value;
     try {
@@ -116,23 +102,21 @@ class _AuthService implements AuthService {
     };
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<UserResponse>(Options(
-      method: 'GET',
-      headers: _headers,
-      extra: _extra,
-      contentType: 'application/x-www-form-urlencoded',
-    )
-        .compose(
-          _dio.options,
-          '/current_user',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
+    final _options = _setStreamType<UserResponse>(
+      Options(
+        method: 'GET',
+        headers: _headers,
+        extra: _extra,
+        contentType: 'application/x-www-form-urlencoded',
+      )
+          .compose(
+            _dio.options,
+            '/current_user',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
     late UserResponse _value;
     try {
@@ -151,22 +135,16 @@ class _AuthService implements AuthService {
     final _headers = <String, dynamic>{r'Accept': 'application/json'};
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<RefreshTokenResponse>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
-        .compose(
-          _dio.options,
-          '/refresh_token',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
+    final _options = _setStreamType<RefreshTokenResponse>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/refresh_token',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
     late RefreshTokenResponse _value;
     try {
@@ -191,22 +169,16 @@ class _AuthService implements AuthService {
     };
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<UserActivationResponse>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
-        .compose(
-          _dio.options,
-          '/activate_user',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
+    final _options = _setStreamType<UserActivationResponse>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/activate_user',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
     late UserActivationResponse _value;
     try {
@@ -224,28 +196,19 @@ class _AuthService implements AuthService {
     String code,
   ) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{
-      r'email': email,
-      r'code': code,
-    };
+    final queryParameters = <String, dynamic>{r'email': email, r'code': code};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<ConfirmResetPasswordResponse>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
-        .compose(
-          _dio.options,
-          '/confirm_reset_password',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
+    final _options = _setStreamType<ConfirmResetPasswordResponse>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/confirm_reset_password',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
     late ConfirmResetPasswordResponse _value;
     try {
@@ -258,10 +221,7 @@ class _AuthService implements AuthService {
   }
 
   @override
-  Future<String> changePassword(
-    String email,
-    String newPassword,
-  ) async {
+  Future<String> changePassword(String email, String newPassword) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'email': email,
@@ -273,23 +233,21 @@ class _AuthService implements AuthService {
     };
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<String>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-      contentType: 'application/json',
-    )
-        .compose(
-          _dio.options,
-          '/change_password',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
+    final _options = _setStreamType<String>(
+      Options(
+        method: 'POST',
+        headers: _headers,
+        extra: _extra,
+        contentType: 'application/json',
+      )
+          .compose(
+            _dio.options,
+            '/change_password',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
     final _result = await _dio.fetch<String>(_options);
     late String _value;
     try {
@@ -314,10 +272,7 @@ class _AuthService implements AuthService {
     return requestOptions;
   }
 
-  String _combineBaseUrls(
-    String dioBaseUrl,
-    String? baseUrl,
-  ) {
+  String _combineBaseUrls(String dioBaseUrl, String? baseUrl) {
     if (baseUrl == null || baseUrl.trim().isEmpty) {
       return dioBaseUrl;
     }

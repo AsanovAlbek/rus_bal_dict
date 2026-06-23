@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
+﻿import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_ce/hive_ce.dart';
 import 'package:rus_bal_dict/core/hive/settings/app_settings_hive.dart';
 import 'package:rus_bal_dict/core/model/settings/converter.dart';
 import 'package:rus_bal_dict/core/navigation/navigation_args.dart';

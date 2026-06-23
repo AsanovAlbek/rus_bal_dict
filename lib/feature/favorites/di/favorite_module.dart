@@ -1,6 +1,6 @@
-import 'package:dio/dio.dart';
+﻿import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_ce/hive_ce.dart';
 import 'package:rus_bal_dict/core/di/core_module.dart';
 import 'package:rus_bal_dict/feature/favorites/data/repository/favorite_repository_impl.dart';
 import 'package:rus_bal_dict/feature/favorites/domain/repository/favorites_repository.dart';

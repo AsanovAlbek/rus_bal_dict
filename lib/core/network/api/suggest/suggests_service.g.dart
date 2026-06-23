@@ -6,15 +6,11 @@ part of 'suggests_service.dart';
 // RetrofitGenerator
 // **************************************************************************
 
-// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element
+// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element,unnecessary_string_interpolations,unused_element_parameter
 
 class _SuggestsService implements SuggestsService {
-  _SuggestsService(
-    this._dio, {
-    this.baseUrl,
-    this.errorLogger,
-  }) {
-    baseUrl ??= 'https://balrusapi.ru//suggestion';
+  _SuggestsService(this._dio, {this.baseUrl, this.errorLogger}) {
+    baseUrl ??= 'http://10.0.0.62:8000//suggestion';
   }
 
   final Dio _dio;
@@ -33,26 +29,17 @@ class _SuggestsService implements SuggestsService {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': authHeader};
     _headers.removeWhere((k, v) => v == null);
-    final _data = {
-      'word': word,
-      'meaning': meaning,
-    };
-    final _options = _setStreamType<SuggestResponse>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
-        .compose(
-          _dio.options,
-          '/suggest_word',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
+    final _data = {'word': word, 'meaning': meaning};
+    final _options = _setStreamType<SuggestResponse>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/suggest_word',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
     late SuggestResponse _value;
     try {
@@ -70,22 +57,16 @@ class _SuggestsService implements SuggestsService {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = {'suggest_id': suggestId};
-    final _options = _setStreamType<SuggestAcceptResponse>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
-        .compose(
-          _dio.options,
-          '/accept_suggest',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
+    final _options = _setStreamType<SuggestAcceptResponse>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/accept_suggest',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
     late SuggestAcceptResponse _value;
     try {
@@ -103,22 +84,16 @@ class _SuggestsService implements SuggestsService {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = {'suggest_id': suggestId};
-    final _options = _setStreamType<SuggestRejectResponse>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
-        .compose(
-          _dio.options,
-          '/reject_suggest',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
+    final _options = _setStreamType<SuggestRejectResponse>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/reject_suggest',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
     late SuggestRejectResponse _value;
     try {
@@ -141,27 +116,17 @@ class _SuggestsService implements SuggestsService {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': authHeader};
     _headers.removeWhere((k, v) => v == null);
-    final _data = {
-      'name': name,
-      'page': page,
-      'size': size,
-    };
-    final _options = _setStreamType<List<SuggestWord>>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
-        .compose(
-          _dio.options,
-          '/get_suggest_words',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
+    final _data = {'name': name, 'page': page, 'size': size};
+    final _options = _setStreamType<List<SuggestWord>>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/get_suggest_words',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
     final _result = await _dio.fetch<List<dynamic>>(_options);
     late List<SuggestWord> _value;
     try {
@@ -176,31 +141,22 @@ class _SuggestsService implements SuggestsService {
   }
 
   @override
-  Future<int> getUserSuggestsWordsCount(
-    dynamic authHeader,
-    String name,
-  ) async {
+  Future<int> getUserSuggestsWordsCount(dynamic authHeader, String name) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': authHeader};
     _headers.removeWhere((k, v) => v == null);
     final _data = {'name': name};
-    final _options = _setStreamType<int>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
-        .compose(
-          _dio.options,
-          '/suggests_count',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
+    final _options = _setStreamType<int>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/suggests_count',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
     final _result = await _dio.fetch<int>(_options);
     late int _value;
     try {
@@ -225,10 +181,7 @@ class _SuggestsService implements SuggestsService {
     return requestOptions;
   }
 
-  String _combineBaseUrls(
-    String dioBaseUrl,
-    String? baseUrl,
-  ) {
+  String _combineBaseUrls(String dioBaseUrl, String? baseUrl) {
     if (baseUrl == null || baseUrl.trim().isEmpty) {
       return dioBaseUrl;
     }
