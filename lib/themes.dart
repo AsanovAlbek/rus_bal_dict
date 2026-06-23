@@ -16,7 +16,7 @@ final lightTheme = ThemeData.light().copyWith(
         error: Colors.red,
         onPrimary: Colors.black),
     bottomNavigationBarTheme: bottomBarThemeLight,
-    cardTheme: const CardTheme(
+    cardTheme: const CardThemeData(
       color: AppLightColors.surfaceColor,
     ),
     dividerColor: AppLightColors.dividerColor,
@@ -37,7 +37,7 @@ final darkTheme = ThemeData.dark().copyWith(
         onSecondary: Colors.lightBlue[400],
         onSurface: Colors.white),
     bottomNavigationBarTheme: bottomBarThemeDark,
-    cardTheme: const CardTheme(
+    cardTheme: const CardThemeData(
         color: AppDarkColors.cardBackgroundColor,
         shadowColor: AppDarkColors.cardShadowColor),
     dividerColor: AppDarkColors.dividerColor,
