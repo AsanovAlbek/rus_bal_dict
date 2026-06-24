@@ -9,9 +9,7 @@ part of 'auth_service.dart';
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element,unnecessary_string_interpolations,unused_element_parameter
 
 class _AuthService implements AuthService {
-  _AuthService(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'http://10.0.0.62:8000//auth/jwt';
-  }
+  _AuthService(this._dio, {this.baseUrl, this.errorLogger});
 
   final Dio _dio;
 
@@ -38,7 +36,7 @@ class _AuthService implements AuthService {
       )
           .compose(
             _dio.options,
-            '/login',
+            '/auth/jwt/login',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -74,7 +72,7 @@ class _AuthService implements AuthService {
       )
           .compose(
             _dio.options,
-            '/register',
+            '/auth/jwt/register',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -111,7 +109,7 @@ class _AuthService implements AuthService {
       )
           .compose(
             _dio.options,
-            '/current_user',
+            '/auth/jwt/current_user',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -139,7 +137,7 @@ class _AuthService implements AuthService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/refresh_token',
+            '/auth/jwt/refresh_token',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -173,7 +171,7 @@ class _AuthService implements AuthService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/activate_user',
+            '/auth/jwt/activate_user',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -203,7 +201,7 @@ class _AuthService implements AuthService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/confirm_reset_password',
+            '/auth/jwt/confirm_reset_password',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -242,7 +240,7 @@ class _AuthService implements AuthService {
       )
           .compose(
             _dio.options,
-            '/change_password',
+            '/auth/jwt/change_password',
             queryParameters: queryParameters,
             data: _data,
           )

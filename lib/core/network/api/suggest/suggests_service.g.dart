@@ -9,9 +9,7 @@ part of 'suggests_service.dart';
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element,unnecessary_string_interpolations,unused_element_parameter
 
 class _SuggestsService implements SuggestsService {
-  _SuggestsService(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'http://10.0.0.62:8000//suggestion';
-  }
+  _SuggestsService(this._dio, {this.baseUrl, this.errorLogger});
 
   final Dio _dio;
 
@@ -34,7 +32,7 @@ class _SuggestsService implements SuggestsService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/suggest_word',
+            '/suggestion/suggest_word',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -61,7 +59,7 @@ class _SuggestsService implements SuggestsService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/accept_suggest',
+            '/suggestion/accept_suggest',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -88,7 +86,7 @@ class _SuggestsService implements SuggestsService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/reject_suggest',
+            '/suggestion/reject_suggest',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -121,7 +119,7 @@ class _SuggestsService implements SuggestsService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/get_suggest_words',
+            '/suggestion/get_suggest_words',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -151,7 +149,7 @@ class _SuggestsService implements SuggestsService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/suggests_count',
+            '/suggestion/suggests_count',
             queryParameters: queryParameters,
             data: _data,
           )
