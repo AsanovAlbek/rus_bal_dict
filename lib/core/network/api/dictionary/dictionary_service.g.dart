@@ -9,9 +9,7 @@ part of 'dictionary_service.dart';
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element,unnecessary_string_interpolations,unused_element_parameter
 
 class _DictionaryService implements DictionaryService {
-  _DictionaryService(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'http://10.0.0.62:8000//dictionary';
-  }
+  _DictionaryService(this._dio, {this.baseUrl, this.errorLogger});
 
   final Dio _dio;
 
@@ -29,7 +27,7 @@ class _DictionaryService implements DictionaryService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/add_word',
+            '/dictionary/add_word',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -56,7 +54,7 @@ class _DictionaryService implements DictionaryService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/update_word',
+            '/dictionary/update_word',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -83,7 +81,7 @@ class _DictionaryService implements DictionaryService {
       Options(method: 'DELETE', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/delete_word',
+            '/dictionary/delete_word',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -114,7 +112,7 @@ class _DictionaryService implements DictionaryService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/get_words',
+            '/dictionary/get_words',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -143,7 +141,7 @@ class _DictionaryService implements DictionaryService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/words_count',
+            '/dictionary/words_count',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -170,7 +168,7 @@ class _DictionaryService implements DictionaryService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/word_by_id',
+            '/dictionary/word_by_id',
             queryParameters: queryParameters,
             data: _data,
           )

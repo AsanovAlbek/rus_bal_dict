@@ -2,7 +2,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-import 'package:rus_bal_dict/core/constants/private.dart';
+import 'package:rus_bal_dict/core/env/app_flavor.dart';
 import 'package:rus_bal_dict/core/navigation/go_router.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:rus_bal_dict/core/network/api/auth/auth_service.dart';
@@ -20,7 +20,7 @@ const dioWithoutBaseUrlInstanceName = 'dioWithoutBaswUrl';
 void coreModule([CacheStore? cacheStore]) {
   di.registerSingleton<GoRouter>(AppRouter().router);
   final options = BaseOptions(
-      connectTimeout: const Duration(seconds: 5), baseUrl: testBaseUrl);
+      connectTimeout: const Duration(seconds: 5), baseUrl: AppFlavor.baseUrl);
 
   final dio = Dio(options);
   dio.interceptors.add(RedirectInterceptor(dio));

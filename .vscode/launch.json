@@ -1,55 +1,44 @@
 {
-    // Используйте IntelliSense, чтобы узнать о возможных атрибутах.
-    // Наведите указатель мыши, чтобы просмотреть описания существующих атрибутов.
-    // Для получения дополнительной информации посетите: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "rus_bal_dict",
-            "request": "launch",
-            "type": "dart"
-        },
-        // {
-        //     "name": "rus_bal_dict (balrus)",
-        //     "request": "launch",
-        //     "type": "dart",
-        //     "args": ["--dart-define-from-file=lib/env/balrus.json"]
-        // },
-        // {
-        //     "name": "rus_bal_dict (local)",
-        //     "request": "launch",
-        //     "type": "dart",
-        //     "args": ["--dart-define=dictionary=localTest"]
-        // },
-        // {
-        //     "name": "rus_bal_dict (rusbal)",
-        //     "request": "launch",
-        //     "type": "dart",
-        //     "args": ["--dart-define-from-file=lib/env/rusbal.json"]
-        // },
-        // {
-        //     "name": "rus_bal_dict (balrus test)",
-        //     "request": "launch",
-        //     "type": "dart",
-        //     "args": ["--dart-define=dictionary=balRusTest"]
-        // },
-        // {
-        //     "name": "rus_bal_dict (balrus test 2)",
-        //     "request": "launch",
-        //     "type": "dart",
-        //     "args": ["--dart-define=dictionary=rusBalTest"]
-        // },
-        {
-            "name": "rus_bal_dict (profile mode)",
+            "name": "bal_rus (debug)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+            "args": ["--flavor", "bal_rus", "--dart-define-from-file=envs/bal_rus.json"]
         },
         {
-            "name": "rus_bal_dict (release mode)",
+            "name": "rus_bal (debug)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "release"
+            "args": ["--flavor", "rus_bal", "--dart-define-from-file=envs/rus_bal.json"]
+        },
+        {
+            "name": "rus_kab (debug)",
+            "request": "launch",
+            "type": "dart",
+            "args": ["--flavor", "rus_kab", "--dart-define-from-file=envs/rus_kab.json"]
+        },
+        {
+            "name": "bal_rus (release)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release",
+            "args": ["--flavor", "bal_rus", "--dart-define-from-file=envs/bal_rus.json"]
+        },
+        {
+            "name": "rus_bal (release)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release",
+            "args": ["--flavor", "rus_bal", "--dart-define-from-file=envs/rus_bal.json"]
+        },
+        {
+            "name": "rus_kab (release)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release",
+            "args": ["--flavor", "rus_kab", "--dart-define-from-file=envs/rus_kab.json"]
         }
     ]
 }

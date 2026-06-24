@@ -7,6 +7,7 @@ import 'package:rus_bal_dict/feature/auth/domain/repository/new_auth_repository.
 import 'package:rus_bal_dict/feature/history/presentation/history.dart';
 import 'package:rus_bal_dict/feature/profile/domain/repository/payment_repository.dart';
 
+import 'core/env/app_flavor.dart';
 import 'export.dart';
 import 'hive_registrar.g.dart';
 import 'feature/auth/di/auth_module.dart';
@@ -81,7 +82,7 @@ class MyApp extends StatelessWidget {
                             TextScaler.linear(appSettings.settings.fontSize)),
                     child: child!);
               },
-              title: 'Балкаро - русский словарь',
+              title: AppFlavor.appName,
               theme: _themeData(context, appSettings.settings.themeMode),
               routerConfig: router,
               debugShowCheckedModeBanner: false,
