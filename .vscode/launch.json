@@ -39,6 +39,27 @@
             "type": "dart",
             "flutterMode": "release",
             "args": ["--flavor", "rus_kab", "--dart-define-from-file=envs/rus_kab.json"]
+        },
+        {
+            "name": "bal_rus (web)",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "chrome",
+            "args": ["--dart-define-from-file=envs/bal_rus.json"]
+        },
+        {
+            "name": "rus_bal (web)",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "chrome",
+            "args": ["--dart-define-from-file=envs/rus_bal.json"]
+        },
+        {
+            "name": "rus_kab (web)",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "chrome",
+            "args": ["--dart-define-from-file=envs/rus_kab.json"]
         }
     ]
 }

@@ -1,5 +1,6 @@
 {
   "APP_FLAVOR": "bal_rus",
   "APP_NAME": "Балкаро-русский словарь",
+  "APP_GREETING": "Хош келигиз!",
   "BASE_URL": "http://62.113.106.199:8003/"
 }
