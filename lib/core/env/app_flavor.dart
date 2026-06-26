@@ -11,6 +11,11 @@ class AppFlavor {
     defaultValue: 'Балкаро-русский словарь',
   );
 
+  static const String greeting = String.fromEnvironment(
+    'APP_GREETING',
+    defaultValue: 'Хош келигиз!',
+  );
+
   static const String baseUrl = String.fromEnvironment(
     'BASE_URL',
     defaultValue: 'http://10.0.0.62:8000/',

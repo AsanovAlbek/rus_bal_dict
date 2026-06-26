@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:rus_bal_dict/core/env/app_flavor.dart';
 import 'package:rus_bal_dict/export.dart';
 import 'package:rus_bal_dict/feature/auth/domain/bloc/auth_bloc.dart';
 import 'package:rus_bal_dict/feature/auth/domain/bloc/auth_event.dart';
@@ -28,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
     final textStyle = Theme.of(context).textTheme.headlineSmall;
     return Scaffold(
       body: Center(
-        child: Text('Хош келигиз!', style: textStyle),
+        child: Text(AppFlavor.greeting, style: textStyle),
       ),
     );
   }

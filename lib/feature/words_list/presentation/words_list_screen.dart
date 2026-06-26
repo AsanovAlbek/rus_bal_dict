@@ -1,3 +1,4 @@
+import 'package:rus_bal_dict/core/env/app_flavor.dart';
 import 'package:rus_bal_dict/export.dart';
 import 'package:rus_bal_dict/feature/history/domain/bloc/history_bloc.dart';
 import 'package:rus_bal_dict/feature/history/domain/bloc/history_event.dart';
@@ -73,7 +74,7 @@ class _WordsListScreenState extends State<WordsListScreen> {
               controller: _scrollController,
               slivers: [
                 MyAppBar(
-                  title: 'БАЛКАРО - РУССКИЙ СЛОВАРЬ',
+                  title: AppFlavor.appName.toUpperCase(),
                   showSearchField: true,
                   searchController: _searchController,
                   onTextEditing: (text) {
